@@ -1,0 +1,30 @@
+<div class="image-manager">
+  <div class="timeline-select">
+    <mat-form-field>
+      <mat-select [(value)]="timelineSelected" (selectionChange)="timelineChanged()">
+        <mat-option value="">--All--</mat-option>
+        <mat-option *ngFor="let t of timelines$ | async" 
+          [value]="t.topicKey">
+          {{t.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <div class="box" *ngFor="let image of column1">
+        <app-image-box [src]="image"></app-image-box>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box" *ngFor="let image of column2">
+        <app-image-box [src]="image"></app-image-box>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box" *ngFor="let image of column3">
+        <app-image-box [src]="image"></app-image-box>
+      </div>
+    </div>
+  </div>
+</div>

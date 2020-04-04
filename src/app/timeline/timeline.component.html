@@ -1,0 +1,87 @@
+<div class="t-content">
+  <section class="section">
+    <div class="level">
+      <div class="level-left">
+        <h1 class="level-item title">{{timeline?.title}}</h1>
+        <a *ngIf="editable" matTooltip="Add Moment" class="level-item" (click)="onAddMomentClicked()">
+          <span class="icon is-small">
+            <i class="far fa-plus-square"></i>
+          </span>
+        </a>
+        <a *ngIf="editable" matTooltip="Edit" class="level-item" (click)="onEditTimelineClicked()">
+          <span class="icon is-small">
+            <i class="fa fa-edit"></i>
+          </span>
+        </a>
+        <a *ngIf="editable" matTooltip="Delete" class="level-item" (click)="onDeleteTimelineClicked()">
+          <span class="icon is-small">
+            <i class="fa fa-trash-alt"></i>
+          </span>
+        </a>
+      </div>
+      <div class="level-right">
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button" [class.is-primary]="align==-1" (click)="align=-1">
+              <span class="icon is-small">
+                <i class="fas fa-align-left"></i>
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button" [class.is-primary]="align==0" (click)="align=0">
+              <span class="icon is-small">
+                <i class="fas fa-align-center"></i>
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button" [class.is-primary]="align==1" (click)="align=1">
+              <span class="icon is-small">
+                <i class="fas fa-align-right"></i>
+              </span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div *ngIf="!loaded">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="loaded">
+    <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1"
+      *ngFor="let mGroup of groupedMoments">
+      <header class="timeline-header">
+        <span class="tag is-primary">{{mGroup.group}}</span>
+      </header>
+      <div class="timeline-item" *ngFor="let moment of mGroup.moments">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <p class="heading">{{moment.recordDate | date: 'MMMM dd'}}</p>
+          <p [innerHTML]="moment.content"></p>
+          <div class="level is-mobile" *ngIf="editable">
+            <div class="level-left"></div>
+            <div class="level-right">
+              <a matTooltip="Edit" class="level-item" (click)="onEdit(moment)">
+                <span class="icon is-small">
+                  <i class="fa fa-edit"></i>
+                </span>
+              </a>
+              <a matTooltip="Delete" class="level-item" (click)="onDelete(moment)">
+                <span class="icon is-small">
+                  <i class="fa fa-trash-alt"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1">
+      <div class="timeline-header">
+        <span class="tag is-medium is-primary">{{timeline?.isCompleted ? 'End': '待续...'}}</span>
+      </div>
+    </div>
+  </div>
+</div>

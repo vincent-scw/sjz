@@ -1,0 +1,12 @@
+<div class="field is-grouped">
+    <p class="control">
+        <a class="button is-link" (click)="onSubmit()" [attr.disabled]="isValid ? null: true">
+            提交
+        </a>
+    </p>
+    <p class="control">
+        <a class="button is-light" (click)="onCancel()">
+            取消
+        </a>
+    </p>
+</div>

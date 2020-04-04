@@ -1,0 +1,59 @@
+<div class="t-content">
+  <section class="section">
+    <h2 class="subtitle">轴编辑</h2>
+  </section>
+  <form name="form" #form="ngForm">
+    <div class="field">
+      <div class="control">
+        <mat-form-field>
+          <input matInput required name="topicKey" [(ngModel)]="model.topicKey" placeholder="Key">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-form-field>
+          <input matInput required name="title" [(ngModel)]="model.title" placeholder="Title">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-radio-group name="protectLevel" [(ngModel)]="model.protectLevel" placeholder="Protect Level">
+          <mat-radio-button value="Public">Public</mat-radio-button>
+          <mat-radio-button value="Protected">Protected</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-form-field>
+          <input matInput name="accessKey" [(ngModel)]="model.accessKey" placeholder="Access Key">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-radio-group name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" placeholder="Period Group Level">
+          <mat-radio-button value="ByDay">By Day</mat-radio-button>
+          <mat-radio-button value="ByMonth">By Month</mat-radio-button>
+          <mat-radio-button value="ByYear">By Year</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-form-field>
+          <input matInput required name="startTime" [(ngModel)]="model.startTime" placeholder="Start Time">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-slide-toggle name="isCompleted" [(ngModel)]="model.isCompleted">Completed?</mat-slide-toggle>
+      </div>
+    </div>
+    
+    <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+  </form>
+</div>

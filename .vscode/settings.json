@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "dist/": true
+  },
+
+  "editor.tabSize": 2,
+  "editor.detectIndentation": true,
+  "editor.autoIndent": true,
+  "editor.colorDecorators": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true
+}

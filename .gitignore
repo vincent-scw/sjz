@@ -1,15 +1,43 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Test binary, built with `go test -c`
-*.test
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+# dependencies
+/node_modules
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db

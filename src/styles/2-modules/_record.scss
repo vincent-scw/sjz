@@ -1,0 +1,19 @@
+.image img {
+  width: auto !important;
+}
+
+ngx-image-gallery {
+  margin-top: 3rem;
+  z-index: 0 !important;
+  height: calc(100vh - 7rem) !important;
+}
+
+ngx-image-gallery .galleria {
+  height: calc(100vh - 7rem);
+  left: 50px !important;
+  right: 50px !important;
+}
+
+.arrow {
+  width: 40px !important;
+}

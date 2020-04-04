@@ -1,0 +1,77 @@
+<nav class="navbar is-fixed-top is-transparent is-primary top-nav" role="navigation" aria-label="main navigation">
+	<div class="container">
+		<div class="navbar-brand">
+			<a class="navbar-item" routerLink="/">
+				<img src="../assets/favicon.png" height="100">
+			</a>
+			<a class="navbar-item" routerLink="/">
+				<img src="../assets/logo.png" height="100">
+			</a>
+
+			<a role="button" class="navbar-burger burger" [class.is-active]="burgerActive" aria-label="menu"
+				aria-expanded="false" data-target="navbarBasic" (click)="burgerActive = !burgerActive">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+		<div id="navbarBasic" class="navbar-menu" [class.is-active]="burgerActive">
+			<div class="navbar-start">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+						<img src="../assets/zhou.png">
+					</a>
+					<div class="navbar-dropdown">
+						<a class="navbar-item" [class.is-active]="activeTopicKey == item.topicKey"
+							*ngFor="let item of timelines$ | async" [routerLink]="['/timeline/', item.topicKey]"
+							(click)="burgerActive = false">
+							<div class="level">
+								<div class="level-left">{{item.title}}</div>
+								<div class="level-right">
+									<span class="icon level-item" *ngIf="item.protectLevel == 'Protected'">
+										<i class="fas fa-lock"></i>
+									</span>
+								</div>
+							</div>
+						</a>
+						<hr class="navbar-divider" *ngIf="editable">
+						<a class="navbar-item" routerLink="/timeline/create" *ngIf="editable">
+							Add New
+						</a>
+					</div>
+				</div>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+						<img src="../assets/ke.png">
+					</a>
+					<div class="navbar-dropdown">
+						<a class="navbar-item" *ngFor="let item of years" [routerLink]="['/records/', item]"
+							(click)="burgerActive = false">
+							{{item}} 年
+						</a>
+						<hr class="navbar-divider" *ngIf="editable">
+						<a class="navbar-item" (click)="onAddNewRecordClicked()" *ngIf="editable">
+							Add New
+						</a>
+					</div>
+				</div>
+				<a class="navbar-item" routerLink="/manage/images" *ngIf="editable" (click)="burgerActive = false">
+					管理
+				</a>
+			</div>
+
+			<div class="navbar-end">
+				<a class="navbar-item" href="https://github.com/vincent-scw/timelines">
+					<span class="icon">
+						<i class="fab fa-lg fa-github"></i>
+					</span>
+				</a>
+				<a class="navbar-item" routerLink="/account/login">
+					<span class="icon">
+						<i class="fas fa-lg fa-sign-in-alt"></i>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</nav>

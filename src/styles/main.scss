@@ -1,0 +1,14 @@
+@import '_constants';
+@import '_scrollbar';
+
+@import './1-layouts/_bg';
+@import './1-layouts/_navbar';
+
+@import './2-modules/record';
+@import './2-modules/timeline';
+@import './2-modules/moment-editor';
+@import './2-modules/image-viewer';
+
+.main {
+  margin-top: 3rem;
+}

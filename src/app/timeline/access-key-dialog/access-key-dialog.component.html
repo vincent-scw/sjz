@@ -1,0 +1,18 @@
+<div>
+  <form name="form" #form="ngForm">
+    <input hidden name="topicKey" [(ngModel)]="model.topicKey">
+    <div class="field">
+      <div class="control">
+        <mat-form-field>
+          <input matInput required name="accessKey" [(ngModel)]="model.accessKey" placeholder="请提供访问密码">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-error *ngIf="verificationSucceed == false">密码不正确，无权访问。</mat-error>
+      </div>
+    </div>
+    <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+  </form>
+</div>

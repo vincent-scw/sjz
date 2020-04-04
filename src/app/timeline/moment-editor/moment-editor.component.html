@@ -1,0 +1,21 @@
+<div class="center-dialog">
+	<form name="form" #form="ngForm">
+		<input hidden name="topicKey" [(ngModel)]="model.topicKey">
+		<h2 class="subtitle">{{timeline.title}}</h2>
+		<div class="field">
+			<div class="control">
+				<mat-form-field>
+					<input matInput required name="recordDate" [(ngModel)]="model.recordDate" placeholder="Record Date">
+					<!-- <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+					<mat-datepicker #myDatepicker></mat-datepicker> -->
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="field">
+			<div class="control">
+				<app-ngx-editor name="content" required placeholder="'Enter text here...'" [config]="editorConfig" [(ngModel)]="model.content"></app-ngx-editor>
+			</div>
+		</div>
+		<button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+	</form>
+</div>

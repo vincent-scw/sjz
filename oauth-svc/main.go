@@ -40,8 +40,8 @@ func main() {
 
 	// client memory store
 	clientStore := store.NewClientStore()
-	clientStore.Set("player_api", &models.Client{
-		ID:     "player_api",
+	clientStore.Set("sjz", &models.Client{
+		ID:     "sjz",
 		Secret: "999999",
 		Domain: viper.GetString("AUTH_DOMAIN"),
 	})

@@ -46,7 +46,6 @@ namespace SJZ.OAuthService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OAuth API v1"));
 
             app.UseStaticFiles();
-            //app.UseMiddleware<StaticGeneratorMiddleware>();
 
             app.UseRouting();
 
@@ -56,10 +55,7 @@ namespace SJZ.OAuthService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/health", async context =>
-                {
-                    await context.Response.WriteAsync("I am good.");
-                });
+                endpoints.MapControllers();
             });
         }
     }

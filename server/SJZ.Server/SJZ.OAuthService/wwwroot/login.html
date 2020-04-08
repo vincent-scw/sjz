@@ -2,8 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | sjz</title>
     <link rel="stylesheet" type="text/css" href="./css/login.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script type="text/javascript">
+        function linkedinAuth() {
+            window.location.href = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=81y34iwbqrnk79&redirect_uri=http%3A%2F%2Flocalhost%3A55227%2Foauth%2Flinkedin&scope=r_liteprofile%20r_emailaddress&state=anything";
+        }
+    </script>
     <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
 </head>
 <body>
@@ -32,8 +39,10 @@
 
                 <!-- <p className="help is-danger">{this.state.errorMsg}</p> -->
             </div>
-            <input class="button full-width" type="submit" value="Login" disabled />
-            <a><div class="linkedin" /></a>
+            <input class="button full-width" type="submit" value="Login" onclick="alert('Please sign in with Linkedin.')" />
+            <div class="openid">
+                <div class="linkedin" onclick="linkedinAuth()"/>
+            </div>
         </form>
     </div>
 </body>

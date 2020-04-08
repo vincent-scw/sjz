@@ -5,7 +5,7 @@
 
     .login form {
         margin: 0 auto;
-        max-width: 320px;
+        max-width: 292px;
     }
 }
 
@@ -23,10 +23,16 @@
 }
 
 .linkedin {
+    width: 292px;
     height: 40px;
     background: url("../assets/linkedin/Sign-In-Small---Default.png") no-repeat;
+    cursor: pointer;
 }
 
 .linkedin:hover {
     background: url("../assets/linkedin/Sign-In-Small---Hover.png") no-repeat;
+}
+
+.openid {
+    margin-top: 1rem;
 }

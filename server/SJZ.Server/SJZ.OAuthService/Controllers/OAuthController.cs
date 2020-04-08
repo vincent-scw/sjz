@@ -21,13 +21,12 @@ namespace SJZ.OAuthService.Controllers
         [HttpGet("api-links")]
         public ActionResult GetLinks()
         {
-            var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var linkedinConfig = _factory.OpenIdAuthConfigs.LinkedInConfig;
             return Ok(new
             {
                 LinkedIn = "https://www.linkedin.com/oauth/v2/authorization?" +
                     $"response_type=code&client_id={linkedinConfig.ClientId}" + 
-                    $"&redirect_uri={System.Net.WebUtility.UrlEncode($"{baseUrl}/oauth/linkedin")}" + 
+                    $"&redirect_uri={System.Net.WebUtility.UrlEncode(linkedinConfig.RedirectUrl)}" + 
                     "&scope=r_liteprofile%20r_emailaddress" + 
                     "&state=anything"
             });

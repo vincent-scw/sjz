@@ -18,9 +18,13 @@ namespace SJZ.OAuthService
         {
             services.AddCors(options =>  options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-            services.AddIdentityServer()
+            var builder = services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiResources(Config.Apis);
+
+            builder.AddDeveloperSigningCredential();
+
+            services.AddAuthentication();
 
             services.AddSwaggerGen(options =>
             {
@@ -44,7 +48,10 @@ namespace SJZ.OAuthService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OAuth API v1"));
 
             app.UseCors();
+            app.UseAuthentication();
+            app.UseIdentityServer();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

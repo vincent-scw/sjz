@@ -1,0 +1,32 @@
+﻿@media all and (min-width: 480px) {
+    .login {
+        padding-top: 100px;
+    }
+
+    .login form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    width: 200px;
+    height: 200px;
+}
+
+.linkedin {
+    height: 40px;
+    background: url("../assets/linkedin/Sign-In-Small---Default.png") no-repeat;
+}
+
+.linkedin:hover {
+    background: url("../assets/linkedin/Sign-In-Small---Hover.png") no-repeat;
+}

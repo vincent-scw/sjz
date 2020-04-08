@@ -1,5 +1,5 @@
 ﻿using SJZ.Common;
-using SJZ.Timelines.Domain;
+using SJZ.Timelines.Domain.TimelineAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;

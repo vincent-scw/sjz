@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SJZ.OAuthProvider;
 
 namespace SJZ.OAuthService
 {
@@ -16,6 +17,17 @@ namespace SJZ.OAuthService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(sp => new OpenIdAuthConfigs
+            {
+                LinkedInConfig = new OAuth2Config
+                {
+                    ClientId = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTID"),
+                    ClientSecret = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTSECRET"),
+                    RedirectUrl = Environment.GetEnvironmentVariable("LINKEDIN_REDIRECT")
+                }
+            });
+            services.AddSingleton<OAuth2ProviderFactory>();
+
             services.AddCors(options =>  options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             var builder = services.AddIdentityServer()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SJZ.OAuthProvider;
 
 namespace SJZ.OAuthService.Controllers
 {
@@ -11,13 +12,41 @@ namespace SJZ.OAuthService.Controllers
     [Route("[controller]")]
     public class OAuthController : ControllerBase
     {
-        [HttpGet("links")]
+        private readonly OAuth2ProviderFactory _factory;
+        public OAuthController(OAuth2ProviderFactory providerFactory)
+        {
+            _factory = providerFactory;
+        }
+
+        [HttpGet("api-links")]
         public ActionResult GetLinks()
         {
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var linkedinConfig = _factory.OpenIdAuthConfigs.LinkedInConfig;
             return Ok(new
             {
-                Linkedin = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=81y34iwbqrnk79&redirect_uri=http%3A%2F%2Flocalhost%3A55227%2Foauth%2Flinkedin&scope=r_liteprofile%20r_emailaddress&state=anything"
+                LinkedIn = "https://www.linkedin.com/oauth/v2/authorization?" +
+                    $"response_type=code&client_id={linkedinConfig.ClientId}" + 
+                    $"&redirect_uri={System.Net.WebUtility.UrlEncode($"{baseUrl}/oauth/linkedin")}" + 
+                    "&scope=r_liteprofile%20r_emailaddress" + 
+                    "&state=anything"
             });
+        }
+
+        [HttpGet("{type}")]
+        public async Task<ActionResult> Callback(string type, [FromQuery]string code, [FromQuery]string state)
+        {
+            try
+            {
+                //todo: Verify state
+                var oauthProvider = _factory.GetProvider(type);
+                var response = await oauthProvider.GetAuthResponseAsync(code);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

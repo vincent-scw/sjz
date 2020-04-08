@@ -13,7 +13,10 @@
       "launchBrowser": true,
       "launchUrl": "login.html",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb",
+        "LINKEDIN_REDIRECT": "https://localhost:44394/oauth/linkedin",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "LINKEDIN_CLIENTID": "81y34iwbqrnk79"
       }
     },
     "SJZ.OAuthService": {

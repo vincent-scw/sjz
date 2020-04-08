@@ -15,4 +15,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SJZ.OAuthProvider\SJZ.OAuthProvider.csproj" />
+  </ItemGroup>
+
 </Project>

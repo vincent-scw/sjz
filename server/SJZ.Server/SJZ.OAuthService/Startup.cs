@@ -29,8 +29,6 @@ namespace SJZ.OAuthService
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "OAuth API" });
-
-
             });
 
             services.AddMvcCore().AddApiExplorer();
@@ -47,18 +45,20 @@ namespace SJZ.OAuthService
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OAuth API v1"));
 
+            app.UseStaticFiles();
+            //app.UseMiddleware<StaticGeneratorMiddleware>();
+
+            app.UseRouting();
+
             app.UseCors();
             app.UseAuthentication();
             app.UseIdentityServer();
 
-            app.UseStaticFiles();
-            app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                endpoints.MapGet("/health", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("I am good.");
                 });
             });
         }

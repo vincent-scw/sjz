@@ -1,3 +1,3 @@
 ﻿const callAuthProvider = (provider) => {
-    fetch('External/' + provider).then();
+    window.location.href = 'External/' + provider;
 }

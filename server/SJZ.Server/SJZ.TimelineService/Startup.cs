@@ -34,6 +34,13 @@ namespace SJZ.TimelineService
 
             services.AddScoped<ITimelineRepository, TimelineRepository>();
 
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Timelines API" });
+            });
+
             services.AddControllers();
         }
 
@@ -44,6 +51,9 @@ namespace SJZ.TimelineService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timelines API v1"));
 
             app.UseHttpsRedirection();
 

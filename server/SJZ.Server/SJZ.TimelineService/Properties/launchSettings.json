@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "MONGO_DATABASE": "sjz",
         "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017",

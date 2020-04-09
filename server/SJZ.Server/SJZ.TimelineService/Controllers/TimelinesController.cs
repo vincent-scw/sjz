@@ -9,7 +9,7 @@ using SJZ.Timelines.Repository;
 namespace SJZ.TimelineService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TimelinesController : ControllerBase
     {
         private readonly ITimelineRepository _timelineRepository;
@@ -24,9 +24,13 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         public async Task<ActionResult> Get(string id)
         {
             var timeline = await _timelineRepository.GetAsync(id);
+            if (timeline == null)
+                return NotFound();
             return Ok(timeline);
         }
     }

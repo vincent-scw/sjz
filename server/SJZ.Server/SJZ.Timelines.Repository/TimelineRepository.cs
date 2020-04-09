@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using SJZ.Timelines.Domain.TimelineAggregate;
 using System;
 using System.Threading.Tasks;

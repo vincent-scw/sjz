@@ -35,9 +35,12 @@
 
                 <!-- <p className="help is-danger">{this.state.errorMsg}</p> -->
             </div>
-            <input class="button full-width" type="submit" value="Login" onclick="alert('Please sign in with Linkedin.')" />
+            <input class="button full-width" type="submit" value="Login" onclick="alert('Please sign in with GitHub.')" />
             <div class="openid">
-                <div class="linkedin" onclick="linkedinAuth()"/>
+                <a id="github-button" class="btn btn-block btn-social btn-github" onclick="callAuthProvider('GitHub')">
+                    <i class="fab fa-github"></i> Sign in with Github
+                </a>
+                <!--<div class="linkedin" onclick="linkedinAuth()"/>-->
             </div>
         </form>
     </div>

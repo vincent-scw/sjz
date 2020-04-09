@@ -7,16 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.0.0" />
+    <PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="3.0.0" />
     <PackageReference Include="IdentityServer4" Version="3.1.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.3.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.3.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SJZ.OAuthProvider\SJZ.OAuthProvider.csproj" />
   </ItemGroup>
 
 </Project>

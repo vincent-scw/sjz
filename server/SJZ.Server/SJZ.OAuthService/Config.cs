@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,21 @@ namespace SJZ.OAuthService
                 ClientId = "spa",
                 AllowedGrantTypes = GrantTypes.Implicit,
                 ClientSecrets = { new Secret("secret".Sha256()) },
-                AllowedScopes = { "timeline.api" }
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Email,
+                    "timeline.api"
+                }
             }
+        };
+
+        public static List<IdentityResource> IdentityResources => new List<IdentityResource>
+        {
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile(),
+            new IdentityResources.Email()
         };
     }
 }

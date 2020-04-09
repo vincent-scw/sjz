@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SJZ.OAuthProvider;
 
 namespace SJZ.OAuthService
 {
@@ -17,26 +18,53 @@ namespace SJZ.OAuthService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(sp => new OpenIdAuthConfigs
-            {
-                LinkedInConfig = new OAuth2Config
-                {
-                    ClientId = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTID"),
-                    ClientSecret = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTSECRET"),
-                    RedirectUrl = Environment.GetEnvironmentVariable("LINKEDIN_REDIRECT")
-                }
-            });
-            services.AddSingleton<OAuth2ProviderFactory>();
-
             services.AddCors(options =>  options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-            var builder = services.AddIdentityServer()
+            services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
-                .AddInMemoryApiResources(Config.Apis);
+                .AddInMemoryApiResources(Config.Apis)
+                .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddDeveloperSigningCredential();
 
-            builder.AddDeveloperSigningCredential();
+            services.AddAuthentication()
+                .AddGitHub(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = Environment.GetEnvironmentVariable("GITHUB_CLIENTID");
+                    options.ClientSecret = Environment.GetEnvironmentVariable("GITHUB_CLIENTSECRET");
 
-            services.AddAuthentication();
+                    options.CallbackPath = new PathString("/oauth/github");
+                    options.SaveTokens = true;
+                    options.Events = new OAuthEvents()
+                    {
+                        OnRemoteFailure = loginFailureHandler =>
+                        {
+                            var authProperties = options.StateDataFormat.Unprotect(loginFailureHandler.Request.Query["state"]);
+                            loginFailureHandler.Response.Redirect("/login");
+                            loginFailureHandler.HandleResponse();
+                            return Task.FromResult(0);
+                        }
+                    };
+                })
+                .AddLinkedIn(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTID");
+                    options.ClientSecret = Environment.GetEnvironmentVariable("LINKEDIN_CLIENTSECRET");
+
+                    options.CallbackPath = new PathString("/oauth/linkedin");
+                    options.SaveTokens = true;
+                    options.Events = new OAuthEvents()
+                    {
+                        OnRemoteFailure = loginFailureHandler =>
+                        {
+                            var authProperties = options.StateDataFormat.Unprotect(loginFailureHandler.Request.Query["state"]);
+                            loginFailureHandler.Response.Redirect("/login");
+                            loginFailureHandler.HandleResponse();
+                            return Task.FromResult(0);
+                        }
+                    };
+                });
 
             services.AddSwaggerGen(options =>
             {

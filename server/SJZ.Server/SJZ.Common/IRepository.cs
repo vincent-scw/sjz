@@ -16,6 +16,6 @@ namespace SJZ.Common
         Task<TEntity> CreateAsync(TEntity entity);
         Task<TEntity> GetAsync(object id);
         Task DeleteAsync(object id);
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
     }
 }

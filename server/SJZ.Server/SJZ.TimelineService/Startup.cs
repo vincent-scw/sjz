@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SJZ.Timelines.Repository;
 
 namespace SJZ.TimelineService
 {
@@ -25,6 +26,14 @@ namespace SJZ.TimelineService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(sp => new MongoConfig
+            {
+                ConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTIONSTRING"),
+                DatabaseName = Environment.GetEnvironmentVariable("MONGO_DATABASE")
+            });
+
+            services.AddScoped<ITimelineRepository, TimelineRepository>();
+
             services.AddControllers();
         }
 

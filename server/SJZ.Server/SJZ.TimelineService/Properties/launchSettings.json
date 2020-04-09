@@ -14,6 +14,8 @@
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
       "environmentVariables": {
+        "MONGO_DATABASE": "sjz",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

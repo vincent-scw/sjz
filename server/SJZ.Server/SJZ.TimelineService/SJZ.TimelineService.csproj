@@ -14,5 +14,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SJZ.Timelines.Repository\SJZ.Timelines.Repository.csproj" />
+  </ItemGroup>
+
 
 </Project>

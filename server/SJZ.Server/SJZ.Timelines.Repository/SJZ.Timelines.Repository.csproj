@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fvspw02a.tar~" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SJZ.Common\SJZ.Common.csproj" />
     <ProjectReference Include="..\SJZ.Timelines.Domain\SJZ.Timelines.Domain.csproj" />
   </ItemGroup>

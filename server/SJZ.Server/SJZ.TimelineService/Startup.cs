@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,10 @@ namespace SJZ.TimelineService
             });
 
             services.AddScoped<ITimelineRepository, TimelineRepository>();
+
+            services.AddMediatR(
+                typeof(Commands.CreateTimelineCommand).Assembly,
+                typeof(Timelines.Domain.TimelineAggregate.Timeline).Assembly);
 
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 

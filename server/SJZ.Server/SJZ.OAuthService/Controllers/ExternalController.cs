@@ -73,5 +73,15 @@ namespace SJZ.OAuthService.Controllers
             var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
             return Redirect(returnUrl);
         }
+
+        [HttpGet("signout")]
+        [HttpPost("signout")]
+        public async Task<IActionResult> Signout()
+        {
+            var result = await HttpContext.AuthenticateAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
+            return SignOut(new AuthenticationProperties { RedirectUri = returnUrl },
+               IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        }
     }
 }

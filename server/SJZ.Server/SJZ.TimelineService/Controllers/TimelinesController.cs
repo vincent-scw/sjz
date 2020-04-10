@@ -36,7 +36,7 @@ namespace SJZ.TimelineService.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetAsync(string id)
+        public async Task<IActionResult> GetAsync(string id)
         {
             var timeline = await _timelineRepository.GetAsync(id);
             if (timeline == null)

@@ -12,16 +12,16 @@ namespace SJZ.TimelineService.Commands
     public class CreateTimelineCommand : IRequest<string>
     {
         [DataMember]
-        public string UserId { get; }
+        public string UserId { get; set; }
         [DataMember]
-        public string Username { get; }
+        public string Username { get; set; }
         [DataMember]
-        public string Title { get; }
+        public string Title { get; set; }
         [DataMember]
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartTime { get; set; }
         [DataMember]
-        public bool IsCompleted { get; }
+        public bool IsCompleted { get; set; }
         [DataMember]
-        public PeriodLevelType PeriodLevel { get; }
+        public PeriodLevelType PeriodLevel { get; set; }
     }
 }

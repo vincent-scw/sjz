@@ -8,11 +8,11 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 {
     public class Timeline : Entity<string>, IAggregateRoot
     {
-        public string Username { get; }
-        public string Title { get; }
-        public DateTimeOffset StartTime { get; }
-        public bool IsCompleted { get; }
-        public PeriodLevel PeriodLevel { get; }
+        public string Username { get; private set; }
+        public string Title { get; private set; }
+        public DateTimeOffset StartTime { get; private set; }
+        public bool IsCompleted { get; private set; }
+        public PeriodLevel PeriodLevel { get; private set; }
 
         private List<TimelineItem> _items;
         public IReadOnlyCollection<TimelineItem> Items => _items;
@@ -38,6 +38,8 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             PeriodLevel = periodLevel;
             CreatedBy = userid;
             Username = username;
+
+            CreatedDate = DateTimeOffset.Now;
         }
 
         public void AddItem(TimelineItem item)

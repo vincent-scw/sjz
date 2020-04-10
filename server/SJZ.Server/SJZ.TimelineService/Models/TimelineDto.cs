@@ -9,9 +9,9 @@ namespace SJZ.TimelineService.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public DateTimeOffset StartTime { get; }
-        public bool IsCompleted { get; }
-        public PeriodLevelType PeriodLevel { get; }
+        public DateTimeOffset StartTime { get; set; }
+        public bool IsCompleted { get; set; }
+        public PeriodLevelType PeriodLevel { get; set; }
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
         public DateTimeOffset LastChanged { get; set; }

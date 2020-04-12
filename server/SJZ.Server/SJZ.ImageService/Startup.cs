@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SJZ.Images.Repository;
 
 namespace SJZ.ImageService
 {
@@ -25,6 +26,14 @@ namespace SJZ.ImageService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(sp => new StorageAccountSettings
+            {
+                Key = Environment.GetEnvironmentVariable("STORAGEACCOUNT_KEY"),
+                ConnectionString = Environment.GetEnvironmentVariable("STORAGEACCOUNT_CONNECTIONSTRING")
+            });
+
+            services.AddScoped<IImageRepository, ImageRepository>();
+
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddSwaggerGen(options =>

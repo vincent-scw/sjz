@@ -9,5 +9,6 @@ namespace SJZ.Images.Repository
     {
         Task<List<Uri>> GetImagesByUserAsnyc(string user, int year, int month);
         Task<Uri> UploadImageAsync(string user, int year, int month, string name, System.IO.Stream stream);
+        Task DeleteAsync(string relativeUrl);
     }
 }

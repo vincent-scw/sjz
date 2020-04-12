@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SJZ.Images.Repository;
@@ -77,6 +78,29 @@ namespace SJZ.ImageService.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpDelete("{url}")]
+        public async Task<IActionResult> DeleteAsync(string url)
+        {
+            var decoded = HttpUtility.UrlDecode(url);
+            var containerUrl = new Uri(decoded).GetLeftPart(UriPartial.Authority) + "/pictures/";
+
+            string main, thumb;
+            if (decoded.Contains("/_thumbnail"))
+            {
+                main = decoded.Replace("/_thumbnail", string.Empty).Substring(containerUrl.Length);
+                thumb = decoded.Substring(containerUrl.Length);
+            }
+            else
+            {
+                main = decoded.Substring(containerUrl.Length);
+                thumb = decoded.Insert(decoded.LastIndexOf('/'), "/_thumbnail").Substring(containerUrl.Length);
+            }
+
+            await _imageRepository.DeleteAsync(main);
+            await _imageRepository.DeleteAsync(thumb);
+            return NoContent();
         }
 
         private static int GetThumbnailDivideBy(long size)

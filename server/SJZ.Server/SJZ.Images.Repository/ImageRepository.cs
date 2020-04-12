@@ -46,6 +46,13 @@ namespace SJZ.Images.Repository
             return cloudBlockBlob.Uri;
         }
 
+        public async Task DeleteAsync(string relativeUrl)
+        {
+            var container = await GetBlobContainerAsync(IMAGE_CONTAINER);
+            var blockBlob = container.GetBlockBlobReference(relativeUrl);
+            await blockBlob.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots, null, null, null);
+        }
+
         private CloudStorageAccount GetAccount()
         {
             CloudStorageAccount.TryParse(_settings.ConnectionString, out CloudStorageAccount storageAccount);

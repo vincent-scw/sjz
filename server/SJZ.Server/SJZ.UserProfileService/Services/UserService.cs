@@ -25,7 +25,12 @@ namespace SJZ.UserProfileService.Services
             var user = await _userRepository.GetUserBySocialIdAsync(request.ThirdPartyProvider, request.ThirdPartyId);
             if (user == null)
             {
-                user = await _userRepository.CreateUserAsync(new User(request.FirstName, request.LastName, request.Email), request.ThirdPartyProvider, request.ThirdPartyId);
+                user = await _userRepository.CreateUserAsync(new User 
+                { 
+                    FirstName = request.FirstName, 
+                    LastName = request.LastName, 
+                    Email = request.Email 
+                }, request.ThirdPartyProvider, request.ThirdPartyId);
             }
             return new UserResponse { Id = user.Id, FirstName = user.FirstName, LastName = user.LastName, Email = user.Email };
         }

@@ -22,7 +22,7 @@ namespace SJZ.UserProfile.Repository
                 var u = await session.WriteTransactionAsync(async tx =>
                 {
                     var result = await tx.RunAsync(@"
-CREATE (u:User {userId: $userid, firstName: $firstName, lastName: $lastName, email: $email, createdDate: $createdDate})-[:hasSocial]->(s:Social {type: $socialType, id: $socialId})
+CREATE (u:User {userId: $userid, firstName: $firstName, lastName: $lastName, email: $email, createdDate: $createdDate})-[:HAS_SOCIAL]->(s:Social {type: $socialType, id: $socialId})
 RETURN u", 
                     new 
                     { 
@@ -58,13 +58,21 @@ RETURN u",
                 var u = await session.WriteTransactionAsync(async tx =>
                 {
                     var result = await tx.RunAsync(@"
-MATCH(u:User)-[:hasSocial]->(s:Social {type:$type, id:$id}) 
-RETURN u", new { type, id });
+MATCH(user:User)-[:HAS_SOCIAL]->(s:Social {type:$type, id:$id}) 
+RETURN user", new { type, id });
                     var data = await result.ToListAsync();
-                    return data.Count > 0 ? data[0].As<dynamic>() : null;
+                    return data.Count > 0 ? data[0]["user"].As<INode>() : null;
                 });
 
-                return User.From(u);
+                if (u == null) return null;
+                return new User
+                {
+                    Id = u["userId"].As<string>(),
+                    FirstName = u["firstName"].As<string>(),
+                    LastName = u["lastName"].As<string>(),
+                    Email = u["email"].As<string>(),
+                    CreatedDate = u["createdDate"].As<DateTimeOffset>()
+                };
             }
             catch (Exception e)
             {

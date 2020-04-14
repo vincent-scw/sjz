@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "SJZ.UserProfileService";
+
+package user;
+
+// The user service definition.
+service UserSvc {
+	// Get or Create a user
+	rpc GetOrCreate (UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+	string firstName = 1;
+	string lastName = 2;
+	string email = 3;
+	string avatarUrl = 4;
+	string thirdPartyProvider = 5;
+	string thirdPartyId = 6;
+}
+
+message UserResponse {
+	string id = 1;
+	string firstName = 2;
+	string lastName = 3;
+	string email = 4;
+	string avatarUrl = 5;
+}

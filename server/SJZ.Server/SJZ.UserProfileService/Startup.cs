@@ -36,6 +36,8 @@ namespace SJZ.UserProfileService
 
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddGrpc();
+
             services.AddMvc();
         }
 
@@ -51,6 +53,8 @@ namespace SJZ.UserProfileService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapGrpcService<Services.UserService>();
             });
         }
     }

@@ -14,7 +14,7 @@ namespace SJZ.UserProfile.Repository
             _driver = GraphDatabase.Driver(config.Uri, AuthTokens.Basic(config.Username, config.Password));
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user, string socialType, string socialId)
         {
             var session = _driver.AsyncSession();
             try
@@ -22,16 +22,22 @@ namespace SJZ.UserProfile.Repository
                 var u = await session.WriteTransactionAsync(async tx =>
                 {
                     var result = await tx.RunAsync(@"
-MERGE (u:User {userId: $userid})
-SET u.firstName = $firstName
-SET u.lastName = $lastName
-SET u.email = $email
-SET u.createdDate = $createdDate
-RETURN u
-", new { userid = user.Id, firstName = user.FirstName, lastName = user.LastName, createdDate = new ZonedDateTime(user.CreatedDate) });
+CREATE (u:User {userId: $userid, firstName: $firstName, lastName: $lastName, email: $email, createdDate: $createdDate})->[hasSocial]->(s:Social: {type: socialType, id: $socialId})
+RETURN u", 
+                    new 
+                    { 
+                        userid = user.Id, 
+                        firstName = user.FirstName, 
+                        lastName = user.LastName, 
+                        createdDate = new ZonedDateTime(user.CreatedDate), 
+                        socialType, 
+                        socialId 
+                    });
                     var data = await result.SingleAsync();
                     return data.As<dynamic>();
                 });
+
+                return user;
             }
             catch (Exception e)
             {
@@ -41,8 +47,32 @@ RETURN u
             {
                 await session.CloseAsync();
             }
+        }
 
-            return user;
+        public async Task<User> GetUserBySocialIdAsync(string type, string id)
+        {
+            var session = _driver.AsyncSession();
+            try
+            {
+                var u = await session.WriteTransactionAsync(async tx =>
+                {
+                    var result = await tx.RunAsync(@"
+MATCH(u:User)-[hasSocial]->(s:Social {type:$type, id:$id}) 
+RETURN u", new { type, id });
+                    var data = await result.SingleAsync();
+                    return data.As<dynamic>();
+                });
+
+                return u;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
         }
 
         public void Dispose()

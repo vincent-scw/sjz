@@ -17,9 +17,11 @@ namespace SJZ.UserProfile.Repository
         public async Task<User> CreateUserAsync(User user)
         {
             var session = _driver.AsyncSession();
-            var u = await session.WriteTransactionAsync(async tx =>
+            try
             {
-                var result = await tx.RunAsync(@"
+                var u = await session.WriteTransactionAsync(async tx =>
+                {
+                    var result = await tx.RunAsync(@"
 MERGE (u:User {userId: $userid})
 SET u.firstName = $firstName
 SET u.lastName = $lastName
@@ -27,9 +29,18 @@ SET u.email = $email
 SET u.createdDate = $createdDate
 RETURN u
 ", new { userid = user.Id, firstName = user.FirstName, lastName = user.LastName, createdDate = new ZonedDateTime(user.CreatedDate) });
-                var data = await result.SingleAsync();
-                return data.As<dynamic>();
-            });
+                    var data = await result.SingleAsync();
+                    return data.As<dynamic>();
+                });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
 
             return user;
         }

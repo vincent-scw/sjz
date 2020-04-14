@@ -14,7 +14,10 @@
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "NEO4J_USERNAME": "neo4j",
+        "NEO4J_URI": "bolt://localhost:7687",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NEO4J_PASSWORD": "Welcome1"
       }
     },
     "SJZ.UserProfileService": {

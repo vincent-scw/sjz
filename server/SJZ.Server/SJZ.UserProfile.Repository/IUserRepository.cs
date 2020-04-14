@@ -2,7 +2,7 @@
 
 namespace SJZ.UserProfile.Repository
 {
-    public class Class1
+    public interface IUserRepository
     {
     }
 }

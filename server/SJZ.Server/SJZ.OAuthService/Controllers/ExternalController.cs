@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Grpc.Core;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SJZ.UserProfileService;
 
 namespace SJZ.OAuthService.Controllers
 {
@@ -14,8 +16,10 @@ namespace SJZ.OAuthService.Controllers
     [Route("[controller]")]
     public class ExternalController : ControllerBase
     {
-        public ExternalController()
+        private readonly UserSvc.UserSvcClient _userClient;
+        public ExternalController(UserSvc.UserSvcClient userClient)
         {
+            _userClient = userClient;
         }
 
         [HttpGet("{provider}")]
@@ -68,7 +72,16 @@ namespace SJZ.OAuthService.Controllers
 
             claims.Remove(userIdClaim);
             var provider = expProperties.Items["scheme"];
-            var userId = userIdClaim.Value;
+            var name = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
+            var email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+
+            var user = await _userClient.GetOrCreateAsync(new UserRequest 
+            { 
+                Name = name?.Value,
+                Email = email?.Value,
+                ThirdPartyProvider = provider, 
+                ThirdPartyId = userIdClaim.Value
+            });
 
             var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
             return Redirect(returnUrl);

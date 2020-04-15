@@ -22,13 +22,12 @@ namespace SJZ.UserProfile.Repository
                 var u = await session.WriteTransactionAsync(async tx =>
                 {
                     var result = await tx.RunAsync(@"
-CREATE (u:User {userId: $userid, firstName: $firstName, lastName: $lastName, email: $email, createdDate: $createdDate})-[:HAS_SOCIAL]->(s:Social {type: $socialType, id: $socialId})
+CREATE (u:User {userId: $userid, name: $name, email: $email, createdDate: $createdDate})-[:HAS_SOCIAL]->(s:Social {type: $socialType, id: $socialId})
 RETURN u", 
                     new 
                     { 
                         userid = user.Id, 
-                        firstName = user.FirstName, 
-                        lastName = user.LastName, 
+                        name = user.Name, 
                         email = user.Email,
                         createdDate = new ZonedDateTime(user.CreatedDate), 
                         socialType, 
@@ -68,8 +67,7 @@ RETURN user", new { type, id });
                 return new User
                 {
                     Id = u["userId"].As<string>(),
-                    FirstName = u["firstName"].As<string>(),
-                    LastName = u["lastName"].As<string>(),
+                    Name = u["name"].As<string>(),
                     Email = u["email"].As<string>(),
                     CreatedDate = u["createdDate"].As<DateTimeOffset>()
                 };

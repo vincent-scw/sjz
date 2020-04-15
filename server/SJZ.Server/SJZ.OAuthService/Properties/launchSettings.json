@@ -1,33 +1,19 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:55227",
-      "sslPort": 44394
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
+    "SJZ.OAuthService": {
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "login.html",
       "environmentVariables": {
         "GITHUB_CLIENTSECRET": "408941d4d7c701efd5a6497e1627e0f8fbd503fc",
+        "UPS_SVC": "https://localhost:5001",
         "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb",
         "GITHUB_CLIENTID": "6abec5f4e4d9d5c48f07",
         "LINKEDIN_REDIRECT": "https://localhost:44394/oauth/linkedin",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "LINKEDIN_CLIENTID": "81y34iwbqrnk79"
-      }
-    },
-    "SJZ.OAuthService": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "https://localhost:5011;http://localhost:5010"
     },
     "Docker": {
       "commandName": "Docker",

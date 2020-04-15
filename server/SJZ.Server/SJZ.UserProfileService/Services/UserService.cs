@@ -27,12 +27,11 @@ namespace SJZ.UserProfileService.Services
             {
                 user = await _userRepository.CreateUserAsync(new User 
                 { 
-                    FirstName = request.FirstName, 
-                    LastName = request.LastName, 
+                    Name = request.Name, 
                     Email = request.Email 
                 }, request.ThirdPartyProvider, request.ThirdPartyId);
             }
-            return new UserResponse { Id = user.Id, FirstName = user.FirstName, LastName = user.LastName, Email = user.Email };
+            return new UserResponse { Id = user.Id, Name = user.Name, Email = user.Email };
         }
     }
 }

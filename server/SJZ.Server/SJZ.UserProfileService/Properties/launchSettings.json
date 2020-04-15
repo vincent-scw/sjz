@@ -1,25 +1,6 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:64266",
-      "sslPort": 44312
-    }
-  },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/values",
-      "environmentVariables": {
-        "NEO4J_USERNAME": "neo4j",
-        "NEO4J_URI": "bolt://localhost:7687",
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "NEO4J_PASSWORD": "Welcome1"
-      }
-    },
     "SJZ.UserProfileService": {
       "commandName": "Project",
       "launchBrowser": true,

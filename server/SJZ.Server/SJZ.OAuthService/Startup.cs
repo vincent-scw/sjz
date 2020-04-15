@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Grpc.Core;
+using Grpc.Net.Client;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using SJZ.UserProfileService;
 
 namespace SJZ.OAuthService
 {
@@ -19,6 +23,21 @@ namespace SJZ.OAuthService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>  options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+            services.AddSingleton(sp =>
+            {
+                var channel = GrpcChannel.ForAddress(Environment.GetEnvironmentVariable("UPS_SVC"),
+                    new GrpcChannelOptions
+                    {
+                        LoggerFactory = LoggerFactory.Create(logging =>
+                        {
+                            logging.AddConsole();
+                            logging.SetMinimumLevel(LogLevel.Information);
+                        })
+                    });
+
+                return new UserSvc.UserSvcClient(channel);
+            });
 
             services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)

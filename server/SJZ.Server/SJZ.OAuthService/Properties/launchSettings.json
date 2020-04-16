@@ -9,7 +9,6 @@
         "UPS_SVC": "https://localhost:5001",
         "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb",
         "GITHUB_CLIENTID": "6abec5f4e4d9d5c48f07",
-        "LINKEDIN_REDIRECT": "https://localhost:44394/oauth/linkedin",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "LINKEDIN_CLIENTID": "81y34iwbqrnk79"
       },

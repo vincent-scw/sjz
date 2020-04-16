@@ -4,7 +4,7 @@
     "SJZ.UserProfileService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "health",
       "environmentVariables": {
         "NEO4J_USERNAME": "neo4j",
         "NEO4J_URI": "bolt://localhost:7687",
@@ -16,7 +16,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/values",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/health",
       "publishAllPorts": true,
       "useSSL": true
     }

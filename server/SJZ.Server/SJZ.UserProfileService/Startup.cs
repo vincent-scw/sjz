@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +53,10 @@ namespace SJZ.UserProfileService
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/health", async context =>
+                {
+                    await context.Response.WriteAsync("I am fine.");
+                });
                 endpoints.MapGrpcService<Services.UserService>();
             });
         }

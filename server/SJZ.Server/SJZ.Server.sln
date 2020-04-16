@@ -25,19 +25,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJZ.Common.Tests", "test\SJ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJZ.Images.Repository", "SJZ.Images.Repository\SJZ.Images.Repository.csproj", "{B7FA9801-88D3-49A2-96F5-9C335B99CF07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJZ.Timelines.Tests", "test\SJZ.Timelines.Tests\SJZ.Timelines.Tests.csproj", "{41929083-B8D5-4AB3-83F8-665F5C1218D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJZ.Timelines.Tests", "test\SJZ.Timelines.Tests\SJZ.Timelines.Tests.csproj", "{41929083-B8D5-4AB3-83F8-665F5C1218D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A4E4E1A9-8719-44CE-981E-32DDA139E193}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserProfileSvc", "UserProfileSvc", "{07DFF3DC-9CB9-4E7F-8F7E-1A40FE5D982E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJZ.UserProfileService", "SJZ.UserProfileService\SJZ.UserProfileService.csproj", "{BB5D5493-28E3-4C2F-AFCE-9530485A184D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJZ.UserProfileService", "SJZ.UserProfileService\SJZ.UserProfileService.csproj", "{BB5D5493-28E3-4C2F-AFCE-9530485A184D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJZ.UserProfile.Repository", "SJZ.UserProfile.Repository\SJZ.UserProfile.Repository.csproj", "{3268AD55-1F3D-4BA7-A0CE-84D30624A83D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJZ.UserProfile.Repository", "SJZ.UserProfile.Repository\SJZ.UserProfile.Repository.csproj", "{3268AD55-1F3D-4BA7-A0CE-84D30624A83D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{53E861C2-F7B8-4132-8F4F-0DDDE0400823}"
 	ProjectSection(SolutionItems) = preProject
 		user.proto = user.proto
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC26FA5E-DA17-45AB-953B-9682A793E79E}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global

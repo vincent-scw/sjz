@@ -6,7 +6,7 @@
       "launchUrl": "login.html",
       "environmentVariables": {
         "GITHUB_CLIENTSECRET": "408941d4d7c701efd5a6497e1627e0f8fbd503fc",
-        "UPS_SVC": "http://localhost:5000",
+        "UPS_SVC": "https://localhost:5001",
         "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb",
         "GITHUB_CLIENTID": "6abec5f4e4d9d5c48f07",
         "LINKEDIN_REDIRECT": "https://localhost:44394/oauth/linkedin",

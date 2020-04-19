@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecordService } from '../../services/record.service';
 import { Record } from '../../models/record.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { switchMap } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 import { DatePipe } from '@angular/common';
 
 @Component({

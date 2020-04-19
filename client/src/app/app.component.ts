@@ -1,8 +1,10 @@
+
+import {filter} from 'rxjs/operators';
 import { Component, OnInit, AfterViewChecked, HostListener, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
-import 'rxjs/add/operator/filter';
+
 import { ImageViewerComponent } from './controls/image-viewer.component';
 
 @Component({
@@ -21,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.router.events.filter((event) => event instanceof NavigationEnd)
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
         this.title.setTitle('时间轴');
       });

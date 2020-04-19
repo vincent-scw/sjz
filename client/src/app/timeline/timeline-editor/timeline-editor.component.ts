@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Timeline, ProtectLevel, PeriodGroupLevel } from '../../models/timeline.model';

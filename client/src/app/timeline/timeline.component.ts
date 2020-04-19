@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription ,  BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { TimelineService } from '../services/timeline.service';
 import { Moment, GroupedMoments } from '../models/moment.model';

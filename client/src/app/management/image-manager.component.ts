@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable ,  Subscription } from "rxjs";
 import { ImageService } from "../services/image.service";
 import { Timeline } from "../models/timeline.model";
 import { TimelineService } from "../services/timeline.service";

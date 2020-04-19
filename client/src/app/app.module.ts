@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Http } from '@angular/http';
 
 import { SharedModule } from './shared.module';
 

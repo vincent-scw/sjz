@@ -1,12 +1,11 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { MomentEditorComponent } from './timeline/moment-editor/moment-editor.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
 import { Timeline } from './models/timeline.model';
 import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
 import { RecordEditorComponent } from './record/record-editor/record-editor.component';
 
 @Component({

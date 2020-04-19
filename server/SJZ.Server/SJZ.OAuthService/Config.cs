@@ -11,23 +11,52 @@ namespace SJZ.OAuthService
     {
         public static IEnumerable<ApiResource> Apis => new List<ApiResource>
         {
-            new ApiResource("timeline.api")
+            new ApiResource("timeline.api"),
+            new ApiResource("ups")
         };
 
         public static IEnumerable<Client> Clients => new List<Client>
         {
             new Client
             {
-                ClientId = "spa",
-                AllowedGrantTypes = GrantTypes.Implicit,
+                ClientId = "clientApp",
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
                 ClientSecrets = { new Secret("secret".Sha256()) },
+                AllowedScopes = { "ups" }
+            },
+            new Client
+            {
+                ClientId = "spa",
+                ClientName = "SPA Code Client",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.Code,
+                AccessTokenType = AccessTokenType.Jwt,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
-                    "timeline.api"
-                }
+                    "timeline.api",
+                    "ups"
+                },
+                AllowedCorsOrigins = new List<string>
+                {
+                    "http://localhost:4200"
+                },
+                RequireClientSecret = false,
+                RequirePkce = true,
+                AllowAccessTokensViaBrowser = true,
+                RedirectUris = new List<string>
+                {
+                    "http://localhost:4200",
+                    "http://localhost:4200/silent-renew.html"
+                },
+                PostLogoutRedirectUris = new List<string>
+                {
+                    "http://localhost:4200",
+                    "http://localhost:4200/unauthorized"
+                },
             }
         };
 

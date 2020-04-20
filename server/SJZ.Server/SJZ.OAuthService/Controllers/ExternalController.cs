@@ -108,7 +108,6 @@ namespace SJZ.OAuthService.Controllers
             ProcessLoginCallbackForOidc(result, additionalLocalClaims, localSignInProps);
 
             // issue authentication cookie for user
-            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name));
             await HttpContext.SignInAsync(
                 user.Id, user.Name, provider, localSignInProps, additionalLocalClaims.ToArray()
             );
@@ -119,8 +118,18 @@ namespace SJZ.OAuthService.Controllers
             var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
             // check if external login is in the context of an OIDC request
-            // var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            //if (context != null)
+            //{
+            //    if (await _clientStore.IsPkceClientAsync(context.ClientId))
+            //    {
+            //        // if the client is PKCE then we assume it's native, so this change in how to
+            //        // return the response is for better UX for the end user.
+            //        return this.LoadingPage("Redirect", returnUrl);
+            //    }
+            //}
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name, true, context?.ClientId));
+
             return Redirect(returnUrl);
         }
 

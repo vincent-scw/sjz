@@ -22,7 +22,7 @@ namespace SJZ.OAuthService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>  options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddSingleton(sp =>
             {
@@ -39,7 +39,13 @@ namespace SJZ.OAuthService
                 return new UserSvc.UserSvcClient(channel);
             });
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryIdentityResources(Config.IdentityResources)

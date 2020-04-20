@@ -5,7 +5,7 @@ import { Timeline } from './models/timeline.model';
 import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { RecordEditorComponent } from './record/record-editor/record-editor.component';
 
 @Component({

@@ -3,7 +3,7 @@ import {filter} from 'rxjs/operators';
 import { Component, OnInit, AfterViewChecked, HostListener, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ImageViewerComponent } from './controls/image-viewer.component';
 

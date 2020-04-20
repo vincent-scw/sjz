@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TimelineService } from './timeline.service';
 import { ProtectLevel } from '../models/timeline.model';
 import { AccessKeyDialogComponent } from '../timeline/access-key-dialog/access-key-dialog.component';

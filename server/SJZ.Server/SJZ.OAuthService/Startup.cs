@@ -47,7 +47,7 @@ namespace SJZ.OAuthService
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
                 options.UserInteraction.LoginUrl = "/login.html";
-                options.UserInteraction.LogoutUrl = "/logout.html";
+                options.UserInteraction.LogoutUrl = "/Account/Signout";
                 options.UserInteraction.ConsentUrl = "/Consent";
             })
                 .AddInMemoryClients(Config.Clients)

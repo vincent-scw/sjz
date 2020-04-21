@@ -19,6 +19,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	activeTopicKey: string;
 	burgerActive: boolean;
 	years: number[] = new Array<number>();
+	private isAuthorizedSubscription: Subscription = new Subscription();
+	public isAuthorized = false;
 
 	private timelineSub: Subscription;
 	private editableSub: Subscription;
@@ -26,7 +28,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	constructor(private timelineService: TimelineService,
 		private authSvc: AuthService,
 		private dialog: MatDialog) {
-
+		this.isAuthorizedSubscription = authSvc.isAuthorized$.subscribe(
+			(isAuthorized: boolean) => {
+				this.isAuthorized = isAuthorized;
+			});
+		
 		this.getYears();
 	}
 
@@ -40,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		if (!!this.timelineSub) { this.timelineSub.unsubscribe(); }
 		if (!!this.editableSub) { this.editableSub.unsubscribe(); }
+		if (!!this.isAuthorizedSubscription) { this.isAuthorizedSubscription.unsubscribe(); }
 	}
 
 	async onAddNewRecordClicked() {

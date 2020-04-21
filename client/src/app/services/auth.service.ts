@@ -15,11 +15,15 @@ export class AuthService implements OnDestroy {
   isAuthorized = false;
   private isAuthorizedSubscription: Subscription = new Subscription;
 
+  userData: { name: string };
+  private userDataSubscription: Subscription;
+
   constructor(private oidcSecurityService: OidcSecurityService,
     private router: Router) { }
 
   ngOnDestroy(): void {
     if (this.isAuthorizedSubscription) { this.isAuthorizedSubscription.unsubscribe(); }
+    if (this.userDataSubscription) { this.userDataSubscription.unsubscribe(); }
   }
 
   public initAuth() {
@@ -66,6 +70,9 @@ export class AuthService implements OnDestroy {
     this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe((isAuthorized => {
       this.isAuthorized = isAuthorized;
     }));
+    this.userDataSubscription = this.oidcSecurityService.getUserData<any>().subscribe(userData => {
+      console.log(userData)
+    });
 
     this.oidcSecurityService.onAuthorizationResult.subscribe(
       (authorizationResult: AuthorizationResult) => {
@@ -112,4 +119,6 @@ export class AuthService implements OnDestroy {
     const token = this.oidcSecurityService.getToken();
     return token;
   }
+
+
 }

@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler)
     : Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    if (this.authSvc.isAccessTokenValid()) {
+    if (this.authSvc.isAuthorized) {
       const jwtReq = req.clone({ headers: req.headers.set('Authorization', `Bearer ${this.authSvc.accessToken}`) });
       return next.handle(jwtReq);
     }

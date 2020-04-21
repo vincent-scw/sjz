@@ -58,7 +58,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.editableSub = this.authSvc.isLoggedIn$.subscribe(l => this.editable = l);
+    this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
   }
 
   ngOnDestroy() {

@@ -5,9 +5,6 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-login',
   template: `
     <div>
-      <a (click)="linkedInLogin()">
-        <img src="/assets/linkedin/Sign-In-Large-Default.png" />
-      </a>
       <a (click)="logout()">Logout
       </a>
     </div>
@@ -16,10 +13,6 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
   constructor(private authService: AuthService) {
     
-  }
-
-  linkedInLogin() {
-    AuthService.getProvider('linkedin', this.authService).signIn();
   }
 
   logout() {

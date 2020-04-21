@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AuthModule, OidcSecurityService } from 'angular-auth-oidc-client';
 
 import { SharedModule } from './shared.module';
 
@@ -15,7 +18,6 @@ import { AccessKeyDialogComponent } from './timeline/access-key-dialog/access-ke
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { TimelineService } from './services/timeline.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ImageService } from './services/image.service';
 import { FooterComponent } from './footer.component';
@@ -32,6 +34,7 @@ import { RecordService } from './services/record.service';
     PageNotFoundComponent
   ],
   imports: [
+    AuthModule.forRoot(),
     SharedModule,
     TimelineModule,
     RecordModule,
@@ -42,6 +45,7 @@ import { RecordService } from './services/record.service';
   providers: [
     AuthService,
     AuthGuard,
+    OidcSecurityService,
     TimelineService,
     RecordService,
     ImageService,

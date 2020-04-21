@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  apiServerUrl: 'http://localhost:55962',
+  apiServerUrl: 'https://sjz.azurewebsites.net',
+  authUrl: 'http://localhost:5011',
   state: 'BCEeFWf45A53sdfaef434',
   linkedIn: {
     clientId: '81x1oimxi0mlzy',

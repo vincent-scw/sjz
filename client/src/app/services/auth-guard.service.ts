@@ -13,11 +13,11 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  async checkLogin(url: string): Promise<boolean> {
-    if (this.authService.isLoggedIn$) { return true; }
+  // async checkLogin(url: string): Promise<boolean> {
+  //   if (this.authService.isAuthorized$) { return true; }
 
-    this.authService.redirectUrl = url;
-    this.router.navigate(['']);
-    return false;
-  }
+  //   this.authService.redirectUrl = url;
+  //   this.router.navigate(['']);
+  //   return false;
+  // }
 }

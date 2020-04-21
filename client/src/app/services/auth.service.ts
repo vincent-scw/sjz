@@ -1,82 +1,115 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  OidcSecurityService, OpenIdConfiguration, AuthWellKnownEndpoints,
+  AuthorizationResult, AuthorizationState
+} from 'angular-auth-oidc-client';
 import { Observable } from 'rxjs/observable';
-import { BehaviorSubject } from 'rxjs';
-import { AuthProviderBase } from './auth-provider-base';
-import { LinkedInAuthProvider } from './linkedin-auth.provider';
+import { Subscription } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { UserWithToken, User } from '../models/user.model';
 import { Router } from '@angular/router';
 
-const AccessToken_CacheKey = 'access_token';
-const User_CacheKey = 'user_info';
-
 @Injectable()
-export class AuthService {
-  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  redirectUrl: string;
+export class AuthService implements OnDestroy {
+  isAuthorized = false;
+  private isAuthorizedSubscription: Subscription = new Subscription;
 
-  public static getProvider(accountType: string, authService: AuthService)
-    : AuthProviderBase {
-    switch (accountType) {
-      case 'linkedin':
-        return new LinkedInAuthProvider(authService);
+  constructor(private oidcSecurityService: OidcSecurityService,
+    private router: Router) { }
+
+  ngOnDestroy(): void {
+    if (this.isAuthorizedSubscription) { this.isAuthorizedSubscription.unsubscribe(); }
+  }
+
+  public initAuth() {
+    const authUrl = environment.authUrl
+    const openIdConfiguration: OpenIdConfiguration = {
+      stsServer: authUrl,
+      redirect_url: '/callback',
+      client_id: 'spa',
+      response_type: 'code',
+      scope: 'openid profile timeline.api ups',
+      post_login_route: '/',
+      forbidden_route: '/forbidden',
+      unauthorized_route: '/unauthorized',
+      silent_renew: true,
+      silent_renew_url: '/silent-renew.html',
+      history_cleanup_off: true,
+      auto_userinfo: true,
+      log_console_warning_active: true,
+      log_console_debug_active: true,
+      max_id_token_iat_offset_allowed_in_seconds: 10
+    };
+
+    const authWellKnownEndpoints: AuthWellKnownEndpoints = {
+      issuer: authUrl,
+      jwks_uri: authUrl + '/.well-know/openid-configuration/jwks',
+      authorization_endpoint: authUrl + '/connect/authorize',
+      token_endpoint: authUrl + '/connect/token',
+      userinfo_endpoint: authUrl + '/connect/userinfo',
+      end_session_endpoint: authUrl + '/connect/endsession',
+      check_session_iframe: authUrl + '/connect/checksession',
+      revocation_endpoint: authUrl + '/connect/revocation',
+      introspection_endpoint: authUrl + '/connect/introspect'
+    };
+
+    this.oidcSecurityService.setupModule(openIdConfiguration, authWellKnownEndpoints);
+
+    if (this.oidcSecurityService.moduleSetup) {
+      this.doCallbackLogicIfRequired();
+    } else {
+      this.oidcSecurityService.onModuleSetup.subscribe(() => {
+        this.doCallbackLogicIfRequired();
+      });
+    }
+    this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe((isAuthorized => {
+      this.isAuthorized = isAuthorized;
+    }));
+
+    this.oidcSecurityService.onAuthorizationResult.subscribe(
+      (authorizationResult: AuthorizationResult) => {
+        this.onAuthorizationResultComplete(authorizationResult);
+      });
+  }
+
+  private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
+
+    console.log('Auth result received AuthorizationState:'
+      + authorizationResult.authorizationState
+      + ' validationResult:' + authorizationResult.validationResult);
+
+    if (authorizationResult.authorizationState === AuthorizationState.unauthorized) {
+      if (window.parent) {
+        // sent from the child iframe, for example the silent renew
+        this.router.navigate(['/unauthorized']);
+      } else {
+        window.location.href = '/unauthorized';
+      }
     }
   }
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.isLoggedIn$.next(this.isAccessTokenValid());
-    //this.isLoggedIn$.next(true);
+  private doCallbackLogicIfRequired() {
+
+    this.oidcSecurityService.authorizedCallbackWithCode(window.location.toString());
+  }
+
+  get isAuthorized$(): Observable<boolean> {
+    return this.oidcSecurityService.getIsAuthorized();
+  }
+
+  login() {
+    console.log('start login');
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    console.log('start logoff');
+    this.oidcSecurityService.logoff();
   }
 
   get accessToken(): string {
-    return localStorage.getItem(AccessToken_CacheKey);
-  }
-
-  set accessToken(token: string) {
-    localStorage.setItem(AccessToken_CacheKey, token);
-  }
-
-  get user(): User {
-    const userInfo = localStorage.getItem(User_CacheKey);
-    return userInfo == null ? null : JSON.parse(userInfo);
-  }
-
-  // After updating user info, allow store user, so make it public
-  set user(value: User) {
-    localStorage.setItem(User_CacheKey, JSON.stringify(value));
-    // this.user.next(user);
-  }
-
-  login(): Observable<boolean> {
-    return null;
-  }
-
-  logout(): void {
-    localStorage.removeItem(AccessToken_CacheKey);
-    localStorage.removeItem(User_CacheKey);
-    this.isLoggedIn$.next(false);
-    this.router.navigate(['']);
-  }
-
-  public async fetchUserInfo(type: string, code: string) {
-    const userWithToken = await this.http.post<UserWithToken>(
-      `${environment.apiServerUrl}/api/Auth`, { accountType: type, code: code }).toPromise();
-    
-    if (userWithToken != null && userWithToken.user != null) {
-      this.user = userWithToken.user;
-      this.accessToken = userWithToken.accessToken;
-      this.isLoggedIn$.next(true);
-    }
-  }
-
-  public isAccessTokenValid(): boolean {
-    const accessToken = this.accessToken;
-    if (accessToken == null) {
-      return false;
-    } else {
-      return true;
-    }
+    const token = this.oidcSecurityService.getToken();
+    return token;
   }
 }

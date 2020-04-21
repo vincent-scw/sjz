@@ -26,15 +26,15 @@ export class AuthService implements OnDestroy {
     const authUrl = environment.authUrl
     const openIdConfiguration: OpenIdConfiguration = {
       stsServer: authUrl,
-      redirect_url: '/callback',
+      redirect_url: 'http://localhost:4200',
       client_id: 'spa',
       response_type: 'code',
-      scope: 'openid profile timeline.api ups',
+      scope: 'openid profile timelineapi ups',
       post_login_route: '/',
       forbidden_route: '/forbidden',
       unauthorized_route: '/unauthorized',
       silent_renew: true,
-      silent_renew_url: '/silent-renew.html',
+      silent_renew_url: 'http://localhost:4200/silent-renew.html',
       history_cleanup_off: true,
       auto_userinfo: true,
       log_console_warning_active: true,
@@ -44,7 +44,7 @@ export class AuthService implements OnDestroy {
 
     const authWellKnownEndpoints: AuthWellKnownEndpoints = {
       issuer: authUrl,
-      jwks_uri: authUrl + '/.well-know/openid-configuration/jwks',
+      jwks_uri: authUrl + '/.well-known/openid-configuration/jwks',
       authorization_endpoint: authUrl + '/connect/authorize',
       token_endpoint: authUrl + '/connect/token',
       userinfo_endpoint: authUrl + '/connect/userinfo',

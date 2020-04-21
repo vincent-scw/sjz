@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SJZ.UserProfileService;
 
 namespace SJZ.OAuthService
@@ -45,6 +46,9 @@ namespace SJZ.OAuthService
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+                options.UserInteraction.LoginUrl = "/login.html";
+                options.UserInteraction.LogoutUrl = "/logout.html";
+                options.UserInteraction.ConsentUrl = "/Consent";
             })
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiResources(Config.Apis)

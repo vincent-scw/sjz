@@ -11,7 +11,7 @@ namespace SJZ.OAuthService
     {
         public static IEnumerable<ApiResource> Apis => new List<ApiResource>
         {
-            new ApiResource("timeline.api"),
+            new ApiResource("timelineapi"),
             new ApiResource("ups")
         };
 
@@ -37,7 +37,7 @@ namespace SJZ.OAuthService
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
-                    "timeline.api",
+                    "timelineapi",
                     "ups"
                 },
                 AllowedCorsOrigins = new List<string>

@@ -64,16 +64,6 @@ namespace SJZ.OAuthService
 
                     options.CallbackPath = new PathString("/oauth/github");
                     options.SaveTokens = true;
-                    options.Events = new OAuthEvents()
-                    {
-                        OnRemoteFailure = loginFailureHandler =>
-                        {
-                            var authProperties = options.StateDataFormat.Unprotect(loginFailureHandler.Request.Query["state"]);
-                            loginFailureHandler.Response.Redirect("/login");
-                            loginFailureHandler.HandleResponse();
-                            return Task.FromResult(0);
-                        }
-                    };
                 })
                 .AddLinkedIn(options =>
                 {
@@ -83,16 +73,6 @@ namespace SJZ.OAuthService
 
                     options.CallbackPath = new PathString("/oauth/linkedin");
                     options.SaveTokens = true;
-                    options.Events = new OAuthEvents()
-                    {
-                        OnRemoteFailure = loginFailureHandler =>
-                        {
-                            var authProperties = options.StateDataFormat.Unprotect(loginFailureHandler.Request.Query["state"]);
-                            loginFailureHandler.Response.Redirect("/login");
-                            loginFailureHandler.HandleResponse();
-                            return Task.FromResult(0);
-                        }
-                    };
                 });
 
             services.AddSwaggerGen(options =>

@@ -112,35 +112,15 @@ namespace SJZ.OAuthService.Controllers
                 user.Id, user.Name, provider, localSignInProps, additionalLocalClaims.ToArray()
             );
 
-            // delete temporary cookie used during external authentication
-            await HttpContext.SignOutAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name));
 
-            var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
+            var returnUrl = result.Properties.Items["returnUrl"];
+            if (_interaction.IsValidReturnUrl(returnUrl) || Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
 
-            // check if external login is in the context of an OIDC request
-            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            //if (context != null)
-            //{
-            //    if (await _clientStore.IsPkceClientAsync(context.ClientId))
-            //    {
-            //        // if the client is PKCE then we assume it's native, so this change in how to
-            //        // return the response is for better UX for the end user.
-            //        return this.LoadingPage("Redirect", returnUrl);
-            //    }
-            //}
-            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name, true, context?.ClientId));
-
-            return Redirect(returnUrl);
-        }
-
-        [HttpGet("signout")]
-        [HttpPost("signout")]
-        public async Task<IActionResult> Signout()
-        {
-            var result = await HttpContext.AuthenticateAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
-            var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
-            return SignOut(new AuthenticationProperties { RedirectUri = returnUrl },
-               IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            return Redirect("~/");
         }
 
         private void ProcessLoginCallbackForOidc(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)

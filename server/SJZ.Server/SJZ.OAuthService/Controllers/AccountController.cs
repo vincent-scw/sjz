@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using IdentityModel;
 using IdentityServer4.Events;
+using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
@@ -41,13 +42,20 @@ namespace SJZ.OAuthService.Controllers
 
         [HttpGet("Signout")]
         [HttpPost("Signout")]
-        public async Task<IActionResult> Signout()
+        public async Task<IActionResult> Signout([FromQuery] string logoutId)
         {
-            var result = await HttpContext.AuthenticateAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
-            var returnUrl = result?.Properties?.Items["returnUrl"] ?? "~/";
+            var logout = await _interaction.GetLogoutContextAsync(logoutId);
 
-            return SignOut(new AuthenticationProperties { RedirectUri = returnUrl },
-               IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            if (User?.Identity.IsAuthenticated == true)
+            {
+                // delete local authentication cookie
+                await HttpContext.SignOutAsync();
+
+                // raise the logout event
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            }
+
+            return SignOut(new AuthenticationProperties { RedirectUri = logout.PostLogoutRedirectUri }, IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
         }
     }
 }

@@ -37,6 +37,7 @@ export class AuthService implements OnDestroy {
       post_login_route: '/',
       forbidden_route: '/forbidden',
       unauthorized_route: '/unauthorized',
+      post_logout_redirect_uri: 'http://localhost:4200',
       silent_renew: true,
       silent_renew_url: 'http://localhost:4200/silent-renew.html',
       history_cleanup_off: true,

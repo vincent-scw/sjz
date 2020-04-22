@@ -61,16 +61,19 @@
 			</div>
 
 			<div class="navbar-end">
-				<a class="navbar-item" href="https://github.com/vincent-scw/timelines">
-					<span class="icon">
-						<i class="fab fa-lg fa-github"></i>
-					</span>
-				</a>
-				<a class="navbar-item" (click)="login()">
-					<span class="icon">
-						<i class="fas fa-lg fa-sign-in-alt"></i>
-					</span>
-				</a>
+				<button class="navbar-item button is-primary is-inverted is-outlined" *ngIf="isAuthorized === false"
+					(click)="login()">Sign In</button>
+				<div class="navbar-item has-dropdown" [class.is-active]="accountActive" *ngIf="isAuthorized === true">
+					<a class="navbar-link" (click)="accountActive = !accountActive">
+						Hi,
+					</a>
+
+					<div class="navbar-dropdown is-right">
+						<a class="navbar-item" (click)="logout()">
+							Sign Out
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

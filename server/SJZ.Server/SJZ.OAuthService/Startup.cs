@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
 using IdentityServer4;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace SJZ.OAuthService
                 return new UserSvc.UserSvcClient(channel);
             });
 
+            services.AddTransient<IProfileService, ProfileService>();
+
             services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -53,6 +56,7 @@ namespace SJZ.OAuthService
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential();
 
             services.AddAuthentication()

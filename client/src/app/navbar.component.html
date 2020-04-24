@@ -63,9 +63,12 @@
 			<div class="navbar-end">
 				<button class="navbar-item button is-primary is-inverted is-outlined" *ngIf="isAuthorized === false"
 					(click)="login()">Sign In</button>
-				<div class="navbar-item has-dropdown" [class.is-active]="accountActive" *ngIf="isAuthorized === true">
-					<a class="navbar-link" (click)="accountActive = !accountActive">
-						Hi,
+				<div class="navbar-item has-dropdown" [class.is-active]="accountActive" 
+					*ngIf="isAuthorized === true"
+					(mouseleave)="accountActive = false"
+					(mouseenter)="accountActive = true">
+					<a class="navbar-link">
+						Hi, {{userData.name}}
 					</a>
 
 					<div class="navbar-dropdown is-right">

@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { MomentEditorComponent } from './timeline/moment-editor/moment-editor.component';
-import { Observable ,  Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Timeline } from './models/timeline.model';
 import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
@@ -19,6 +19,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	activeTopicKey: string;
 	burgerActive: boolean;
 	years: number[] = new Array<number>();
+
+	public userData: { sub: string, name: string } = { sub: '', name: '' };
+	private userDataSubscription: Subscription;
+
 	private isAuthorizedSubscription: Subscription = new Subscription();
 	public isAuthorized = false;
 
@@ -32,7 +36,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 			(isAuthorized: boolean) => {
 				this.isAuthorized = isAuthorized;
 			});
-		
+
+		this.userDataSubscription = authSvc.userData$.subscribe(userData => {
+			this.userData = userData;
+		});
+
 		this.getYears();
 	}
 
@@ -47,6 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		if (!!this.timelineSub) { this.timelineSub.unsubscribe(); }
 		if (!!this.editableSub) { this.editableSub.unsubscribe(); }
 		if (!!this.isAuthorizedSubscription) { this.isAuthorizedSubscription.unsubscribe(); }
+		if (!!this.userDataSubscription) { this.userDataSubscription.unsubscribe(); }
 	}
 
 	async onAddNewRecordClicked() {

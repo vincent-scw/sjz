@@ -55,7 +55,7 @@ namespace SJZ.OAuthService.Controllers
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
             }
 
-            return SignOut(new AuthenticationProperties { RedirectUri = logout.PostLogoutRedirectUri }, IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            return new RedirectResult(logout.PostLogoutRedirectUri);
         }
     }
 }

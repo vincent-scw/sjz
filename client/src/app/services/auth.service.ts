@@ -7,8 +7,8 @@ import { Observable } from 'rxjs/observable';
 import { Subscription } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { UserWithToken, User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class AuthService implements OnDestroy {
@@ -36,6 +36,7 @@ export class AuthService implements OnDestroy {
       post_logout_redirect_uri: 'http://localhost:4200',
       silent_renew: true,
       silent_renew_url: 'http://localhost:4200/silent-renew.html',
+      silent_renew_offset_in_seconds: 60,
       history_cleanup_off: true,
       auto_userinfo: true,
       log_console_warning_active: true,
@@ -75,11 +76,6 @@ export class AuthService implements OnDestroy {
   }
 
   private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
-
-    console.log('Auth result received AuthorizationState:'
-      + authorizationResult.authorizationState
-      + ' validationResult:' + authorizationResult.validationResult);
-
     if (authorizationResult.authorizationState === AuthorizationState.unauthorized) {
       if (window.parent) {
         // sent from the child iframe, for example the silent renew
@@ -99,7 +95,7 @@ export class AuthService implements OnDestroy {
     return this.oidcSecurityService.getIsAuthorized();
   }
 
-  get userData$(): Observable<{ sub: string, name: string }>{
+  get userData$(): Observable<User>{
     return this.oidcSecurityService.getUserData<{ sub: string, name: string }>();
   }
 

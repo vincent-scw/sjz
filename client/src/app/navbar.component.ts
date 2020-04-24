@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RecordEditorComponent } from './record/record-editor/record-editor.component';
+import { User } from './models/user.model';
 
 @Component({
 	selector: 'app-navbar',
@@ -20,7 +21,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	burgerActive: boolean;
 	years: number[] = new Array<number>();
 
-	public userData: { sub: string, name: string } = { sub: '', name: '' };
+	public userData: User = { sub: '', name: '' };
 	private userDataSubscription: Subscription;
 
 	private isAuthorizedSubscription: Subscription = new Subscription();

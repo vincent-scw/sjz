@@ -40,17 +40,19 @@ namespace SJZ.OAuthService.Controllers
         }
 
         [HttpGet("{provider}")]
-        public IActionResult Challenge(string provider, [FromQuery]string returnUrl)
+        public IActionResult Challenge(string provider)
         {
             try
             {
+                var returnUrl = HttpContext.Request.QueryString.Value;
+                returnUrl = returnUrl.Substring(11); // Remove ?ReturnUrl=
                 // start challenge and roundtrip the return URL and scheme 
                 var props = new AuthenticationProperties
                 {
                     RedirectUri = Url.Action(nameof(Callback)),
                     Items =
                     {
-                        { "returnUrl", returnUrl },
+                        { "returnUrl", System.Web.HttpUtility.UrlDecode(returnUrl) },
                         { "scheme", provider },
                     }
                 };
@@ -114,13 +116,9 @@ namespace SJZ.OAuthService.Controllers
 
             await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name));
 
-            var returnUrl = result.Properties.Items["returnUrl"];
-            if (_interaction.IsValidReturnUrl(returnUrl) || Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
+            var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
-            return Redirect("~/");
+            return Redirect(returnUrl);
         }
 
         private void ProcessLoginCallbackForOidc(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)

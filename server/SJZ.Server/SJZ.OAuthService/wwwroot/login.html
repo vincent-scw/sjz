@@ -13,34 +13,13 @@
     <div class="login">
         <img src="./assets/logo.png" class="logo" alt="logo" />
         <form>
-            <div class="field">
-                <label class="label">Username</label>
-                <div class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Username" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                    </span>
-                </div>
-
-                <!-- <p className="help is-danger">{this.state.errorMsg}</p> -->
-            </div>
-            <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                    <input class="input" type="password" placeholder="Password" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                </div>
-
-                <!-- <p className="help is-danger">{this.state.errorMsg}</p> -->
-            </div>
-            <input class="button full-width" type="submit" value="Login" onclick="alert('Please sign in with GitHub.')" />
             <div class="openid">
                 <a id="github-button" class="btn btn-block btn-social btn-github" onclick="callAuthProvider('GitHub')">
-                    <i class="fab fa-github"></i> Sign in with Github
+                    <i class="fab fa-github"></i> Sign in with GitHub
                 </a>
-                <!--<div class="linkedin" onclick="linkedinAuth()"/>-->
+                <a id="github-button" class="btn btn-block btn-social btn-linkedin" onclick="callAuthProvider('LinkedIn')">
+                    <i class="fab fa-linkedin"></i> Sign in with LinkedIn
+                </a>
             </div>
         </form>
     </div>

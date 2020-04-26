@@ -18,6 +18,7 @@ services:
     volumes:
       - ~/.aspnet/https:/https:ro
 
+      
   imagesvc:
     build:
       context: .

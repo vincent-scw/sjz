@@ -45,7 +45,7 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> CreateAsnyc([FromBody]CreateTimelineCommand command)
+        public async Task<IActionResult> CreateAsnyc([FromBody]MergeTimelineCommand command)
         {
             var result = await _mediator.Send(command);
             if (string.IsNullOrEmpty(result))

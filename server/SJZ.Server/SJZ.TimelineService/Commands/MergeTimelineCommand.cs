@@ -9,14 +9,18 @@ using System.Threading.Tasks;
 namespace SJZ.TimelineService.Commands
 {
     [DataContract]
-    public class CreateTimelineCommand : IRequest<string>
+    public class MergeTimelineCommand : IRequest<string>
     {
+        [DataMember]
+        public string Id { get; set; }
         [DataMember]
         public string UserId { get; set; }
         [DataMember]
         public string Username { get; set; }
         [DataMember]
         public string Title { get; set; }
+        [DataMember]
+        public string Description { get; set; }
         [DataMember]
         public DateTimeOffset StartTime { get; set; }
         [DataMember]

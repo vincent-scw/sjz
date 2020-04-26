@@ -10,19 +10,21 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
     {
         public string Username { get; private set; }
         public string Title { get; private set; }
+        public string Description { get; private set; }
         public DateTimeOffset StartTime { get; private set; }
         public bool IsCompleted { get; private set; }
         public PeriodLevel PeriodLevel { get; private set; }
 
-        private List<TimelineItem> _items;
-        public IReadOnlyCollection<TimelineItem> Items => _items;
+        private List<Record> _items;
+        public IReadOnlyCollection<Record> Items => _items;
 
         protected Timeline() 
         {
-            _items = new List<TimelineItem>();
+            _items = new List<Record>();
         }
 
         public Timeline(string title, 
+            string description,
             DateTimeOffset startTime,
             bool isCompleted,
             PeriodLevel periodLevel,
@@ -33,6 +35,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             Id = StringObjectIdGenerator.Instance.GenerateId("timelines", this).ToString();
 
             Title = title;
+            Description = description;
             StartTime = startTime;
             IsCompleted = isCompleted;
             PeriodLevel = periodLevel;
@@ -42,12 +45,32 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             CreatedDate = DateTimeOffset.Now;
         }
 
-        public void AddItem(TimelineItem item)
+        public void UpdateContent(string title, 
+            string description, 
+            DateTimeOffset startTime,
+            bool isCompleted,
+            PeriodLevel periodLevel,
+            string userid)
+        {
+            if (userid != CreatedBy)
+            {
+                throw new DomainException("AccessDenied");
+            }
+
+            Title = title;
+            Description = description;
+            StartTime = startTime;
+            IsCompleted = isCompleted;
+            PeriodLevel = periodLevel;
+            UpdatedBy = userid;
+        }
+
+        public void AddItem(Record item)
         {
             _items.Add(item);
         }
 
-        public void AddItems(List<TimelineItem> items)
+        public void AddItems(List<Record> items)
         {
             _items.AddRange(items);
         }

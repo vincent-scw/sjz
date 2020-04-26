@@ -15,5 +15,7 @@ namespace SJZ.TimelineService.Models
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
         public DateTimeOffset LastChanged { get; set; }
+
+        public IEnumerable<RecordDto> Records { get; set; }
     }
 }

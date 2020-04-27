@@ -1,5 +1,5 @@
 import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "../services/auth-guard.service";
+import { AuthGuard } from "../../services/auth-guard.service";
 import { MomentEditorComponent } from "./moment-editor/moment-editor.component";
 import { MomentViewComponent } from "./moment-view/moment-view.component";
 import { NgModule } from "@angular/core";

@@ -16,7 +16,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 
         public Record(string timelineId, string content, DateTimeOffset date, string userId)
         {
-            Id = StringObjectIdGenerator.Instance.GenerateId("records", this).ToString();
+            Id = Id = shortid.ShortId.Generate(true, false, 12);
 
             TimelineId = timelineId;
             Content = content;

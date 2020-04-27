@@ -5,11 +5,11 @@ import { Title } from '@angular/platform-browser';
 import { Observable ,  Subscription ,  BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { TimelineService } from '../services/timeline.service';
-import { Record, GroupedRecords } from '../models/record.model';
+import { TimelineService } from '../../services/timeline.service';
+import { Record, GroupedRecords } from '../../models/record.model';
 import { RecordEditorComponent } from './record-editor/record-editor.component';
-import { Timeline, PeriodGroupLevel } from '../models/timeline.model';
-import { AuthService } from '../services/auth.service';
+import { Timeline, PeriodGroupLevel } from '../../models/timeline.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-timeline',

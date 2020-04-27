@@ -5,7 +5,7 @@ import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MomentEditorComponent } from './moment/moment-editor/moment-editor.component';
+import { MomentEditorComponent } from './areas/moment/moment-editor/moment-editor.component';
 import { User } from './models/user.model';
 
 @Component({

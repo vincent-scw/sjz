@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Moment } from '../../models/moment.model';
-import { MomentService } from '../../services/moment.service';
-import { ImageService } from '../../services/image.service';
+import { Moment } from '../../../models/moment.model';
+import { MomentService } from '../../../services/moment.service';
+import { ImageService } from '../../../services/image.service';
 
 @Component({
   selector: 'app-moment-editor',

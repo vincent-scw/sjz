@@ -3,8 +3,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { Timeline, ProtectLevel, PeriodGroupLevel } from '../../models/timeline.model';
-import { TimelineService } from '../../services/timeline.service';
+import { Timeline, ProtectLevel, PeriodGroupLevel } from '../../../models/timeline.model';
+import { TimelineService } from '../../../services/timeline.service';
 
 
 @Component({

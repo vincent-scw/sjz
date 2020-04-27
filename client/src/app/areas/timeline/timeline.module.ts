@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared.module';
+import { SharedModule } from '../../shared.module';
 import { TimelineRoutingModule } from './timeline-routing.module';
 
 import { TimelineComponent } from '../timeline/timeline.component';
 import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { TimelineEditorComponent } from './timeline-editor/timeline-editor.component';
-import { TimelineAccessGuard } from '../services/timeline-access-guard.service';
+import { TimelineAccessGuard } from '../../services/timeline-access-guard.service';
 
 @NgModule({
   imports: [

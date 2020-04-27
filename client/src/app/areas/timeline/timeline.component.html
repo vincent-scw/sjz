@@ -51,24 +51,24 @@
   </div>
   <div *ngIf="loaded">
     <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1"
-      *ngFor="let mGroup of groupedMoments">
+      *ngFor="let mGroup of groupedRecords">
       <header class="timeline-header">
         <span class="tag is-primary">{{mGroup.group}}</span>
       </header>
-      <div class="timeline-item" *ngFor="let moment of mGroup.moments">
+      <div class="timeline-item" *ngFor="let record of mGroup.records">
         <div class="timeline-marker"></div>
         <div class="timeline-content">
-          <p class="heading">{{moment.recordDate | date: 'MMMM dd'}}</p>
-          <p [innerHTML]="moment.content"></p>
+          <p class="heading">{{record.date | date: 'MMMM dd'}}</p>
+          <p [innerHTML]="record.content"></p>
           <div class="level is-mobile" *ngIf="editable">
             <div class="level-left"></div>
             <div class="level-right">
-              <a matTooltip="Edit" class="level-item" (click)="onEdit(moment)">
+              <a matTooltip="Edit" class="level-item" (click)="onEdit(record)">
                 <span class="icon is-small">
                   <i class="fa fa-edit"></i>
                 </span>
               </a>
-              <a matTooltip="Delete" class="level-item" (click)="onDelete(moment)">
+              <a matTooltip="Delete" class="level-item" (click)="onDelete(record)">
                 <span class="icon is-small">
                   <i class="fa fa-trash-alt"></i>
                 </span>
@@ -80,7 +80,7 @@
     </div>
     <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1">
       <div class="timeline-header">
-        <span class="tag is-medium is-primary">{{timeline?.isCompleted ? 'End': '待续...'}}</span>
+        <span class="tag is-medium is-primary">{{timeline?.isCompleted ? 'End': 'To be continued...'}}</span>
       </div>
     </div>
   </div>

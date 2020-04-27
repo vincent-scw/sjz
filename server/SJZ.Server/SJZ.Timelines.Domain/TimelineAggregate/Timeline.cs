@@ -30,7 +30,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             string username)
             : this()
         {
-            Id = StringObjectIdGenerator.Instance.GenerateId("timelines", this).ToString();
+            Id = shortid.ShortId.Generate(true, false, 12);
 
             Title = title;
             Description = description;

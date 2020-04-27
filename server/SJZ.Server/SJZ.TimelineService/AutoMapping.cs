@@ -18,6 +18,8 @@ namespace SJZ.TimelineService
                 .ForMember(t => t.OwnerId, o => o.MapFrom(s => s.CreatedBy))
                 .ForMember(t => t.OwnerName, o => o.MapFrom(s => s.Username))
                 .ForMember(t => t.LastChanged, o => o.MapFrom(s => s.UpdatedDate ?? s.CreatedDate));
+
+            CreateMap<Record, RecordDto>();
         }
     }
 }

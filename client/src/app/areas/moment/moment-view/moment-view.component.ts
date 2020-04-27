@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MomentService } from '../../services/moment.service';
-import { Moment } from '../../models/moment.model';
+import { MomentService } from '../../../services/moment.service';
+import { Moment } from '../../../models/moment.model';
 import { Observable ,  Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';

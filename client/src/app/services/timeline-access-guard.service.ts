@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { MatDialog } from '@angular/material/dialog';
 import { TimelineService } from './timeline.service';
 import { ProtectLevel } from '../models/timeline.model';
-import { AccessKeyDialogComponent } from '../timeline/access-key-dialog/access-key-dialog.component';
+import { AccessKeyDialogComponent } from '../areas/timeline/access-key-dialog/access-key-dialog.component';
 
 @Injectable()
 export class TimelineAccessGuard implements CanActivate {

@@ -6,15 +6,15 @@ import { AuthModule, OidcSecurityService } from 'angular-auth-oidc-client';
 import { SharedModule } from './shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { TimelineModule } from './timeline/timeline.module';
-import { AccountModule } from './account/account.module';
-import { MomentModule } from './moment/moment.module';
+import { TimelineModule } from './areas/timeline/timeline.module';
+import { AccountModule } from './areas/account/account.module';
+import { MomentModule } from './areas/moment/moment.module';
 import { ManagementModule } from './management/management.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar.component';
 import { MainComponent } from './main.component';
-import { AccessKeyDialogComponent } from './timeline/access-key-dialog/access-key-dialog.component';
+import { AccessKeyDialogComponent } from './areas/timeline/access-key-dialog/access-key-dialog.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { TimelineService } from './services/timeline.service';

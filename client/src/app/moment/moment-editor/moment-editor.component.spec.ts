@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecordEditorComponent } from './record-editor.component';
+import { MomentEditorComponent } from './moment-editor.component';
 
-describe('RecordEditorComponent', () => {
-  let component: RecordEditorComponent;
-  let fixture: ComponentFixture<RecordEditorComponent>;
+describe('MomentEditorComponent', () => {
+  let component: MomentEditorComponent;
+  let fixture: ComponentFixture<MomentEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecordEditorComponent ]
+      declarations: [MomentEditorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordEditorComponent);
+    fixture = TestBed.createComponent(MomentEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

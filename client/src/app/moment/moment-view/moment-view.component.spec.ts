@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecordViewComponent } from './record-view.component';
+import { MomentViewComponent } from './moment-view.component';
 
-describe('RecordViewComponent', () => {
-  let component: RecordViewComponent;
-  let fixture: ComponentFixture<RecordViewComponent>;
+describe('MomentViewComponent', () => {
+  let component: MomentViewComponent;
+  let fixture: ComponentFixture<MomentViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecordViewComponent ]
+      declarations: [MomentViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordViewComponent);
+    fixture = TestBed.createComponent(MomentViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

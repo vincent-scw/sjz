@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "../services/auth-guard.service";
-import { RecordEditorComponent } from "./record-editor/record-editor.component";
-import { RecordViewComponent } from "./record-view/record-view.component";
+import { MomentEditorComponent } from "./moment-editor/moment-editor.component";
+import { MomentViewComponent } from "./moment-view/moment-view.component";
 import { NgModule } from "@angular/core";
 
 const recordRoutes: Routes = [
@@ -11,16 +11,16 @@ const recordRoutes: Routes = [
 
       {
         path: ':year',
-        component: RecordViewComponent
+        component: MomentViewComponent
       },
       {
         path: 'create',
-        component: RecordEditorComponent,
+        component: MomentEditorComponent,
         canActivate: [AuthGuard]
       },
       {
         path: ':record/edit',
-        component: RecordEditorComponent,
+        component: MomentEditorComponent,
         canActivate: [AuthGuard]
       },
       
@@ -36,4 +36,4 @@ const recordRoutes: Routes = [
     RouterModule
   ]
 })
-export class RecordRoutingModule { }
+export class MomentRoutingModule { }

@@ -5,7 +5,7 @@ import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { RecordEditorComponent } from './record/record-editor/record-editor.component';
+import { MomentEditorComponent } from './moment/moment-editor/moment-editor.component';
 import { User } from './models/user.model';
 
 @Component({
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	async onAddNewRecordClicked() {
-		const dialogRef = this.dialog.open(RecordEditorComponent);
+		const dialogRef = this.dialog.open(MomentEditorComponent);
 		await dialogRef.afterClosed().toPromise();
 	}
 

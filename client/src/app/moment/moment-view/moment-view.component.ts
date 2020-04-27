@@ -8,8 +8,8 @@ import { switchMap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-record-view',
-  templateUrl: './record-view.component.html',
+  selector: 'app-moment-view',
+  templateUrl: './moment-view.component.html',
   styles: [
     `.masonry-item { 
       width: 400px; 
@@ -18,29 +18,29 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [DatePipe]
 })
-export class RecordViewComponent implements OnInit, OnDestroy {
+export class MomentViewComponent implements OnInit, OnDestroy {
   year: number;
   editable: boolean;
 
   images: any[];
 
-  private records$: Observable<Moment[]>;
-  private recordsSub: Subscription;
+  private moments$: Observable<Moment[]>;
+  private momentsSub: Subscription;
   
-  constructor(private recordService: MomentService,
+  constructor(private momentService: MomentService,
     private activatedRoute: ActivatedRoute,
     private title: Title,
     private datePipe: DatePipe) { }
 
   ngOnInit() {
-    this.records$ = this.activatedRoute.paramMap.pipe(
+    this.moments$ = this.activatedRoute.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.year = parseInt(params.get('year'));
-        return this.recordService.getRecords(this.year);
+        return this.momentService.getRecords(this.year);
       })
     );
 
-    this.recordsSub = this.records$.subscribe((r) => {
+    this.momentsSub = this.moments$.subscribe((r) => {
       this.images = r.map(e => {
         return {
           url: e.imageUrl,
@@ -53,6 +53,6 @@ export class RecordViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!!this.recordsSub) { this.recordsSub.unsubscribe(); }
+    if (!!this.momentsSub) { this.momentsSub.unsubscribe(); }
   }
 }

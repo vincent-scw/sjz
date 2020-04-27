@@ -8,7 +8,7 @@ import { SharedModule } from './shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { TimelineModule } from './timeline/timeline.module';
 import { AccountModule } from './account/account.module';
-import { RecordModule } from './record/record.module';
+import { MomentModule } from './moment/moment.module';
 import { ManagementModule } from './management/management.module';
 
 import { AppComponent } from './app.component';
@@ -37,7 +37,7 @@ import { MomentService } from './services/moment.service';
     AuthModule.forRoot(),
     SharedModule,
     TimelineModule,
-    RecordModule,
+    MomentModule,
     AccountModule,
     ManagementModule,
     AppRoutingModule

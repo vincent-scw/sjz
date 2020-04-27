@@ -5,11 +5,11 @@ import { MomentService } from '../../services/moment.service';
 import { ImageService } from '../../services/image.service';
 
 @Component({
-  selector: 'app-record-editor',
-  templateUrl: './record-editor.component.html',
-  styleUrls: ['./record-editor.component.scss']
+  selector: 'app-moment-editor',
+  templateUrl: './moment-editor.component.html',
+  styleUrls: ['./moment-editor.component.scss']
 })
-export class RecordEditorComponent implements OnInit {
+export class MomentEditorComponent implements OnInit {
   model: Moment = {
     date: new Date(),
     title: '',
@@ -20,7 +20,7 @@ export class RecordEditorComponent implements OnInit {
 
   constructor(private recordService: MomentService,
     private imageService: ImageService,
-    private dialogRef: MatDialogRef<RecordEditorComponent>) { }
+    private dialogRef: MatDialogRef<MomentEditorComponent>) { }
 
   ngOnInit() {
     

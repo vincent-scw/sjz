@@ -25,14 +25,21 @@ namespace SJZ.Timelines.Repository
             return entity;
         }
 
-        public Task DeleteAsync(object id)
+        public async Task DeleteAsync(object id)
         {
-            return _timelines.FindOneAndDeleteAsync(t => t.Id == (id as string));
+            var timelineId = (id as string);
+            await _records.DeleteManyAsync(r => r.TimelineId == timelineId);
+            await _timelines.FindOneAndDeleteAsync(t => t.Id == timelineId);
         }
 
         public async Task<Timeline> GetAsync(object id)
         {
-            return (await _timelines.FindAsync(t => t.Id == (id as string))).SingleOrDefault();
+            var timeline = (await _timelines.FindAsync(t => t.Id == (id as string))).SingleOrDefault();
+            if (timeline == null)
+                return null;
+
+            timeline.AddItems((await _records.FindAsync(r => r.TimelineId == timeline.Id)).ToList());
+            return timeline;
         }
 
         public Task UpdateAsync(Timeline entity)
@@ -51,12 +58,17 @@ namespace SJZ.Timelines.Repository
             return _records.FindOneAndDeleteAsync(r => r.Id == id);
         }
 
+        public async Task<Record> GetRecordAsync(string id)
+        {
+            return (await _records.FindAsync(r => r.Id == id)).FirstOrDefault();
+        }
+
         public async Task<IEnumerable<Record>> GetRecordsAsync(string timelineId)
         {
             return (await _records.FindAsync<Record>(r => r.TimelineId == timelineId)).ToList();
         }
 
-        public Task UpdateRecord(Record record)
+        public Task UpdateRecordAsync(Record record)
         {
             return _records.FindOneAndReplaceAsync(replacement => replacement.Id == record.Id, record);
         }

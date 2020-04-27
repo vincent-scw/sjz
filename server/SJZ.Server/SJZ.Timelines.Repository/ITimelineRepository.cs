@@ -11,7 +11,8 @@ namespace SJZ.Timelines.Repository
     {
         Task<Record> CreateRecordAsync(Record record);
         Task DeleteRecordAsync(string id);
+        Task<Record> GetRecordAsync(string id);
         Task<IEnumerable<Record>> GetRecordsAsync(string timelineId);
-        Task UpdateRecord(Record record);
+        Task UpdateRecordAsync(Record record);
     }
 }

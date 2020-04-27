@@ -11,7 +11,6 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
         public string Username { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
-        public DateTimeOffset StartTime { get; private set; }
         public bool IsCompleted { get; private set; }
         public PeriodLevel PeriodLevel { get; private set; }
 
@@ -25,7 +24,6 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 
         public Timeline(string title, 
             string description,
-            DateTimeOffset startTime,
             bool isCompleted,
             PeriodLevel periodLevel,
             string userid,
@@ -36,7 +34,6 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 
             Title = title;
             Description = description;
-            StartTime = startTime;
             IsCompleted = isCompleted;
             PeriodLevel = periodLevel;
             CreatedBy = userid;
@@ -47,7 +44,6 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 
         public void UpdateContent(string title, 
             string description, 
-            DateTimeOffset startTime,
             bool isCompleted,
             PeriodLevel periodLevel,
             string userid)
@@ -59,7 +55,6 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
 
             Title = title;
             Description = description;
-            StartTime = startTime;
             IsCompleted = isCompleted;
             PeriodLevel = periodLevel;
             UpdatedBy = userid;

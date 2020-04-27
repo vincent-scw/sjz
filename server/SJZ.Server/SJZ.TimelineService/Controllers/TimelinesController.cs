@@ -44,14 +44,27 @@ namespace SJZ.TimelineService.Controllers
             return Ok(_mapper.Map<TimelineDto>(timeline));
         }
 
-        [HttpPut]
-        public async Task<IActionResult> CreateAsnyc([FromBody]MergeTimelineCommand command)
+        [HttpPost]
+        public async Task<IActionResult> UpsertAsnyc([FromBody]UpsertTimelineCommand command)
         {
             var result = await _mediator.Send(command);
             if (string.IsNullOrEmpty(result))
                 return BadRequest(); 
             else
                 return Ok(new { TimelineId = result });
+        }
+
+        [HttpPost("{timelineId}/Records")]
+        public async Task<IActionResult> UpsertAsync(string timelineId, [FromBody] UpsertRecordCommand command)
+        {
+            if (string.IsNullOrEmpty(command.TimelineId))
+                command.TimelineId = timelineId;
+
+            var result = await _mediator.Send(command);
+            if (string.IsNullOrEmpty(result))
+                return BadRequest();
+            else
+                return Ok(new { TimelineId = timelineId, RecordId = result });
         }
     }
 }

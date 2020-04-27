@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace SJZ.TimelineService.Commands
 {
     [DataContract]
-    public class MergeTimelineCommand : IRequest<string>
+    public class UpsertTimelineCommand : IRequest<string>
     {
         [DataMember]
-        public string Id { get; set; }
+        public string TimelineId { get; set; }
         [DataMember]
         public string UserId { get; set; }
         [DataMember]
@@ -21,8 +21,6 @@ namespace SJZ.TimelineService.Commands
         public string Title { get; set; }
         [DataMember]
         public string Description { get; set; }
-        [DataMember]
-        public DateTimeOffset StartTime { get; set; }
         [DataMember]
         public bool IsCompleted { get; set; }
         [DataMember]

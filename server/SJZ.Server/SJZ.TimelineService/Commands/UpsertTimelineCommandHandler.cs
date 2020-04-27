@@ -10,22 +10,21 @@ using System.Threading.Tasks;
 
 namespace SJZ.TimelineService.Commands
 {
-    public class MergeTimelineCommandHandler : IRequestHandler<MergeTimelineCommand, string>
+    public class UpsertTimelineCommandHandler : IRequestHandler<UpsertTimelineCommand, string>
     {
         private readonly ITimelineRepository _timelineRepository;
-        public MergeTimelineCommandHandler(ITimelineRepository timelineRepository)
+        public UpsertTimelineCommandHandler(ITimelineRepository timelineRepository)
         {
             _timelineRepository = timelineRepository;
         }
 
-        public async Task<string> Handle(MergeTimelineCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpsertTimelineCommand request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(request.Id))
+            if (string.IsNullOrEmpty(request.TimelineId))
             {
                 var timeline = await _timelineRepository.CreateAsync(new Timeline(
                     request.Title,
                     request.Description,
-                    request.StartTime,
                     request.IsCompleted,
                     Enumeration.FromValue<PeriodLevel>(request.PeriodLevel),
                     request.UserId,
@@ -35,11 +34,11 @@ namespace SJZ.TimelineService.Commands
             }
             else
             {
-                var timeline = await _timelineRepository.GetAsync(request.Id);
-                timeline.UpdateContent(request.Title, request.Description, request.StartTime, request.IsCompleted, 
+                var timeline = await _timelineRepository.GetAsync(request.TimelineId);
+                timeline.UpdateContent(request.Title, request.Description, request.IsCompleted, 
                     Enumeration.FromValue<PeriodLevel>(request.PeriodLevel), request.UserId);
                 await _timelineRepository.UpdateAsync(timeline);
-                return request.Id;
+                return request.TimelineId;
             }
         }
     }

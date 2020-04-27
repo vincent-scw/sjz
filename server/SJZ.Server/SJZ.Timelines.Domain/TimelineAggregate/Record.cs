@@ -23,6 +23,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             Date = date;
             CreatedDate = DateTimeOffset.UtcNow;
             CreatedBy = userId;
+            UpdatedDate = DateTimeOffset.UtcNow;
         }
 
         public void UpdateContent(string content, DateTimeOffset date, string userId)

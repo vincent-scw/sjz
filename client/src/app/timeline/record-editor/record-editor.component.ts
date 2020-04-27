@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Moment } from '../../models/moment.model';
+import { Record } from '../../models/record.model';
 import { TimelineService } from '../../services/timeline.service';
 
 import { environment } from '../../../environments/environment';
@@ -9,12 +9,12 @@ import { Timeline } from '../../models/timeline.model';
 import { DatePipe } from '@angular/common';
 
 @Component({
-	selector: 'app-moment-editor',
-	templateUrl: './moment-editor.component.html'
+	selector: 'app-record-editor',
+	templateUrl: './record-editor.component.html'
 })
 
-export class MomentEditorComponent implements OnInit, OnDestroy {
-	model: Moment = { topicKey: '', recordDate: new Date() };
+export class RecordEditorComponent implements OnInit, OnDestroy {
+	model: Record = { id: '', date: new Date() };
 	timeline: Timeline;
 	editorConfig = {
 		"editable": true,
@@ -39,8 +39,8 @@ export class MomentEditorComponent implements OnInit, OnDestroy {
 	private timelineSub: Subscription;
 
 	constructor(
-		@Inject(MAT_DIALOG_DATA) public data: Moment,
-		private dialogRef: MatDialogRef<MomentEditorComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: Record,
+		private dialogRef: MatDialogRef<RecordEditorComponent>,
 		private service: TimelineService) {
 
 	}
@@ -51,7 +51,7 @@ export class MomentEditorComponent implements OnInit, OnDestroy {
 		}
 		this.timelineSub = this.service.activeTimeline$.subscribe(t => {
 			this.timeline = t;
-			this.editorConfig.imageEndPoint = this.editorConfig.imageEndPoint + `?folder=${t.topicKey}`;
+			this.editorConfig.imageEndPoint = this.editorConfig.imageEndPoint + `?folder=${t.id}`;
 		});
 	}
 
@@ -59,7 +59,7 @@ export class MomentEditorComponent implements OnInit, OnDestroy {
 		if (!!this.timelineSub) { this.timelineSub.unsubscribe(); }
 	}
 
-	onSubmit(newData: Moment) {
+	onSubmit(newData: Record) {
 		this.service.insertOrReplaceMoment(newData).toPromise()
 			.then((moment) => this.dialogRef.close());
 	}

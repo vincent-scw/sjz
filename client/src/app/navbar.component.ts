@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { MomentEditorComponent } from './timeline/moment-editor/moment-editor.component';
 import { Observable, Subscription } from 'rxjs';
 import { Timeline } from './models/timeline.model';
 import { TimelineService } from './services/timeline.service';
@@ -48,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.authSvc.initAuth();
 		this.timelines$ = this.timelineService.getTimelines();
-		this.timelineSub = this.timelineService.activeTimeline$.subscribe(t => this.activeTopicKey = t.topicKey);
+		this.timelineSub = this.timelineService.activeTimeline$.subscribe(t => this.activeTopicKey = t.id);
 		this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
 	}
 

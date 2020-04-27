@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Record } from '../../models/record.model';
-import { RecordService } from '../../services/record.service';
+import { Moment } from '../../models/moment.model';
+import { MomentService } from '../../services/moment.service';
 import { ImageService } from '../../services/image.service';
 
 @Component({
@@ -10,15 +10,15 @@ import { ImageService } from '../../services/image.service';
   styleUrls: ['./record-editor.component.scss']
 })
 export class RecordEditorComponent implements OnInit {
-  model: Record = {
+  model: Moment = {
     date: new Date(),
     title: '',
     imageUrl: ''
   };
 
-  selectedFile: File
+  selectedFile: File;
 
-  constructor(private recordService: RecordService,
+  constructor(private recordService: MomentService,
     private imageService: ImageService,
     private dialogRef: MatDialogRef<RecordEditorComponent>) { }
 
@@ -42,7 +42,7 @@ export class RecordEditorComponent implements OnInit {
         });
   }
 
-  onSubmit(data: Record) {
+  onSubmit(data: Moment) {
     console.log(data);
     this.recordService.insertOrReplaceRecord(data).toPromise()
       .then((_) => this.dialogRef.close());

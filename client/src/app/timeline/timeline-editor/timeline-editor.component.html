@@ -1,12 +1,12 @@
 <div class="t-content">
   <section class="section">
-    <h2 class="subtitle">轴编辑</h2>
+    <h2 class="subtitle">Edit Timeline</h2>
   </section>
   <form name="form" #form="ngForm">
     <div class="field">
       <div class="control">
         <mat-form-field>
-          <input matInput required name="topicKey" [(ngModel)]="model.topicKey" placeholder="Key">
+          <input matInput required name="id" [(ngModel)]="model.id" placeholder="Key">
         </mat-form-field>
       </div>
     </div>
@@ -17,14 +17,14 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="field">
+    <!-- <div class="field">
       <div class="control">
         <mat-radio-group name="protectLevel" [(ngModel)]="model.protectLevel" placeholder="Protect Level">
           <mat-radio-button value="Public">Public</mat-radio-button>
           <mat-radio-button value="Protected">Protected</mat-radio-button>
         </mat-radio-group>
       </div>
-    </div>
+    </div> -->
     <div class="field">
       <div class="control">
         <mat-form-field>

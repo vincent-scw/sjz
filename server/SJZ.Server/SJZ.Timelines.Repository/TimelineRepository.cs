@@ -42,6 +42,20 @@ namespace SJZ.Timelines.Repository
             return timeline;
         }
 
+        public async Task<IEnumerable<Timeline>> GetListAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return (await _timelines.FindAsync(x => true, 
+                    new FindOptions<Timeline, Timeline> { 
+                        Sort = Builders<Timeline>.Sort.Descending(f => f.UpdatedDate),
+                        Limit = 10
+                    })).ToList();
+            }
+
+            return (await _timelines.FindAsync(x => x.CreatedBy == userId)).ToList();
+        }
+
         public Task UpdateAsync(Timeline entity)
         {
             return _timelines.FindOneAndReplaceAsync(t => t.Id == entity.Id, entity);

@@ -22,7 +22,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { ImageService } from './services/image.service';
 import { FooterComponent } from './footer.component';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { RecordService } from './services/record.service';
+import { MomentService } from './services/moment.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { RecordService } from './services/record.service';
     AuthGuard,
     OidcSecurityService,
     TimelineService,
-    RecordService,
+    MomentService,
     ImageService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

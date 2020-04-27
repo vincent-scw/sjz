@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RecordService } from '../../services/record.service';
-import { Record } from '../../models/record.model';
+import { MomentService } from '../../services/moment.service';
+import { Moment } from '../../models/moment.model';
 import { Observable ,  Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -24,10 +24,10 @@ export class RecordViewComponent implements OnInit, OnDestroy {
 
   images: any[];
 
-  private records$: Observable<Record[]>;
+  private records$: Observable<Moment[]>;
   private recordsSub: Subscription;
   
-  constructor(private recordService: RecordService,
+  constructor(private recordService: MomentService,
     private activatedRoute: ActivatedRoute,
     private title: Title,
     private datePipe: DatePipe) { }

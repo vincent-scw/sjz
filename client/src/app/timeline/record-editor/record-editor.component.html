@@ -1,11 +1,11 @@
 <div class="center-dialog">
 	<form name="form" #form="ngForm">
-		<input hidden name="topicKey" [(ngModel)]="model.topicKey">
+		<input hidden name="id" [(ngModel)]="model.id">
 		<h2 class="subtitle">{{timeline.title}}</h2>
 		<div class="field">
 			<div class="control">
 				<mat-form-field>
-					<input matInput required name="recordDate" [(ngModel)]="model.recordDate" placeholder="Record Date">
+					<input matInput required name="date" [(ngModel)]="model.date" placeholder="Record Date">
 					<!-- <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
 					<mat-datepicker #myDatepicker></mat-datepicker> -->
 				</mat-form-field>

@@ -13,7 +13,7 @@ import { TimelineService } from '../../services/timeline.service';
 })
 export class TimelineEditorComponent implements OnInit {
   model: Timeline = {
-    topicKey: '',
+    id: '',
     protectLevel: ProtectLevel.public,
     periodGroupLevel: PeriodGroupLevel.any,
     isCompleted: false,

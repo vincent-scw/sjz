@@ -3,7 +3,7 @@ import { SharedModule } from '../shared.module';
 import { TimelineRoutingModule } from './timeline-routing.module';
 
 import { TimelineComponent } from '../timeline/timeline.component';
-import { MomentEditorComponent } from './moment-editor/moment-editor.component';
+import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { TimelineEditorComponent } from './timeline-editor/timeline-editor.component';
 import { TimelineAccessGuard } from '../services/timeline-access-guard.service';
 
@@ -14,14 +14,14 @@ import { TimelineAccessGuard } from '../services/timeline-access-guard.service';
   ],
   declarations: [
     TimelineComponent,
-    MomentEditorComponent,
+    RecordEditorComponent,
     TimelineEditorComponent
   ],
   providers: [
     TimelineAccessGuard
   ],
   entryComponents: [
-    MomentEditorComponent
+    RecordEditorComponent
   ]
 })
 export class TimelineModule { }

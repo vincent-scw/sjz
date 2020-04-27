@@ -6,8 +6,8 @@ import { Observable ,  Subscription ,  BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { TimelineService } from '../services/timeline.service';
-import { Moment, GroupedMoments } from '../models/moment.model';
-import { MomentEditorComponent } from './moment-editor/moment-editor.component';
+import { Record, GroupedRecords } from '../models/record.model';
+import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { Timeline, PeriodGroupLevel } from '../models/timeline.model';
 import { AuthService } from '../services/auth.service';
 
@@ -17,7 +17,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   timeline: Timeline;
-  groupedMoments: GroupedMoments[];
+  groupedMoments: GroupedRecords[];
   loaded: boolean;
   editable: boolean;
   align: number = -1;
@@ -50,12 +50,12 @@ export class TimelineComponent implements OnInit, OnDestroy {
       this.timeline = t;
       this.timelineService.activeTimeline = this.timeline;
       this.title.setTitle(`${t.title} | 时间轴`);
-      this.momentsSubscription = this.timelineService.getMoments(t.topicKey).subscribe(x => {
-        x.map((m) => {
-          this.groupByLevel(this.timeline.periodGroupLevel, m);
-        });
-        this.loaded = true;
+
+      t.items && t.items.forEach(i => {
+        this.groupByLevel(this.timeline.periodGroupLevel, i);
       });
+
+      this.loaded = true;
     });
 
     this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
@@ -67,16 +67,16 @@ export class TimelineComponent implements OnInit, OnDestroy {
     if (!!this.editableSub) { this.editableSub.unsubscribe(); }
   }
 
-  onEdit(moment: Moment) {
-    this.dialog.open(MomentEditorComponent, {data: moment});
+  onEdit(record: Record) {
+    this.dialog.open(RecordEditorComponent, {data: record});
   }
 
-  onDelete(moment: Moment) {
-    this.timelineService.deleteMoment(moment.topicKey, moment.recordDate).toPromise();
+  onDelete(record: Record) {
+    this.timelineService.deleteMoment(record.id, record.date).toPromise();
   }
 
-  groupByLevel(level: PeriodGroupLevel, m: Moment) {
-    const date = new Date(m.recordDate);
+  groupByLevel(level: PeriodGroupLevel, m: Record) {
+    const date = new Date(m.date);
     let groupKey: string;
     switch (level) {
       case PeriodGroupLevel.byDay:
@@ -92,23 +92,23 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
     const grouped = this.groupedMoments.find(g => g.group == groupKey);
     if (grouped == null) {
-      this.groupedMoments.push({ group: groupKey, moments: [m] });
+      this.groupedMoments.push({ group: groupKey, records: [m] });
     } else {
-      grouped.moments.push(m);
+      grouped.records.push(m);
     }
   }
 
   onEditTimelineClicked() {
-    this.router.navigateByUrl(`timeline/${this.timeline.topicKey}/edit`);
+    this.router.navigateByUrl(`timeline/${this.timeline.id}/edit`);
   }
 
   onDeleteTimelineClicked() {
-    if (confirm('确定要删除吗？')) {
-      this.timelineService.deleteTimeline(this.timeline.topicKey).toPromise();
+    if (confirm('Are you sure to delete it?')) {
+      this.timelineService.deleteTimeline(this.timeline.id).toPromise();
     }
   }
 
   onAddMomentClicked() {
-    this.dialog.open(MomentEditorComponent, { data: { topicKey: this.timeline.topicKey } });
+    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.id } });
   }
 }

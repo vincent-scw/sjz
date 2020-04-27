@@ -39,7 +39,8 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             CreatedBy = userid;
             Username = username;
 
-            CreatedDate = DateTimeOffset.Now;
+            CreatedDate = DateTimeOffset.UtcNow;
+            UpdatedDate = DateTimeOffset.UtcNow;
         }
 
         public void UpdateContent(string title, 
@@ -58,6 +59,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             IsCompleted = isCompleted;
             PeriodLevel = periodLevel;
             UpdatedBy = userid;
+            UpdatedDate = DateTimeOffset.UtcNow;
         }
 
         public void AddItem(Record item)

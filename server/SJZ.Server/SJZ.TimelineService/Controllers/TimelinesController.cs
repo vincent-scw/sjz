@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SJZ.Timelines.Domain.TimelineAggregate;
 using SJZ.Timelines.Repository;
 using SJZ.TimelineService.Commands;
 using SJZ.TimelineService.Models;
@@ -42,6 +43,13 @@ namespace SJZ.TimelineService.Controllers
             if (timeline == null)
                 return NotFound();
             return Ok(_mapper.Map<TimelineDto>(timeline));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetListAsync([FromQuery] string userId)
+        {
+            var list = await _timelineRepository.GetListAsync(userId);
+            return Ok(list.Select(x => _mapper.Map<TimelineDto>(x)));
         }
 
         [HttpPost]

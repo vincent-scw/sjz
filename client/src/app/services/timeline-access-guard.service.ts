@@ -25,12 +25,13 @@ export class TimelineAccessGuard implements CanActivate {
   }
 
   private async CheckTimelineCanAccess(key: string): Promise<boolean> {
-    const timeline = await this.timelineService.getTimeline(key).toPromise();
-    if (timeline.protectLevel == ProtectLevel.public) {
-      return true;
-    }
+    return true;
+    // const timeline = await this.timelineService.getTimeline(key).toPromise();
+    // if (timeline.protectLevel == ProtectLevel.public) {
+    //   return true;
+    // }
 
-    const dialogRef = this.dialog.open(AccessKeyDialogComponent, { data: { topicKey: key } });
-    return await dialogRef.afterClosed().toPromise<boolean>();
+    // const dialogRef = this.dialog.open(AccessKeyDialogComponent, { data: { topicKey: key } });
+    // return await dialogRef.afterClosed().toPromise<boolean>();
   }
 }

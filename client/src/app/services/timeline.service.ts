@@ -3,13 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable ,  BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Moment } from '../models/moment.model';
+import { Record } from '../models/record.model';
 import { Timeline, ProtectLevel, PeriodGroupLevel } from '../models/timeline.model';
 
 @Injectable()
 export class TimelineService {
 	private baseUrl: string;
-	private defaultTimeline: Timeline = { topicKey: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.any, isCompleted: false };
+	private defaultTimeline: Timeline = { id: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.any, isCompleted: false };
 	activeTimeline$ = new BehaviorSubject<Timeline>(this.defaultTimeline);
 
 	constructor(private http: HttpClient) {
@@ -24,13 +24,8 @@ export class TimelineService {
 		this.activeTimeline$.next(value);
 	}
 
-	getMoments(topic: string): Observable<Moment[]> {
-		const options = { params: new HttpParams().set('timeline', topic) };
-		return this.http.get<Moment[]>(`${this.baseUrl}/api/Moments`, options);
-	}
-
-	insertOrReplaceMoment(moment: Moment): Observable<Moment> {
-		return this.http.post<Moment>(`${this.baseUrl}/api/Moments`, moment);
+	insertOrReplaceMoment(moment: Record): Observable<Record> {
+		return this.http.post<Record>(`${this.baseUrl}/api/Moments`, moment);
 	}
 
 	deleteMoment(topic: string, date: Date): Observable<{}> {
@@ -54,6 +49,6 @@ export class TimelineService {
 	}
 
 	verifyAccessCode(timeline: Timeline): Observable<boolean> {
-		return this.http.post<boolean>(`${this.baseUrl}/api/Timelines/${timeline.topicKey}/verify`, timeline);
+		return this.http.post<boolean>(`${this.baseUrl}/api/Timelines/${timeline.id}/verify`, timeline);
 	}
 }

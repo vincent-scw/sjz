@@ -3,7 +3,7 @@
     <article class="tile notification is-warning is-vertical">
       <p class="tile is-child"><img src="../assets/zhou.png"></p>
       <div class="tile is-child" *ngFor="let t of timelines$ | async">
-        <a [routerLink]="['timeline', t.topicKey]">
+        <a [routerLink]="['timeline', t.id]">
           {{t.title}}
         </a>
       </div>
@@ -16,7 +16,7 @@
       </p>
       <div class="tile is-child" *ngFor="let r of years">
         <a [routerLink]="['records', r]">
-          {{r}} 年
+          {{r}}
         </a>
       </div>
     </article>

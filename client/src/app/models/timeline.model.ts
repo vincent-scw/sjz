@@ -1,3 +1,5 @@
+import { Record } from './record.model';
+
 export enum ProtectLevel {
   public = 'Public',
   protect = 'Protected'
@@ -13,10 +15,11 @@ export enum PeriodGroupLevel {
 export interface Timeline {
   username?: string;
   title?: string;
-  topicKey: string;
+  id: string;
   protectLevel: ProtectLevel;
   accessKey?: string;
   periodGroupLevel: PeriodGroupLevel;
   isCompleted: boolean;
   startTime?: Date;
+  items?: Record[];
 }

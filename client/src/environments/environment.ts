@@ -5,11 +5,6 @@
 
 export const environment = {
   production: false,
-  apiServerUrl: 'https://sjz.azurewebsites.net',
-  authUrl: 'https://localhost:5011',
-  state: 'BCEeFWf45A53sdfaef434',
-  linkedIn: {
-    clientId: '81x1oimxi0mlzy',
-    scope: 'r_basicprofile'
-  },
+  apiServerUrl: 'https://localhost:5031',
+  authUrl: 'https://localhost:5011'
 };

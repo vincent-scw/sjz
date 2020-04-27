@@ -1,7 +1,10 @@
 export interface Record {
-  date: Date;
-  title: string;
-  location?: string;
-  imageUrl: string;
-  thumbnailUrl?: string;
+    id: string;
+    date: Date;
+    content?: string;
+}
+
+export interface GroupedRecords {
+    group: string;
+    records: Record[];
 }

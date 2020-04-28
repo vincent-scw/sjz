@@ -3,21 +3,6 @@
     <div class="level">
       <div class="level-left">
         <h1 class="level-item title">{{timeline?.title}}</h1>
-        <a *ngIf="editable" matTooltip="Add Moment" class="level-item" (click)="onAddMomentClicked()">
-          <span class="icon is-small">
-            <i class="far fa-plus-square"></i>
-          </span>
-        </a>
-        <a *ngIf="editable" matTooltip="Edit" class="level-item" (click)="onEditTimelineClicked()">
-          <span class="icon is-small">
-            <i class="fa fa-edit"></i>
-          </span>
-        </a>
-        <a *ngIf="editable" matTooltip="Delete" class="level-item" (click)="onDeleteTimelineClicked()">
-          <span class="icon is-small">
-            <i class="fa fa-trash-alt"></i>
-          </span>
-        </a>
       </div>
       <div class="level-right">
         <div class="field has-addons">
@@ -85,4 +70,7 @@
     </div>
   </div>
 </div>
-<app-action-panel class="left-dockbg"></app-action-panel>
+<app-action-panel class="left-dockbg"
+  (add)="onAddMomentClicked()"
+  (edit)="onEditTimelineClicked()"
+  (delete)="onDeleteTimelineClicked()"></app-action-panel>

@@ -1,21 +1,21 @@
 <div class="panel">
   <p class="panel-block dock-img-block">
-    <a>
-      <span class="icon">
-        <i class="far fa-plus-square"></i>
+    <a matTooltip="Add Moment" (click)="add.emit()">
+      <span class="icon is-medium">
+        <i class="fas fa-plus"></i>
       </span>
     </a>
   </p>
   <p class="panel-block dock-img-block">
-    <a>
-      <span class="icon">
+    <a matTooltip="Edit Timeline" (click)="edit.emit()">
+      <span class="icon is-medium">
         <i class="fa fa-edit"></i>
       </span>
     </a>
   </p>
   <p class="panel-block dock-img-block">
-    <a>
-      <span class="icon has-text-danger">
+    <a matTooltip="Delete Timeline" (click)="delete.emit()">
+      <span class="icon is-medium has-text-danger">
         <i class="fa fa-trash-alt"></i>
       </span>
     </a>

@@ -5,6 +5,7 @@ import { TimelineRoutingModule } from './timeline-routing.module';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { TimelineEditorComponent } from './timeline-editor/timeline-editor.component';
+import { ActionPanelComponent } from './action-panel/action-panel.component';
 import { TimelineAccessGuard } from '../../services/timeline-access-guard.service';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TimelineAccessGuard } from '../../services/timeline-access-guard.servic
   declarations: [
     TimelineComponent,
     RecordEditorComponent,
-    TimelineEditorComponent
+    TimelineEditorComponent,
+    ActionPanelComponent
   ],
   providers: [
     TimelineAccessGuard

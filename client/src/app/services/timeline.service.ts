@@ -24,11 +24,11 @@ export class TimelineService {
 		this.activeTimeline$.next(value);
 	}
 
-	insertOrReplaceMoment(moment: Record): Observable<Record> {
-		return this.http.post<Record>(`${this.baseUrl}/api/Moments`, moment);
+	insertOrReplaceRecord(timelineId: string, record: Record): Observable<Record> {
+		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, record);
 	}
 
-	deleteMoment(topic: string, date: Date): Observable<{}> {
+	deleteRecord(topic: string, date: Date): Observable<{}> {
 		return this.http.delete(`${this.baseUrl}/api/Moments/${topic}/${date}`)
 	}
 

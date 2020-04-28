@@ -75,7 +75,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onDelete(record: Record) {
-    this.timelineService.deleteMoment(record.id, record.date).toPromise();
+    this.timelineService.deleteRecord(record.id, record.date).toPromise();
   }
 
   groupByLevel(level: PeriodGroupLevel, m: Record) {

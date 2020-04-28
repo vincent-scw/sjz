@@ -60,8 +60,8 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit(newData: Record) {
-		this.service.insertOrReplaceMoment(newData).toPromise()
-			.then((moment) => this.dialogRef.close());
+		this.service.insertOrReplaceRecord(this.timeline.id, newData).toPromise()
+			.then((record) => this.dialogRef.close());
 	}
 
 	onCancel() {

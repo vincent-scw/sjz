@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace SJZ.TimelineService.Models
 {
-    public enum PeriodLevelType
+    public enum PeriodGroupLevelType
     {
-        Any,
-        ByDay,
-        ByMonth,
-        ByYear
+        ByDay = 1,
+        ByMonth = 2,
+        ByYear = 3
     }
 }

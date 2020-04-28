@@ -12,7 +12,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
         public string Title { get; private set; }
         public string Description { get; private set; }
         public bool IsCompleted { get; private set; }
-        public PeriodLevel PeriodLevel { get; private set; }
+        public PeriodGroupLevel PeriodGroupLevel { get; private set; }
 
         private List<Record> _items;
         public IReadOnlyCollection<Record> Items => _items;
@@ -25,7 +25,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
         public Timeline(string title, 
             string description,
             bool isCompleted,
-            PeriodLevel periodLevel,
+            PeriodGroupLevel periodLevel,
             string userid,
             string username)
             : this()
@@ -35,7 +35,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             Title = title;
             Description = description;
             IsCompleted = isCompleted;
-            PeriodLevel = periodLevel;
+            PeriodGroupLevel = periodLevel;
             CreatedBy = userid;
             Username = username;
 
@@ -46,7 +46,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
         public void UpdateContent(string title, 
             string description, 
             bool isCompleted,
-            PeriodLevel periodLevel,
+            PeriodGroupLevel periodLevel,
             string userid)
         {
             if (userid != CreatedBy)
@@ -57,7 +57,7 @@ namespace SJZ.Timelines.Domain.TimelineAggregate
             Title = title;
             Description = description;
             IsCompleted = isCompleted;
-            PeriodLevel = periodLevel;
+            PeriodGroupLevel = periodLevel;
             UpdatedBy = userid;
             UpdatedDate = DateTimeOffset.UtcNow;
         }

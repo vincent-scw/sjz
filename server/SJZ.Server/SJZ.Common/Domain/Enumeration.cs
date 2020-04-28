@@ -97,6 +97,7 @@ namespace SJZ.Common.Domain
         }
 
         public static TTo ParseCodeToEnum<TTo>(Enumeration e)
+            where TTo: Enum
         {
             if (e == null)
             {

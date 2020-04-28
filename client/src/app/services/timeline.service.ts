@@ -9,7 +9,7 @@ import { Timeline, ProtectLevel, PeriodGroupLevel } from '../models/timeline.mod
 @Injectable()
 export class TimelineService {
 	private baseUrl: string;
-	private defaultTimeline: Timeline = { id: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.any, isCompleted: false };
+	private defaultTimeline: Timeline = { id: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byDay, isCompleted: false };
 	activeTimeline$ = new BehaviorSubject<Timeline>(this.defaultTimeline);
 
 	constructor(private http: HttpClient) {

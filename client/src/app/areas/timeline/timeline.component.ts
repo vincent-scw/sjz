@@ -10,14 +10,16 @@ import { Record, GroupedRecords } from '../../models/record.model';
 import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { Timeline, PeriodGroupLevel } from '../../models/timeline.model';
 import { AuthService } from '../../services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-timeline',
-  templateUrl: './timeline.component.html'
+  templateUrl: './timeline.component.html',
+  providers: [DatePipe]
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   timeline: Timeline;
-  groupedMoments: GroupedRecords[];
+  groupedRecords: GroupedRecords[];
   loaded: boolean;
   editable: boolean;
   align: number = -1;
@@ -33,8 +35,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private title: Title,
-    private router: Router) { 
-    this.groupedMoments = new Array();
+    private router: Router,
+    private datePipe: DatePipe) { 
+    this.groupedRecords = new Array();
     this.loaded = false;
   }
 
@@ -44,7 +47,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
     );
     
     this.timelineSubscription = this.timeline$.subscribe((t) => {
-      this.groupedMoments = new Array();
+      this.groupedRecords = new Array();
       this.loaded = false;
       
       this.timeline = t;
@@ -80,22 +83,23 @@ export class TimelineComponent implements OnInit, OnDestroy {
     let groupKey: string;
     switch (level) {
       case PeriodGroupLevel.byDay:
-        groupKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });  
+        groupKey = this.datePipe.transform(date, 'yyyy-MM-dd');
         break;
       case PeriodGroupLevel.byMonth:
-        groupKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+        groupKey = this.datePipe.transform(date, 'yyyy-MM');
         break;
       case PeriodGroupLevel.byYear:
-        groupKey = date.toLocaleDateString('en-US', { year: 'numeric' });  
+        groupKey = this.datePipe.transform(date, 'yyyy');
         break;
     }
 
-    const grouped = this.groupedMoments.find(g => g.group == groupKey);
+    const grouped = this.groupedRecords.find(g => g.group == groupKey);
     if (grouped == null) {
-      this.groupedMoments.push({ group: groupKey, records: [m] });
+      this.groupedRecords.push({ group: groupKey, records: [m] });
     } else {
       grouped.records.push(m);
     }
+    console.log(this.groupedRecords)
   }
 
   onEditTimelineClicked() {

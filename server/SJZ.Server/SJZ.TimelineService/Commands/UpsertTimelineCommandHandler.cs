@@ -26,7 +26,7 @@ namespace SJZ.TimelineService.Commands
                     request.Title,
                     request.Description,
                     request.IsCompleted,
-                    Enumeration.FromValue<PeriodLevel>(request.PeriodLevel),
+                    Enumeration.FromValue<PeriodGroupLevel>(request.PeriodLevel),
                     request.UserId,
                     request.Username
                     ));
@@ -36,7 +36,7 @@ namespace SJZ.TimelineService.Commands
             {
                 var timeline = await _timelineRepository.GetAsync(request.TimelineId);
                 timeline.UpdateContent(request.Title, request.Description, request.IsCompleted, 
-                    Enumeration.FromValue<PeriodLevel>(request.PeriodLevel), request.UserId);
+                    Enumeration.FromValue<PeriodGroupLevel>(request.PeriodLevel), request.UserId);
                 await _timelineRepository.UpdateAsync(timeline);
                 return request.TimelineId;
             }

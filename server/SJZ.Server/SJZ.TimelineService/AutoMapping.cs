@@ -14,7 +14,7 @@ namespace SJZ.TimelineService
         public AutoMapping()
         {
             CreateMap<Timeline, TimelineDto>()
-                .ForMember(t => t.PeriodLevel, o => o.MapFrom(s => Enumeration.FromValue<PeriodLevel>(s.PeriodLevel)))
+                .ForMember(t => t.PeriodGroupLevel, o => o.MapFrom(s => Enumeration.ParseCodeToEnum<PeriodGroupLevelType>(s.PeriodGroupLevel)))
                 .ForMember(t => t.OwnerId, o => o.MapFrom(s => s.CreatedBy))
                 .ForMember(t => t.OwnerName, o => o.MapFrom(s => s.Username))
                 .ForMember(t => t.LastChanged, o => o.MapFrom(s => s.UpdatedDate ?? s.CreatedDate));

@@ -6,7 +6,6 @@ export enum ProtectLevel {
 }
 
 export enum PeriodGroupLevel {
-  any = 'Any',
   byDay = 'ByDay',
   byMonth = 'ByMonth',
   byYear = 'ByYear'

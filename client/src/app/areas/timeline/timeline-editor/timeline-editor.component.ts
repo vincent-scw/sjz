@@ -15,7 +15,7 @@ export class TimelineEditorComponent implements OnInit {
   model: Timeline = {
     id: '',
     protectLevel: ProtectLevel.public,
-    periodGroupLevel: PeriodGroupLevel.any,
+    periodGroupLevel: PeriodGroupLevel.byDay,
     isCompleted: false,
     startTime: new Date()
   };

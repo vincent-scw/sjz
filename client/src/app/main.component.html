@@ -1,13 +1,23 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent is-8">
-    <article class="tile notification is-warning is-vertical">
-      <p class="tile is-child"><img src="../assets/zhou.png"></p>
+    <div class="tile is-vertical">
+      <p style="margin-bottom: 1em;"><img src="../assets/zhou.png"></p>
       <div class="tile is-child" *ngFor="let t of timelines$ | async">
-        <a [routerLink]="['timeline', t.id]">
-          {{t.title}}
-        </a>
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <a [routerLink]="['timeline', t.timelineId]"><strong>{{t.title}}</strong></a><small class="is-size-7 has-text-grey-light by-owner">&nbsp;by {{t.ownerName}}</small>
+                <br>
+                <small>{{t.description}}</small>
+                <br>
+                <small>{{t.lastChanged | amTimeAgo}}</small>
+              </p>
+            </div>
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
   </div>
   <div class="tile is-parent">
     <article class="tile notification is-info is-vertical">

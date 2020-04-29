@@ -21,5 +21,6 @@ export interface Timeline {
   isCompleted: boolean;
   ownerId?: string;
   ownerName?: string;
+  lastChanged?: Date;
   items?: Record[];
 }

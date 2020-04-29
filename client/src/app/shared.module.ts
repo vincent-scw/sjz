@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxEditorModule } from 'ngx-editor';
 import { MomentModule } from 'ngx-moment';
+import { AvatarModule } from 'ngx-avatar';
 
 import { MaterialModule } from './material.module';
 import { ControlsModule } from './controls/controls.module';
@@ -25,7 +26,8 @@ import { ControlsModule } from './controls/controls.module';
     ControlsModule,
     NgxMasonryModule,
     NgxEditorModule,
-    MomentModule
+    MomentModule,
+    AvatarModule
   ],
   exports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { ControlsModule } from './controls/controls.module';
     ControlsModule,
     NgxMasonryModule,
     NgxEditorModule,
-    MomentModule
+    MomentModule,
+    AvatarModule
   ]
 })
 

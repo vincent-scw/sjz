@@ -1,5 +1,5 @@
 <div class="tile is-ancestor">
-  <div class="tile is-parent is-8">
+  <div class="tile is-parent is-9">
     <div class="tile is-vertical">
       <p style="margin-bottom: 1em;"><img src="../assets/zhou.png"></p>
       <div class="tile is-child" *ngFor="let t of timelines$ | async">
@@ -28,7 +28,7 @@
       </p>
       <div class="tile is-child" *ngFor="let r of years">
         <a [routerLink]="['records', r]">
-          {{r}}
+          My {{r}}
         </a>
       </div>
     </article>

@@ -16,14 +16,14 @@
 			</a>
 		</div>
 		<div id="navbarBasic" class="navbar-menu" [class.is-active]="burgerActive">
-			<div class="navbar-start">
+			<div class="navbar-start" *ngIf="editable">
 				<div class="navbar-item has-dropdown is-hoverable">
 					<a class="navbar-link">
 						<img src="../assets/zhou.png">
 					</a>
 					<div class="navbar-dropdown">
-						<a class="navbar-item" [class.is-active]="activeTopicKey == item.topicKey"
-							*ngFor="let item of timelines$ | async" [routerLink]="['/timeline/', item.topicKey]"
+						<a class="navbar-item" [class.is-active]="activeTopicKey == item.timelineId"
+							*ngFor="let item of timelines$ | async" [routerLink]="['/timeline/', item.timelineId]"
 							(click)="burgerActive = false">
 							<div class="level">
 								<div class="level-left">{{item.title}}</div>
@@ -47,7 +47,7 @@
 					<div class="navbar-dropdown">
 						<a class="navbar-item" *ngFor="let item of years" [routerLink]="['/records/', item]"
 							(click)="burgerActive = false">
-							{{item}} 年
+							My {{item}}
 						</a>
 						<hr class="navbar-divider" *ngIf="editable">
 						<a class="navbar-item" (click)="onAddNewRecordClicked()" *ngIf="editable">
@@ -56,19 +56,17 @@
 					</div>
 				</div>
 				<a class="navbar-item" routerLink="/manage/images" *ngIf="editable" (click)="burgerActive = false">
-					管理
+					My Images
 				</a>
 			</div>
 
 			<div class="navbar-end">
 				<button class="navbar-item button is-primary is-inverted is-outlined" *ngIf="isAuthorized === false"
 					(click)="login()">Sign In</button>
-				<div class="navbar-item has-dropdown" [class.is-active]="accountActive" 
-					*ngIf="isAuthorized === true"
-					(mouseleave)="accountActive = false"
-					(mouseenter)="accountActive = true">
+				<div class="navbar-item has-dropdown" [class.is-active]="accountActive" *ngIf="isAuthorized === true"
+					(mouseleave)="accountActive = false" (mouseenter)="accountActive = true">
 					<a class="navbar-link">
-						Hi, {{userData.name}}
+						<ngx-avatar [name]="userData.name" size="25"></ngx-avatar>&nbsp;{{userData.name}}
 					</a>
 
 					<div class="navbar-dropdown is-right">

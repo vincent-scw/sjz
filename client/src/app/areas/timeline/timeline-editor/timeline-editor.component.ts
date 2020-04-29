@@ -16,8 +16,7 @@ export class TimelineEditorComponent implements OnInit {
     id: '',
     protectLevel: ProtectLevel.public,
     periodGroupLevel: PeriodGroupLevel.byDay,
-    isCompleted: false,
-    startTime: new Date()
+    isCompleted: false
   };
   constructor(private timelineService: TimelineService,
     private activatedRoute: ActivatedRoute) {  }

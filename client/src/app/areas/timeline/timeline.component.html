@@ -1,34 +1,33 @@
 <div class="t-content">
-  <section class="section">
-    <div class="level">
-      <div class="level-left">
-        <h1 class="level-item title">{{timeline?.title}}</h1>
-      </div>
-      <div class="level-right">
-        <div class="field has-addons">
-          <p class="control">
-            <a class="button" [class.is-primary]="align==-1" (click)="align=-1">
-              <span class="icon is-small">
-                <i class="fas fa-align-left"></i>
-              </span>
-            </a>
-          </p>
-          <p class="control">
-            <a class="button" [class.is-primary]="align==0" (click)="align=0">
-              <span class="icon is-small">
-                <i class="fas fa-align-center"></i>
-              </span>
-            </a>
-          </p>
-          <p class="control">
-            <a class="button" [class.is-primary]="align==1" (click)="align=1">
-              <span class="icon is-small">
-                <i class="fas fa-align-right"></i>
-              </span>
-            </a>
-          </p>
-        </div>
-      </div>
+  <section class="section" *ngIf="timeline != null">
+    <h1 class="title">
+      {{timeline.title}}
+      <p class="is-size-7 has-text-grey-light by-owner">by {{timeline.ownerName}}</p>
+    </h1>
+    <h2 class="subtitle is-size-6" style="max-width:calc(100vw/3)">{{timeline.description}}</h2>
+
+    <div class="field has-addons is-pulled-right">
+      <p class="control">
+        <a class="button" [class.is-primary]="align==-1" (click)="align=-1">
+          <span class="icon is-small">
+            <i class="fas fa-align-left"></i>
+          </span>
+        </a>
+      </p>
+      <p class="control">
+        <a class="button" [class.is-primary]="align==0" (click)="align=0">
+          <span class="icon is-small">
+            <i class="fas fa-align-center"></i>
+          </span>
+        </a>
+      </p>
+      <p class="control">
+        <a class="button" [class.is-primary]="align==1" (click)="align=1">
+          <span class="icon is-small">
+            <i class="fas fa-align-right"></i>
+          </span>
+        </a>
+      </p>
     </div>
   </section>
   <div *ngIf="!loaded">
@@ -70,7 +69,5 @@
     </div>
   </div>
 </div>
-<app-action-panel class="left-dockbg"
-  (add)="onAddMomentClicked()"
-  (edit)="onEditTimelineClicked()"
+<app-action-panel class="left-dockbg" (add)="onAddMomentClicked()" (edit)="onEditTimelineClicked()"
   (delete)="onDeleteTimelineClicked()"></app-action-panel>

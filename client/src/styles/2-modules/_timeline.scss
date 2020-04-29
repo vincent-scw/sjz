@@ -5,6 +5,11 @@
   background-color: $white
 }
 
+.by-owner {
+  display:inline; 
+  font-style: italic;
+}
+
 .editor-width-300 {
   min-width: 300px;
 }

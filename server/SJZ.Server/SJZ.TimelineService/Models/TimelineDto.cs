@@ -9,6 +9,7 @@ namespace SJZ.TimelineService.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public bool IsCompleted { get; set; }
         public PeriodGroupLevelType PeriodGroupLevel { get; set; }
         public string OwnerId { get; set; }

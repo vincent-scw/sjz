@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 export class RecordEditorComponent implements OnInit, OnDestroy {
 	model: Record = { id: '', date: new Date() };
 	timeline: Timeline;
-	editorConfig = {
+	public editorConfig = {
 		"editable": true,
 		"spellcheck": true,
 		"minHeight": "200px",
@@ -27,12 +27,9 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 		"placeholder": "Enter text here...",
 		"imageEndPoint": `${location.href.substring(0, location.href.indexOf(location.pathname))}/api/images/upload`,
 		"toolbar": [
-			["bold", "italic", "underline"],
-			["fontName", "fontSize", "color"],
-			["indent", "outdent"],
-			["cut", "copy", "delete", "removeFormat", "undo", "redo"],
-			["paragraph", "blockquote", "removeBlockquote", "horizontalLine"],
-			["link", "unlink", "image", "video"]
+			["bold", "italic"],
+			["removeFormat", "undo", "redo"],
+			["link", "unlink", "image"]
 		]
 	};
 

@@ -12,13 +12,14 @@ export enum PeriodGroupLevel {
 }
 
 export interface Timeline {
-  username?: string;
   title?: string;
+  description?: string;
   id: string;
   protectLevel: ProtectLevel;
   accessKey?: string;
   periodGroupLevel: PeriodGroupLevel;
   isCompleted: boolean;
-  startTime?: Date;
+  ownerId?: string;
+  ownerName?: string;
   items?: Record[];
 }

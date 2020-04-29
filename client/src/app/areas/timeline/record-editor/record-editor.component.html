@@ -13,7 +13,8 @@
 		</div>
 		<div class="field">
 			<div class="control">
-				<!-- <app-ngx-editor name="content" required placeholder="'Enter text here...'" [config]="editorConfig" [(ngModel)]="model.content"></app-ngx-editor> -->
+				<ngx-editor name="content" required [config]="editorConfig"
+					[(ngModel)]="model.content"></ngx-editor>
 			</div>
 		</div>
 		<button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>

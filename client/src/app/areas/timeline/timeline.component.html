@@ -39,9 +39,34 @@
       <header class="timeline-header">
         <span class="tag is-primary">{{mGroup.group}}</span>
       </header>
-      <app-timeline-item *ngFor="let record of mGroup.records"
-        [record]="record" [editable]="editable"
-        (delete)="onDelete($event)"></app-timeline-item>
+      <div class="timeline-item" *ngFor="let record of mGroup.records">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content" *ngIf="!record.editMode; else editTemplate">
+          <p class="heading">{{record.date | date: 'MMMM dd'}}</p>
+          <p [innerHTML]="record.content"></p>
+          <div class="level is-mobile" *ngIf="editable" style="padding-top: 5px">
+            <div class="level-left"></div>
+            <div class="level-right">
+              <a matTooltip="Edit" class="level-item" (click)="record.editMode = true">
+                <span class="icon is-small">
+                  <i class="fa fa-edit"></i>
+                </span>
+              </a>
+              <a matTooltip="Delete" class="level-item" (click)="delete.emit(record.recordId)">
+                <span class="icon is-small">
+                  <i class="fa fa-trash-alt"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <ng-template #editTemplate>
+          <div class="timeline-content">
+            <app-record-editor [model]="record" (complete)="record.editMode = false"></app-record-editor>
+          </div>
+        </ng-template>
+      </div>
     </div>
     <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1">
       <div class="timeline-header">

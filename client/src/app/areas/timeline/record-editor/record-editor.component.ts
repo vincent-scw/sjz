@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Record } from '../../../models/record.model';
 import { TimelineService } from '../../../services/timeline.service';
 
@@ -14,7 +13,8 @@ import { DatePipe } from '@angular/common';
 })
 
 export class RecordEditorComponent implements OnInit, OnDestroy {
-	model: Record = { id: '', date: new Date() };
+	@Input() model: Record = { id: '', date: new Date() };
+	@Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
 	timeline: Timeline;
 	public editorConfig = {
 		"editable": true,
@@ -36,19 +36,12 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	private timelineSub: Subscription;
 
 	constructor(
-		@Inject(MAT_DIALOG_DATA) public data: Record,
-		private dialogRef: MatDialogRef<RecordEditorComponent>,
 		private service: TimelineService) {
-
 	}
 
 	ngOnInit() {
-		if (this.data != null) {
-			this.model = this.data;
-		}
 		this.timelineSub = this.service.activeTimeline$.subscribe(t => {
 			this.timeline = t;
-			this.editorConfig.imageEndPoint = this.editorConfig.imageEndPoint + `?folder=${t.id}`;
 		});
 	}
 
@@ -58,10 +51,10 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 
 	onSubmit(newData: Record) {
 		this.service.insertOrReplaceRecord(this.timeline.id, newData).toPromise()
-			.then((record) => this.dialogRef.close());
+			.then(() => this.complete.emit(true));
 	}
 
 	onCancel() {
-		this.dialogRef.close();
+		this.complete.emit(false);
 	}
 }

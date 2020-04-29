@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Record } from '../../../models/record.model';
 
 @Component({
@@ -7,5 +7,8 @@ import { Record } from '../../../models/record.model';
 })
 export class TimelineItemComponent {
   @Input() record: Record;
-  @Input() editable: boolean;
+  editable: boolean = true;
+  @Output() delete: EventEmitter<string> = new EventEmitter<string>();
+
+  isReadMode: boolean = true;
 }

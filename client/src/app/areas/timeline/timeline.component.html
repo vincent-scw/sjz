@@ -40,7 +40,8 @@
         <span class="tag is-primary">{{mGroup.group}}</span>
       </header>
       <app-timeline-item *ngFor="let record of mGroup.records"
-        [record]="record" [editable]="editable"></app-timeline-item>
+        [record]="record" [editable]="editable"
+        (delete)="onDelete($event)"></app-timeline-item>
     </div>
     <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1">
       <div class="timeline-header">

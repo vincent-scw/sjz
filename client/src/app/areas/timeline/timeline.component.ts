@@ -77,12 +77,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEdit(record: Record) {
-    this.dialog.open(RecordEditorComponent, {data: record});
-  }
-
-  onDelete(record: Record) {
-    this.timelineService.deleteRecord(record.id, record.date)
+  onDelete(recordId: string) {
+    this.timelineService.deleteRecord(this.timeline.id, recordId)
       .toPromise().then(() => this.refresh());
   }
 

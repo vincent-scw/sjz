@@ -28,8 +28,8 @@ export class TimelineService {
 		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, record);
 	}
 
-	deleteRecord(topic: string, date: Date): Observable<{}> {
-		return this.http.delete(`${this.baseUrl}/api/Moments/${topic}/${date}`)
+	deleteRecord(topic: string, recordId: string): Observable<{}> {
+		return this.http.delete(`${this.baseUrl}/api/Moments/${topic}/${recordId}`)
 	}
 
 	getTimelines(): Observable<Timeline[]> {

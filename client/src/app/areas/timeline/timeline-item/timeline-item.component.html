@@ -1,17 +1,17 @@
 <div class="timeline-item">
   <div class="timeline-marker"></div>
-  <div class="timeline-content">
+  <div class="timeline-content" *ngIf="isReadMode; else editTemplate">
     <p class="heading">{{record.date | date: 'MMMM dd'}}</p>
     <p [innerHTML]="record.content"></p>
     <div class="level is-mobile" *ngIf="editable">
       <div class="level-left"></div>
       <div class="level-right">
-        <a matTooltip="Edit" class="level-item" (click)="onEdit(record)">
+        <a matTooltip="Edit" class="level-item" (click)="isReadMode = false">
           <span class="icon is-small">
             <i class="fa fa-edit"></i>
           </span>
         </a>
-        <a matTooltip="Delete" class="level-item" (click)="onDelete(record)">
+        <a matTooltip="Delete" class="level-item" (click)="delete.emit(record.id)">
           <span class="icon is-small">
             <i class="fa fa-trash-alt"></i>
           </span>
@@ -19,4 +19,10 @@
       </div>
     </div>
   </div>
+
+  <ng-template #editTemplate>
+    <div class="timeline-content">
+      <app-record-editor [model]="record" (complete)="isReadMode = true"></app-record-editor>
+    </div>
+  </ng-template>
 </div>

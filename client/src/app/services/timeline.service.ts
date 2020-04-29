@@ -9,7 +9,7 @@ import { Timeline, ProtectLevel, PeriodGroupLevel } from '../models/timeline.mod
 @Injectable()
 export class TimelineService {
 	private baseUrl: string;
-	private defaultTimeline: Timeline = { id: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byDay, isCompleted: false };
+	private defaultTimeline: Timeline = { timelineId: '', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byDay, isCompleted: false };
 	activeTimeline$ = new BehaviorSubject<Timeline>(this.defaultTimeline);
 
 	constructor(private http: HttpClient) {
@@ -25,9 +25,7 @@ export class TimelineService {
 	}
 
 	insertOrReplaceRecord(timelineId: string, record: Record): Observable<Record> {
-		const payload = { ...record, recordId: record.id };
-		console.log(payload)
-		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, payload);
+		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, record);
 	}
 
 	deleteRecord(topic: string, recordId: string): Observable<{}> {
@@ -51,6 +49,6 @@ export class TimelineService {
 	}
 
 	verifyAccessCode(timeline: Timeline): Observable<boolean> {
-		return this.http.post<boolean>(`${this.baseUrl}/api/Timelines/${timeline.id}/verify`, timeline);
+		return this.http.post<boolean>(`${this.baseUrl}/api/Timelines/${timeline.timelineId}/verify`, timeline);
 	}
 }

@@ -14,12 +14,14 @@ namespace SJZ.TimelineService
         public AutoMapping()
         {
             CreateMap<Timeline, TimelineDto>()
+                .ForMember(t => t.TimelineId, o => o.MapFrom(s => s.Id))
                 .ForMember(t => t.PeriodGroupLevel, o => o.MapFrom(s => Enumeration.ParseCodeToEnum<PeriodGroupLevelType>(s.PeriodGroupLevel)))
                 .ForMember(t => t.OwnerId, o => o.MapFrom(s => s.CreatedBy))
                 .ForMember(t => t.OwnerName, o => o.MapFrom(s => s.Username))
                 .ForMember(t => t.LastChanged, o => o.MapFrom(s => s.UpdatedDate ?? s.CreatedDate));
 
-            CreateMap<Record, RecordDto>();
+            CreateMap<Record, RecordDto>()
+                .ForMember(t => t.RecordId, o => o.MapFrom(s => s.Id));
         }
     }
 }

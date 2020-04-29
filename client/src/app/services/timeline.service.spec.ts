@@ -32,8 +32,8 @@ describe('TimelineService', () => {
   describe('#getTimelines', () => {
     it('should return timelines from the mock httpclient', () => {
       const stubValues: Timeline[] = [
-        { id: 'topic1', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byYear, isCompleted: true },
-        { id: 'topic2', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byMonth, isCompleted: false }
+        { timelineId: 'topic1', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byYear, isCompleted: true },
+        { timelineId: 'topic2', protectLevel: ProtectLevel.public, periodGroupLevel: PeriodGroupLevel.byMonth, isCompleted: false }
       ];
 
       service.getTimelines().subscribe(timelines => {

@@ -14,7 +14,7 @@ export enum PeriodGroupLevel {
 export interface Timeline {
   title?: string;
   description?: string;
-  id: string;
+  timelineId: string;
   protectLevel: ProtectLevel;
   accessKey?: string;
   periodGroupLevel: PeriodGroupLevel;

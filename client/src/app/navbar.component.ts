@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.authSvc.initAuth();
 		this.timelines$ = this.timelineService.getTimelines();
-		this.timelineSub = this.timelineService.activeTimeline$.subscribe(t => this.activeTopicKey = t.id);
+		this.timelineSub = this.timelineService.activeTimeline$.subscribe(t => this.activeTopicKey = t.timelineId);
 		this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
 	}
 

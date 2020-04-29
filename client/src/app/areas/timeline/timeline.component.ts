@@ -78,7 +78,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onDelete(recordId: string) {
-    this.timelineService.deleteRecord(this.timeline.id, recordId)
+    this.timelineService.deleteRecord(this.timeline.timelineId, recordId)
       .toPromise().then(() => this.refresh());
   }
 
@@ -106,17 +106,17 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onEditTimelineClicked() {
-    this.router.navigateByUrl(`timeline/${this.timeline.id}/edit`);
+    this.router.navigateByUrl(`timeline/${this.timeline.timelineId}/edit`);
   }
 
   onDeleteTimelineClicked() {
     if (confirm('Are you sure to delete it?')) {
-      this.timelineService.deleteTimeline(this.timeline.id).toPromise();
+      this.timelineService.deleteTimeline(this.timeline.timelineId).toPromise();
     }
   }
 
   onAddMomentClicked() {
-    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.id } })
+    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.timelineId } })
       .afterClosed().toPromise().then(() => this.refresh());
   }
 }

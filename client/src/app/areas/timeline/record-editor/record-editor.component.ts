@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
 })
 
 export class RecordEditorComponent implements OnInit, OnDestroy {
-	@Input() model: Record = { id: '', date: new Date() };
+	@Input() model: Record = { recordId: '', date: new Date() };
 	@Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
 	timeline: Timeline;
 	public editorConfig = {
@@ -50,7 +50,7 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit(newData: Record) {
-		this.service.insertOrReplaceRecord(this.timeline.id, newData).toPromise()
+		this.service.insertOrReplaceRecord(this.timeline.timelineId, newData).toPromise()
 			.then(() => this.complete.emit(true));
 	}
 

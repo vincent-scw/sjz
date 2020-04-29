@@ -7,7 +7,7 @@ namespace SJZ.TimelineService.Models
 {
     public class TimelineDto
     {
-        public string Id { get; set; }
+        public string TimelineId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsCompleted { get; set; }

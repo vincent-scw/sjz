@@ -17,11 +17,16 @@
 					[(ngModel)]="model.content"></ngx-editor> -->
 				<mat-form-field>
 					<mat-label>Content</mat-label>
-					<textarea matInput placeholder="Input something here..." 
-						name="content" [(ngModel)]="model.content" required></textarea>
+					<textarea matInput placeholder="Input something here..." name="content" [(ngModel)]="model.content"
+						required></textarea>
 				</mat-form-field>
 			</div>
 		</div>
-		<button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+		<div class="level is-mobile">
+			<div class="level-left"></div>
+			<div class="level-right">
+				<button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+			</div>
+		</div>
 	</form>
 </div>

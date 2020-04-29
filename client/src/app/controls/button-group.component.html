@@ -1,12 +1,16 @@
 <div class="field is-grouped">
-    <p class="control">
-        <a class="button is-link" (click)="onSubmit()" [attr.disabled]="isValid ? null: true">
-            Submit
-        </a>
-    </p>
-    <p class="control">
-        <a class="button is-light" (click)="onCancel()">
-            Cancel
-        </a>
-    </p>
+  <p class="control">
+    <a (click)="onSubmit()" matTooltip="Submit" [attr.disabled]="isValid ? null: true">
+      <span class="icon has-text-success is-medium">
+        <i class="fas fa-check-square fa-lg"></i>
+      </span>
+    </a>
+  </p>
+  <p class="control">
+    <a (click)="onCancel()" matTooltip="Cancel">
+      <span class="icon has-text-danger is-medium">
+        <i class="fas fa-ban fa-lg"></i>
+      </span>
+    </a>
+  </p>
 </div>

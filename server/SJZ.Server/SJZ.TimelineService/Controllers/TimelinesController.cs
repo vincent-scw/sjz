@@ -53,7 +53,7 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpsertAsnyc([FromBody]UpsertTimelineCommand command)
+        public async Task<IActionResult> UpsertAsnyc([FromBody] UpsertTimelineCommand command)
         {
             var result = await _mediator.Send(command);
             if (string.IsNullOrEmpty(result))
@@ -73,6 +73,22 @@ namespace SJZ.TimelineService.Controllers
                 return BadRequest();
             else
                 return Ok(new { TimelineId = timelineId, RecordId = result });
+        }
+
+        [HttpDelete("{timelineId}")]
+        public async Task<IActionResult> DeleteAsync(string timelineId)
+        {
+            var command = new DeleteCommand { TimelineId = timelineId };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{timelineId}/Records/{recordId}")]
+        public async Task<IActionResult> DeleteAsync(string timelineId, string recordId)
+        {
+            var command = new DeleteCommand { TimelineId = timelineId, RecordId = recordId };
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

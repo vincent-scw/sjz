@@ -2,6 +2,7 @@
 using SJZ.Timelines.Domain.TimelineAggregate;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SJZ.Timelines.Repository
@@ -38,7 +39,8 @@ namespace SJZ.Timelines.Repository
             if (timeline == null)
                 return null;
 
-            timeline.AddItems((await _records.FindAsync(r => r.TimelineId == timeline.Id)).ToList());
+            var records = (await _records.FindAsync(r => r.TimelineId == timeline.Id)).ToList();
+            timeline.AddItems(records.OrderBy(x => x.Date).ToList());
             return timeline;
         }
 

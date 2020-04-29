@@ -1,11 +1,9 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, Injector } from '@angular/core';
 import { Record } from '../../../models/record.model';
 import { TimelineService } from '../../../services/timeline.service';
-
-import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { Timeline } from '../../../models/timeline.model';
-import { DatePipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-record-editor',
@@ -34,9 +32,12 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	};
 
 	private timelineSub: Subscription;
+	private dialogRef: MatDialogRef<RecordEditorComponent>;
 
 	constructor(
+		private injector: Injector,
 		private service: TimelineService) {
+		this.dialogRef = injector.get(MatDialogRef, null);
 	}
 
 	ngOnInit() {
@@ -51,10 +52,14 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 
 	onSubmit(newData: Record) {
 		this.service.insertOrReplaceRecord(this.timeline.timelineId, newData).toPromise()
-			.then(() => this.complete.emit(true));
+			.then(() => {
+				this.complete.emit(true);
+				this.dialogRef && this.dialogRef.close();
+			});
 	}
 
 	onCancel() {
 		this.complete.emit(false);
+		this.dialogRef && this.dialogRef.close();
 	}
 }

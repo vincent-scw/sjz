@@ -7,7 +7,7 @@ import { Record } from '../../../models/record.model';
 })
 export class TimelineItemComponent {
   @Input() record: Record;
-  editable: boolean = true;
+  @Input() editable: boolean;
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 
   isReadMode: boolean = true;

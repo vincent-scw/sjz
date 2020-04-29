@@ -87,10 +87,10 @@ export class TimelineComponent implements OnInit, OnDestroy {
     let groupKey: string;
     switch (level) {
       case PeriodGroupLevel.byDay:
-        groupKey = this.datePipe.transform(date, 'yyyy-MM-dd');
+        groupKey = this.datePipe.transform(date, 'MMMM dd, yyyy');
         break;
       case PeriodGroupLevel.byMonth:
-        groupKey = this.datePipe.transform(date, 'yyyy-MM');
+        groupKey = this.datePipe.transform(date, 'MMMM yyyy');
         break;
       case PeriodGroupLevel.byYear:
         groupKey = this.datePipe.transform(date, 'yyyy');
@@ -116,7 +116,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onAddMomentClicked() {
-    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.timelineId } })
+    this.dialog.open(RecordEditorComponent)
       .afterClosed().toPromise().then(() => this.refresh());
   }
 }

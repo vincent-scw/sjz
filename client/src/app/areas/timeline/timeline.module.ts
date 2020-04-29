@@ -5,6 +5,7 @@ import { TimelineRoutingModule } from './timeline-routing.module';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { TimelineEditorComponent } from './timeline-editor/timeline-editor.component';
+import { TimelineItemComponent } from './timeline-item/timeline-item.component';
 import { ActionPanelComponent } from './action-panel/action-panel.component';
 import { TimelineAccessGuard } from '../../services/timeline-access-guard.service';
 
@@ -17,6 +18,7 @@ import { TimelineAccessGuard } from '../../services/timeline-access-guard.servic
     TimelineComponent,
     RecordEditorComponent,
     TimelineEditorComponent,
+    TimelineItemComponent,
     ActionPanelComponent
   ],
   providers: [

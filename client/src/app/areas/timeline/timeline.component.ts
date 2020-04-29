@@ -24,9 +24,11 @@ export class TimelineComponent implements OnInit, OnDestroy {
   editable: boolean;
   align: number = -1;
 
+  private topicKey: string;
   private timelineSubscription: Subscription;
   private momentsSubscription: Subscription;
   private editableSub: Subscription;
+  private routeSub: Subscription;
 
   private timeline$: Observable<Timeline>;
 
@@ -42,14 +44,27 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.timeline$ = this.activatedRoute.paramMap.pipe(
-      switchMap((params: ParamMap) => this.timelineService.getTimeline(params.get('timeline')))
-    );
-    
+    this.routeSub = this.activatedRoute.paramMap.subscribe((params) => {
+      this.topicKey = params.get('timeline');
+      this.timeline$ = this.timelineService.getTimeline(this.topicKey);
+      this.refresh();
+    })
+
+    this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
+  }
+
+  ngOnDestroy() {
+    if (!!this.timelineSubscription) { this.timelineSubscription.unsubscribe(); }
+    if (!!this.momentsSubscription) { this.momentsSubscription.unsubscribe(); }
+    if (!!this.editableSub) { this.editableSub.unsubscribe(); }
+    if (!!this.routeSub) { this.routeSub.unsubscribe(); }
+  }
+
+  refresh() {
     this.timelineSubscription = this.timeline$.subscribe((t) => {
       this.groupedRecords = new Array();
       this.loaded = false;
-      
+
       this.timeline = t;
       this.timelineService.activeTimeline = this.timeline;
       this.title.setTitle(`${t.title} | 时间轴`);
@@ -60,14 +75,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
       this.loaded = true;
     });
-
-    this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
-  }
-
-  ngOnDestroy() {
-    if (!!this.timelineSubscription) { this.timelineSubscription.unsubscribe(); }
-    if (!!this.momentsSubscription) { this.momentsSubscription.unsubscribe(); }
-    if (!!this.editableSub) { this.editableSub.unsubscribe(); }
   }
 
   onEdit(record: Record) {
@@ -75,7 +82,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onDelete(record: Record) {
-    this.timelineService.deleteRecord(record.id, record.date).toPromise();
+    this.timelineService.deleteRecord(record.id, record.date)
+      .toPromise().then(() => this.refresh());
   }
 
   groupByLevel(level: PeriodGroupLevel, m: Record) {
@@ -112,6 +120,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onAddMomentClicked() {
-    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.id } });
+    this.dialog.open(RecordEditorComponent, { data: { topicKey: this.timeline.id } })
+      .afterClosed().toPromise().then(() => this.refresh());
   }
 }

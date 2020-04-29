@@ -25,7 +25,9 @@ export class TimelineService {
 	}
 
 	insertOrReplaceRecord(timelineId: string, record: Record): Observable<Record> {
-		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, record);
+		const payload = { ...record, recordId: record.id };
+		console.log(payload)
+		return this.http.post<Record>(`${this.baseUrl}/api/Timelines/${timelineId}/Records`, payload);
 	}
 
 	deleteRecord(topic: string, recordId: string): Observable<{}> {

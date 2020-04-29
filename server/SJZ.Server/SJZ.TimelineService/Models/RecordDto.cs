@@ -7,7 +7,8 @@ namespace SJZ.TimelineService.Models
 {
     public class RecordDto
     {
-        public string Content { get; private set; }
-        public DateTimeOffset Date { get; private set; }
+        public string Id { get; set; }
+        public string Content { get; set; }
+        public DateTimeOffset Date { get; set; }
     }
 }

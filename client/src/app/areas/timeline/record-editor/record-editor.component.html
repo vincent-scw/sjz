@@ -5,16 +5,22 @@
 		<div class="field">
 			<div class="control">
 				<mat-form-field>
-					<input matInput required name="date" [(ngModel)]="model.date" placeholder="Record Date">
-					<!-- <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-					<mat-datepicker #myDatepicker></mat-datepicker> -->
+					<mat-label>Choose record date</mat-label>
+					<input matInput required name="date" [(ngModel)]="model.date" [matDatepicker]="picker">
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
 				</mat-form-field>
 			</div>
 		</div>
 		<div class="field">
 			<div class="control">
-				<ngx-editor name="content" required [config]="editorConfig"
-					[(ngModel)]="model.content"></ngx-editor>
+				<!-- <ngx-editor name="content" required [config]="editorConfig"
+					[(ngModel)]="model.content"></ngx-editor> -->
+				<mat-form-field>
+					<mat-label>Content</mat-label>
+					<textarea matInput placeholder="Input something here..." 
+						name="content" [(ngModel)]="model.content" required></textarea>
+				</mat-form-field>
 			</div>
 		</div>
 		<button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>

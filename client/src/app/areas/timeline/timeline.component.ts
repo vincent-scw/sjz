@@ -99,7 +99,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
     } else {
       grouped.records.push(m);
     }
-    console.log(this.groupedRecords)
   }
 
   onEditTimelineClicked() {

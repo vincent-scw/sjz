@@ -43,7 +43,6 @@ export class MomentEditorComponent implements OnInit {
   }
 
   onSubmit(data: Moment) {
-    console.log(data);
     this.recordService.insertOrReplaceRecord(data).toPromise()
       .then((_) => this.dialogRef.close());
   }

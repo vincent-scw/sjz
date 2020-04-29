@@ -100,12 +100,10 @@ export class AuthService implements OnDestroy {
   }
 
   login() {
-    console.log('start login');
     this.oidcSecurityService.authorize();
   }
 
   logout() {
-    console.log('start logoff');
     this.oidcSecurityService.logoff();
   }
 

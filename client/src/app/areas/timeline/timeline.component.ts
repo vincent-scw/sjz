@@ -11,6 +11,7 @@ import { RecordEditorComponent } from './record-editor/record-editor.component';
 import { Timeline, PeriodGroupLevel } from '../../models/timeline.model';
 import { AuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
+import { TimelineEditorComponent } from './timeline-editor/timeline-editor.component';
 
 @Component({
   selector: 'app-timeline',
@@ -107,7 +108,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onEditTimelineClicked() {
-    this.router.navigateByUrl(`timeline/${this.timeline.timelineId}/edit`);
+    this.dialog.open(TimelineEditorComponent, { data: this.timeline })
+      .afterClosed().toPromise().then(() => this.refresh());
   }
 
   onDeleteTimelineClicked() {

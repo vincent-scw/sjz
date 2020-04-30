@@ -23,6 +23,7 @@ import { ImageService } from './services/image.service';
 import { FooterComponent } from './footer.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { MomentService } from './services/moment.service';
+import { TimelineEditorComponent } from './areas/timeline/timeline-editor/timeline-editor.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MomentService } from './services/moment.service';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   entryComponents: [
-    AccessKeyDialogComponent
+    AccessKeyDialogComponent,
+    TimelineEditorComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MomentEditorComponent } from './areas/moment/moment-editor/moment-editor.component';
 import { User } from './models/user.model';
+import { TimelineEditorComponent } from './areas/timeline/timeline-editor/timeline-editor.component';
 
 @Component({
 	selector: 'app-navbar',
@@ -39,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 		this.userDataSubscription = authSvc.userData$.subscribe(userData => {
 			this.userData = userData;
-			this.timelines$ = this.timelineService.getTimelines(userData.sub);
+			this.refresh();
 		});
 
 		this.getYears();
@@ -58,6 +59,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		if (!!this.userDataSubscription) { this.userDataSubscription.unsubscribe(); }
 	}
 
+	refresh() {
+		this.timelines$ = this.timelineService.getTimelines(this.userData.sub);
+	}
+
 	getYears() {
 		var today = new Date();
 		for (var i = 2017; i <= today.getFullYear(); i++) {
@@ -71,5 +76,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 	logout() {
 		this.authSvc.logout();
+	}
+
+	createNew() {
+		this.dialog.open(TimelineEditorComponent, { data: {} })
+			.afterClosed().toPromise().then(() => this.refresh());
 	}
 }

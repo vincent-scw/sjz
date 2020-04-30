@@ -34,9 +34,9 @@
 								</div>
 							</div>
 						</a>
-						<hr class="navbar-divider" *ngIf="editable">
-						<a class="navbar-item" routerLink="/timeline/create" *ngIf="editable">
-							Add New
+						<hr class="navbar-divider">
+						<a class="navbar-item" (click)="createNew()">
+							Create New Timeline
 						</a>
 					</div>
 				</div>
@@ -51,9 +51,9 @@
 						</a>
 					</div>
 				</div> -->
-				<a class="navbar-item" routerLink="/manage/images" *ngIf="editable" (click)="burgerActive = false">
+				<!-- <a class="navbar-item" routerLink="/manage/images" *ngIf="editable" (click)="burgerActive = false">
 					My Images
-				</a>
+				</a> -->
 			</div>
 
 			<div class="navbar-end">

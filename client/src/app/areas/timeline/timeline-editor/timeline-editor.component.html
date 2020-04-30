@@ -1,13 +1,15 @@
-<div class="t-content">
-  <section class="section">
-    <h2 class="subtitle">Edit Timeline</h2>
+<div class="t-content editor-container">
+  <section style="margin-bottom: 2rem;">
+    <h2 class="subtitle">{{model.timelineId ? 'Edit Timeline': 'Create Timeline'}}</h2>
   </section>
   <form name="form" #form="ngForm">
     <input hidden name="timelineId" [(ngModel)]="model.timelineId">
     <div class="field">
       <div class="control">
-        <mat-form-field>
-          <input matInput required name="title" [(ngModel)]="model.title" placeholder="Title">
+        <mat-form-field class="is-fullwidth">
+          <input matInput #input required name="title" maxlength="50"
+            [(ngModel)]="model.title" placeholder="Title">
+          <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -28,26 +30,38 @@
     </div> -->
     <div class="field">
       <div class="control">
-        <mat-radio-group name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" placeholder="Period Group Level">
-          <mat-radio-button value="ByDay">By Day</mat-radio-button>
-          <mat-radio-button value="ByMonth">By Month</mat-radio-button>
-          <mat-radio-button value="ByYear">By Year</mat-radio-button>
-        </mat-radio-group>
+        <label>Period Group:</label>
+        <mat-select name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" 
+          placeholder="Period Group Level" required>
+          <mat-option value="ByDay">By Day</mat-option>
+          <mat-option value="ByMonth">By Month</mat-option>
+          <mat-option value="ByYear">By Year</mat-option>
+        </mat-select>
+        <mat-hint>Records will be grouped by period group.</mat-hint>
       </div>
     </div>
     <div class="field">
       <div class="control">
-        <mat-form-field>
-          <textarea matInput required name="description" [(ngModel)]="model.description" placeholder="Description"></textarea>
+        <mat-form-field class="is-fullwidth">
+          <textarea matInput #text maxlength="400" rows="5"
+            name="description" [(ngModel)]="model.description"
+            placeholder="Description"></textarea>
+          <mat-hint align="end">{{text.value?.length || 0}}/400</mat-hint>
         </mat-form-field>
       </div>
     </div>
     <div class="field">
       <div class="control">
         <mat-slide-toggle name="isCompleted" [(ngModel)]="model.isCompleted">Completed?</mat-slide-toggle>
+        <mat-hint style="display: block;">End or To be continued...?</mat-hint>
       </div>
     </div>
-    
-    <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+
+    <div class="level is-mobile">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+      </div>
+    </div>
   </form>
 </div>

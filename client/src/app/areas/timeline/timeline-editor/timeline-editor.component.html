@@ -3,13 +3,7 @@
     <h2 class="subtitle">Edit Timeline</h2>
   </section>
   <form name="form" #form="ngForm">
-    <div class="field">
-      <div class="control">
-        <mat-form-field>
-          <input matInput required name="timelineId" [(ngModel)]="model.timelineId" placeholder="Key">
-        </mat-form-field>
-      </div>
-    </div>
+    <input hidden name="timelineId" [(ngModel)]="model.timelineId">
     <div class="field">
       <div class="control">
         <mat-form-field>
@@ -35,16 +29,16 @@
     <div class="field">
       <div class="control">
         <mat-radio-group name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" placeholder="Period Group Level">
-          <mat-radio-button value="ByDay">By Day</mat-radio-button>
-          <mat-radio-button value="ByMonth">By Month</mat-radio-button>
-          <mat-radio-button value="ByYear">By Year</mat-radio-button>
+          <mat-radio-button value="1">By Day</mat-radio-button>
+          <mat-radio-button value="2">By Month</mat-radio-button>
+          <mat-radio-button value="3">By Year</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
     <div class="field">
       <div class="control">
         <mat-form-field>
-          <input matInput required name="description" [(ngModel)]="model.description" placeholder="Description">
+          <textarea matInput required name="description" [(ngModel)]="model.description" placeholder="Description"></textarea>
         </mat-form-field>
       </div>
     </div>

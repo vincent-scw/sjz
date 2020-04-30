@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SJZ.Timelines.Domain;
 using SJZ.Timelines.Repository;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace SJZ.TimelineService.Commands
 
         public async Task<Unit> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
+            var timeline = await _timelineRepository.GetAsync(request.TimelineId);
+            if (timeline == null)
+                throw new DomainException("TimelineNotFound");
+            if (timeline.CreatedBy != request.UserId)
+                throw new DomainException("AccessDenid");
+
             if (string.IsNullOrEmpty(request.RecordId))
             {
                 await _timelineRepository.DeleteAsync(request.TimelineId);

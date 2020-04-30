@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SJZ.Timelines.Domain.TimelineAggregate;
@@ -53,8 +55,12 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpsertAsnyc([FromBody] UpsertTimelineCommand command)
         {
+            command.UserId ??= GetUserId();
+            command.Username ??= GetUserName();
+
             var result = await _mediator.Send(command);
             if (string.IsNullOrEmpty(result))
                 return BadRequest(); 
@@ -63,10 +69,11 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpPost("{timelineId}/Records")]
+        [Authorize]
         public async Task<IActionResult> UpsertAsync(string timelineId, [FromBody] UpsertRecordCommand command)
         {
-            if (string.IsNullOrEmpty(command.TimelineId))
-                command.TimelineId = timelineId;
+            command.TimelineId ??= timelineId;
+            command.UserId ??= GetUserId();
 
             var result = await _mediator.Send(command);
             if (string.IsNullOrEmpty(result))
@@ -76,19 +83,33 @@ namespace SJZ.TimelineService.Controllers
         }
 
         [HttpDelete("{timelineId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync(string timelineId)
         {
-            var command = new DeleteCommand { TimelineId = timelineId };
+            var command = new DeleteCommand { TimelineId = timelineId, UserId = GetUserId() };
             await _mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{timelineId}/Records/{recordId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync(string timelineId, string recordId)
         {
-            var command = new DeleteCommand { TimelineId = timelineId, RecordId = recordId };
+            var command = new DeleteCommand { TimelineId = timelineId, RecordId = recordId, UserId = GetUserId() };
             await _mediator.Send(command);
             return NoContent();
+        }
+
+        private string GetUserId()
+        {
+            var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return idClaim.Value;
+        }
+
+        private string GetUserName()
+        {
+            var nameClaim = User.FindFirst("name");
+            return nameClaim.Value;
         }
     }
 }

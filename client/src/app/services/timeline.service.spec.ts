@@ -41,7 +41,7 @@ describe('TimelineService', () => {
         expect(timelines).toEqual(stubValues)
       });
       
-      const req = httpMock.expectOne(`${environment.apiServerUrl}/api/Timelines`);
+      const req = httpMock.expectOne(`${environment.timelineSvcUrl}/api/Timelines`);
       expect(req.request.method).toBe("GET");
       req.flush(stubValues);
     });

@@ -9,7 +9,7 @@ export class MomentService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = environment.apiServerUrl;
+    this.baseUrl = environment.timelineSvcUrl;
   }
 
   getRecords(year: number): Observable<Moment[]> {

@@ -23,19 +23,19 @@ export class AuthService implements OnDestroy {
   }
 
   public initAuth() {
-    const authUrl = environment.authUrl
+    const authUrl = environment.authSvcUrl
     const openIdConfiguration: OpenIdConfiguration = {
       stsServer: authUrl,
-      redirect_url: 'http://localhost:4200',
+      redirect_url: environment.selfUrl,
       client_id: 'spa',
       response_type: 'code',
       scope: 'openid profile timelineapi ups',
       post_login_route: '/',
       forbidden_route: '/forbidden',
       unauthorized_route: '/unauthorized',
-      post_logout_redirect_uri: 'http://localhost:4200',
+      post_logout_redirect_uri: environment.selfUrl,
       silent_renew: true,
-      silent_renew_url: 'http://localhost:4200/silent-renew.html',
+      silent_renew_url: `${environment.selfUrl}/silent-renew.html`,
       silent_renew_offset_in_seconds: 60,
       history_cleanup_off: true,
       auto_userinfo: true,

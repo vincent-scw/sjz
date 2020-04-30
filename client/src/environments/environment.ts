@@ -5,6 +5,8 @@
 
 export const environment = {
   production: false,
-  apiServerUrl: 'https://localhost:5031',
-  authUrl: 'https://localhost:5011'
+  timelineSvcUrl: 'https://localhost:5031',
+  authSvcUrl: 'https://localhost:5011',
+  imageSvcUrl: 'https://localhost:5021',
+  selfUrl: 'http://localhost:4200'
 };

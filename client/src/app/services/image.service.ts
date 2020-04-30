@@ -9,7 +9,7 @@ export class ImageService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = environment.apiServerUrl;
+    this.baseUrl = environment.imageSvcUrl;
   }
 
   getImageUrls(timeline?: string): Observable<string[]> {

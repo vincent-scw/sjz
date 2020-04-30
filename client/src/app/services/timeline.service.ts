@@ -13,7 +13,7 @@ export class TimelineService {
 	activeTimeline$ = new BehaviorSubject<Timeline>(this.defaultTimeline);
 
 	constructor(private http: HttpClient) {
-		this.baseUrl = environment.apiServerUrl;
+		this.baseUrl = environment.timelineSvcUrl;
 	}
 
 	get activeTimeline(): Timeline {

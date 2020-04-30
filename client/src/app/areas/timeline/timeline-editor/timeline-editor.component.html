@@ -7,9 +7,9 @@
     <div class="field">
       <div class="control">
         <mat-form-field class="is-fullwidth">
-          <input matInput #input required name="title" maxlength="50"
-            [(ngModel)]="model.title" placeholder="Title">
+          <input matInput #input required name="title" maxlength="50" [(ngModel)]="model.title" placeholder="Title">
           <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
+          <mat-error *ngIf="model.title == null || model.title == ''">Title is required.</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -30,21 +30,21 @@
     </div> -->
     <div class="field">
       <div class="control">
-        <label>Period Group:</label>
-        <mat-select name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" 
-          placeholder="Period Group Level" required>
-          <mat-option value="ByDay">By Day</mat-option>
-          <mat-option value="ByMonth">By Month</mat-option>
-          <mat-option value="ByYear">By Year</mat-option>
-        </mat-select>
-        <mat-hint>Records will be grouped by period group.</mat-hint>
+        <mat-form-field class="is-fullwidth">
+          <mat-select name="periodGroupLevel" [(ngModel)]="model.periodGroupLevel" placeholder="Period Group Level"
+            required>
+            <mat-option value="ByDay">By Day</mat-option>
+            <mat-option value="ByMonth">By Month</mat-option>
+            <mat-option value="ByYear">By Year</mat-option>
+          </mat-select>
+          <mat-hint>Records will be grouped by period group.</mat-hint>
+        </mat-form-field>
       </div>
     </div>
     <div class="field">
       <div class="control">
         <mat-form-field class="is-fullwidth">
-          <textarea matInput #text maxlength="400" rows="5"
-            name="description" [(ngModel)]="model.description"
+          <textarea matInput #text maxlength="400" rows="5" name="description" [(ngModel)]="model.description"
             placeholder="Description"></textarea>
           <mat-hint align="end">{{text.value?.length || 0}}/400</mat-hint>
         </mat-form-field>

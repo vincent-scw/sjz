@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Timeline } from '../../../models/timeline.model';
+import { Timeline, PeriodGroupLevel } from '../../../models/timeline.model';
 import { TimelineService } from '../../../services/timeline.service';
 
 

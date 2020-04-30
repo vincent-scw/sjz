@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Timeline } from './models/timeline.model';
+import { Timeline, PeriodGroupLevel } from './models/timeline.model';
 import { TimelineService } from './services/timeline.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	createNew() {
-		this.dialog.open(TimelineEditorComponent, { data: {} })
+		this.dialog.open(TimelineEditorComponent, { data: { periodGroupLevel: PeriodGroupLevel.byDay} })
 			.afterClosed().toPromise().then(() => this.refresh());
 	}
 }

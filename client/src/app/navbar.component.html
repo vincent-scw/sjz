@@ -49,10 +49,6 @@
 							(click)="burgerActive = false">
 							My {{item}}
 						</a>
-						<hr class="navbar-divider" *ngIf="editable">
-						<a class="navbar-item" (click)="onAddNewRecordClicked()" *ngIf="editable">
-							Add New
-						</a>
 					</div>
 				</div>
 				<a class="navbar-item" routerLink="/manage/images" *ngIf="editable" (click)="burgerActive = false">

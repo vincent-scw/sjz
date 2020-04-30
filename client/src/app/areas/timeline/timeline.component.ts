@@ -49,8 +49,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
       this.timeline$ = this.timelineService.getTimeline(this.topicKey);
       this.refresh();
     })
-
-    this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
   }
 
   ngOnDestroy() {
@@ -72,6 +70,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
       t.items && t.items.forEach(i => {
         this.groupByLevel(this.timeline.periodGroupLevel, i);
       });
+
+      this.editableSub = this.authSvc.userData$
+        .subscribe(u => this.editable = u.sub == this.timeline?.ownerId);
 
       this.loaded = true;
     });

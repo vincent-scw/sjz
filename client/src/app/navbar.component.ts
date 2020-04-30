@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 		this.userDataSubscription = authSvc.userData$.subscribe(userData => {
 			this.userData = userData;
+			this.timelines$ = this.timelineService.getTimelines(userData.sub);
 		});
 
 		this.getYears();
@@ -46,7 +47,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.authSvc.initAuth();
-		this.timelines$ = this.timelineService.getTimelines();
 		this.timelineSub = this.timelineService.activeTimeline$.subscribe(t => this.activeTopicKey = t.timelineId);
 		this.editableSub = this.authSvc.isAuthorized$.subscribe(l => this.editable = l);
 	}
@@ -56,11 +56,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		if (!!this.editableSub) { this.editableSub.unsubscribe(); }
 		if (!!this.isAuthorizedSubscription) { this.isAuthorizedSubscription.unsubscribe(); }
 		if (!!this.userDataSubscription) { this.userDataSubscription.unsubscribe(); }
-	}
-
-	async onAddNewRecordClicked() {
-		const dialogRef = this.dialog.open(MomentEditorComponent);
-		await dialogRef.afterClosed().toPromise();
 	}
 
 	getYears() {

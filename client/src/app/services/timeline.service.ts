@@ -32,8 +32,11 @@ export class TimelineService {
 		return this.http.delete(`${this.baseUrl}/api/Timelines/${timelineId}/Records/${recordId}`);
 	}
 
-	getTimelines(): Observable<Timeline[]> {
-		return this.http.get<Timeline[]>(`${this.baseUrl}/api/Timelines`);
+	getTimelines(userId?: string): Observable<Timeline[]> {
+		if (userId == null)
+			return this.http.get<Timeline[]>(`${this.baseUrl}/api/Timelines`);
+		else
+			return this.http.get<Timeline[]>(`${this.baseUrl}/api/Timelines?userId=${userId}`);
 	}
 
 	getTimeline(topicKey: string): Observable<Timeline> {

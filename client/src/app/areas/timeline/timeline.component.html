@@ -75,5 +75,7 @@
     </div>
   </div>
 </div>
-<app-action-panel class="left-dockbg" (add)="onAddMomentClicked()" (edit)="onEditTimelineClicked()"
+<app-action-panel class="left-dockbg" *ngIf="editable"
+  (add)="onAddMomentClicked()" 
+  (edit)="onEditTimelineClicked()"
   (delete)="onDeleteTimelineClicked()"></app-action-panel>

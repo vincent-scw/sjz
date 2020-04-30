@@ -24,6 +24,6 @@ namespace SJZ.TimelineService.Commands
         [DataMember]
         public bool IsCompleted { get; set; }
         [DataMember]
-        public PeriodGroupLevelType PeriodLevel { get; set; }
+        public PeriodGroupLevelType PeriodGroupLevel { get; set; }
     }
 }

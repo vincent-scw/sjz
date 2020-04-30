@@ -1,14 +1,14 @@
 import { Record } from './record.model';
 
 export enum ProtectLevel {
-  public = 1,
-  protect = 2
+  public = 'Public',
+  protect = 'Protected'
 }
 
 export enum PeriodGroupLevel {
-  byDay = 1,
-  byMonth = 2,
-  byYear = 3
+  byDay = 'ByDay',
+  byMonth = 'ByMonth',
+  byYear = 'ByYear'
 }
 
 export interface Timeline {

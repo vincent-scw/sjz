@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
@@ -31,6 +32,11 @@ namespace SJZ.OAuthService
                 var channel = GrpcChannel.ForAddress(Environment.GetEnvironmentVariable("UPS_SVC"),
                     new GrpcChannelOptions
                     {
+                        HttpClient = new HttpClient(new HttpClientHandler
+                        {
+                            // Trust certificates for debugging purpose
+                            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                        }),
                         LoggerFactory = LoggerFactory.Create(logging =>
                         {
                             logging.AddConsole();

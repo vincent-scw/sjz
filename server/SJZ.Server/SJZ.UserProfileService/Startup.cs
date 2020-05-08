@@ -37,7 +37,7 @@ namespace SJZ.UserProfileService
 
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddGrpc();
+            services.AddGrpc(options => options.EnableDetailedErrors = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -23,7 +23,7 @@ export class AuthService implements OnDestroy {
   }
 
   public initAuth() {
-    const authUrl = environment.authSvcUrl
+    const authUrl = environment.authSvcUrl;
     const openIdConfiguration: OpenIdConfiguration = {
       stsServer: authUrl,
       redirect_url: environment.selfUrl,

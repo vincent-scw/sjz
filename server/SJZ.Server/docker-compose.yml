@@ -18,6 +18,25 @@ services:
     volumes:
       - ~/.aspnet/https:/https:ro
 
+  oauthsvc:
+    build:
+      context: .
+      dockerfile: ./SJZ.OAuthService/Dockerfile
+    ports:
+      - "5010:80"
+      - "5011:443"
+    environment:
+      - UPS_SVC=https://userprofilesvc:443
+      - GITHUB_CLIENTSECRET=408941d4d7c701efd5a6497e1627e0f8fbd503fc
+      - GITHUB_CLIENTID=6abec5f4e4d9d5c48f07
+      - LINKEDIN_CLIENTSECRET=FSVHA2ty27qpe8yb
+      - LINKEDIN_CLIENTID=81y34iwbqrnk79
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
       
   imagesvc:
     build:
@@ -35,3 +54,21 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     volumes:
       - ~/.aspnet/https:/https:ro
+      
+  timelinesvc:
+    build:
+      context: .
+      dockerfile: ./SJZ.TimelineService/Dockerfile
+    ports:
+      - "5030:80"
+      - "5031:443"
+    environment:
+      - MONGO_DATABASE=sjz
+      - MONGO_CONNECTIONSTRING=mongodb://host.docker.internal:27017
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      

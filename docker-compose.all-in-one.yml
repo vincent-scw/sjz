@@ -1,0 +1,112 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - 27017:27017 
+  
+  neo4j:
+    image: neo4j:4.0
+    restart: unless-stopped
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+      - D:/neo4j/conf:/conf
+      - D:/neo4j/data:/data
+      - D:/neo4j/logs:/logs
+      
+  
+  userprofilesvc:
+    build:
+      context: ./server/SJZ.Server
+      dockerfile: ./SJZ.UserProfileService/Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    environment:
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_PASSWORD=Welcome1
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - neo4j
+
+  oauthsvc:
+    build:
+      context: ./server/SJZ.Server
+      dockerfile: ./SJZ.OAuthService/Dockerfile
+    ports:
+      - "5010:80"
+      - "5011:443"
+    environment:
+      - UPS_SVC=https://userprofilesvc:443
+      - GITHUB_CLIENTSECRET=408941d4d7c701efd5a6497e1627e0f8fbd503fc
+      - GITHUB_CLIENTID=6abec5f4e4d9d5c48f07
+      - LINKEDIN_CLIENTSECRET=FSVHA2ty27qpe8yb
+      - LINKEDIN_CLIENTID=81y34iwbqrnk79
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - userprofilesvc
+      
+  imagesvc:
+    build:
+      context: ./server/SJZ.Server
+      dockerfile: ./SJZ.ImageService/Dockerfile
+    ports:
+      - "5020:80"
+      - "5021:443"
+    environment:
+      - STORAGEACCOUNT_CONNECTIONSTRING="DefaultEndpointsProtocol=https;AccountName=storageaccountexp85e8;AccountKey=fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA==;EndpointSuffix=core.windows.net"
+      - STORAGEACCOUNT_KEY="fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA=="
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - oauthsvc
+    
+      
+  timelinesvc:
+    build:
+      context: ./server/SJZ.Server
+      dockerfile: ./SJZ.TimelineService/Dockerfile
+    ports:
+      - "5030:80"
+      - "5031:443"
+    environment:
+      - MONGO_DATABASE=sjz
+      - MONGO_CONNECTIONSTRING=mongodb://mongo:27017
+      - AUTHORITY=http://oauthsvc:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - oauthsvc
+      - mongo
+      
+  angularclient:
+    build:
+      context: ./client
+      dockerfile: ./dev.Dockerfile
+    ports:
+      - 4200:80
+    depends_on:
+      - timelinesvc

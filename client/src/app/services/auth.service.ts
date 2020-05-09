@@ -3,8 +3,7 @@ import {
   OidcSecurityService, OpenIdConfiguration, AuthWellKnownEndpoints,
   AuthorizationResult, AuthorizationState
 } from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs/observable';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';

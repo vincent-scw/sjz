@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -54,11 +57,17 @@ namespace SJZ.TimelineService
                 options.JsonSerializerOptions.IgnoreNullValues = true;
             });
 
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) 
+            { 
+                // Bypass certification error
+                return true; 
+            };
+            
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:5011";
-                    options.RequireHttpsMetadata = true;
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = Environment.GetEnvironmentVariable("AUTHORITY");
                     options.Audience = "timelineapi";
                 });
         }

@@ -19,3 +19,5 @@
 - Deploy [Nginx](https://www.nginx.com/) to Kubernetes
   - Create a static IP, reference to https://docs.microsoft.com/en-us/azure/aks/static-ip
   - Run `helm install stable/nginx-ingress --name nginx --namespace sjz --set controller.replicaCount=2 --set controller.service.loadBalancerIP={{StaticIP}}`
+- Use TLS with Let's Encrypt 
+  - Reference to https://docs.microsoft.com/en-us/azure/aks/ingress-static-ip

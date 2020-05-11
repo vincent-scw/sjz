@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angularclient
+  namespace: sjz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angularclient
+  template:
+    metadata:
+      labels:
+        app: angularclient
+    spec:
+      containers:
+      - name: angularclient
+        image: sjzvin.azurecr.io/sjz_angularclient:v0.1
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 2
+          timeoutSeconds: 5
+      imagePullSecrets:
+      - name: registrysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: angularclient
+  namespace: sjz
+  labels:
+    app: angularclient
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+  selector:
+    app: angularclient

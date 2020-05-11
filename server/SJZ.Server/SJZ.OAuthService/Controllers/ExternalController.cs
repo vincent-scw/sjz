@@ -101,6 +101,8 @@ namespace SJZ.OAuthService.Controllers
             var name = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
             var email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
 
+            await HttpContext.SignOutAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
             //var user = await _userClient.GetOrCreateAsync(new UserRequest 
             //{ 
             //    Name = name?.Value,
@@ -123,7 +125,6 @@ namespace SJZ.OAuthService.Controllers
             );
 
             await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userIdClaim.Value, user.Id, user.Name));
-            await HttpContext.SignOutAsync(IdentityServer4.IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
             var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 

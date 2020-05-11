@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imagesvc
+  namespace: sjz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagesvc
+  template:
+    metadata:
+      labels:
+        app: imagesvc
+    spec:
+      containers:
+      - name: imagesvc
+        image: sjzvin.azurecr.io/sjz_imagesvc:{{VERSION_NUMBER}}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: STORAGEACCOUNT_CONNECTIONSTRING
+          value: "{{STORAGEACCOUNT_CONNECTIONSTRING}}"
+        - name: STORAGEACCOUNT_KEY
+          value: "{{STORAGEACCOUNT_KEY}}"
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 3
+      imagePullSecrets:
+      - name: registrysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imagesvc
+  namespace: sjz
+  labels:
+    app: imagesvc
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+  selector:
+    app: imagesvc

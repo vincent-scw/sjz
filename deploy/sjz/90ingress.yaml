@@ -13,6 +13,8 @@ spec:
   - hosts:
     - www.timelines.top
     - auth.timelines.top
+    - timeline.timelines.top
+    - image.timelines.top
     secretName: tls-secret
   rules:
   - host: www.timelines.top
@@ -27,5 +29,19 @@ spec:
       paths:
       - path: /(.*)
         backend:
-          serviceName: oauth
+          serviceName: oauthsvc
+          servicePort: 80
+  - host: timeline.timelines.top
+    http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: timelinesvc
+          servicePort: 80
+  - host: image.timelines.top
+    http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: imagesvc
           servicePort: 80

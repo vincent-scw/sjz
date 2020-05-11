@@ -7,14 +7,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: oauth
+      app: oauthsvc
   template:
     metadata:
       labels:
-        app: oauth
+        app: oauthsvc
     spec:
       containers:
-      - name: oauth
+      - name: oauthsvc
         image: sjzvin.azurecr.io/sjz_oauthsvc:{{VERSION_NUMBER}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -22,13 +22,13 @@ spec:
         - name: UPS_SVC
           value: "http://ups:80"
         - name: GITHUB_CLIENTSECRET
-          value: "bolt://neo4j:7687"
+          value: "{{GITHUB_CLIENTSECRET}}"
         - name: GITHUB_CLIENTID
-          value: "Welcome1"
+          value: "{{GITHUB_CLIENTID}}"
         - name: LINKEDIN_CLIENTSECRET
-          value:
+          value: "{{LINKEDIN_CLIENTSECRET}}"
         - name: LINKEDIN_CLIENTID
-          value:
+          value: "{{LINKEDIN_CLIENTID}}"
         ports:
         - containerPort: 80
         readinessProbe:
@@ -49,14 +49,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: oauth
+  name: oauthsvc
   namespace: sjz
   labels:
-    app: oauth
+    app: oauthsvc
 spec:
   type: NodePort
   ports:
   - name: web
     port: 80
   selector:
-    app: oauth
+    app: oauthsvc

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timelinesvc
+  namespace: sjz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timelinesvc
+  template:
+    metadata:
+      labels:
+        app: timelinesvc
+    spec:
+      containers:
+      - name: timelinesvc
+        image: sjzvin.azurecr.io/sjz_timelinesvc:{{VERSION_NUMBER}}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: MONGO_DATABASE
+          value: "sjz"
+        - name: MONGO_CONNECTIONSTRING
+          value: "mongodb://mongo:27017"
+        - name: AUTHORITY
+          value: "http://oauthsvc:80"
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 3
+      imagePullSecrets:
+      - name: registrysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: timelinesvc
+  namespace: sjz
+  labels:
+    app: timelinesvc
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+  selector:
+    app: timelinesvc

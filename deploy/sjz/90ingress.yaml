@@ -12,6 +12,7 @@ spec:
   tls:
   - hosts:
     - www.timelines.top
+    - auth.timelines.top
     secretName: tls-secret
   rules:
   - host: www.timelines.top
@@ -20,4 +21,11 @@ spec:
       - path: /(.*)
         backend:
           serviceName: angularclient
+          servicePort: 80
+  - host: auth.timelines.top
+    http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: oauth
           servicePort: 80

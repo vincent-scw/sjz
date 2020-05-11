@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ups
+  namespace: sjz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ups
+  template:
+    metadata:
+      labels:
+        app: ups
+    spec:
+      containers:
+      - name: ups
+        image: sjzvin.azurecr.io/sjz_userprofilesvc:{{VERSION_NUMBER}}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: NEO4J_USERNAME
+          value: "neo4j"
+        - name: NEO4J_URI
+          value: "bolt://neo4j:7687"
+        - name: NEO4J_PASSWORD
+          value: "Welcome1"
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 3
+      imagePullSecrets:
+      - name: registrysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ups
+  namespace: sjz
+  labels:
+    app: ups
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+  selector:
+    app: ups

@@ -8,18 +8,8 @@ import { NgModule } from "@angular/core";
 
 const timelineRoutes: Routes = [
   {
-    path: 'timeline',
+    path: 't',
     children: [
-      {
-        path: 'create',
-        component: TimelineEditorComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: ':timeline/edit',
-        component: TimelineEditorComponent,
-        canActivate: [AuthGuard]
-      },
       {
         path: ':timeline',
         component: TimelineComponent,

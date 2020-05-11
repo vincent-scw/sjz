@@ -27,26 +27,30 @@ namespace SJZ.OAuthService
         {
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-            services.AddSingleton(sp =>
+            //services.AddSingleton(sp =>
+            //{
+            //    var channel = GrpcChannel.ForAddress(Environment.GetEnvironmentVariable("UPS_SVC"),
+            //        new GrpcChannelOptions
+            //        {
+            //            HttpClient = new HttpClient(new HttpClientHandler
+            //            {
+            //                // Trust certificates for debugging purpose
+            //                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            //            }),
+            //            LoggerFactory = LoggerFactory.Create(logging =>
+            //            {
+            //                logging.AddConsole();
+            //                logging.SetMinimumLevel(LogLevel.Information);
+            //            })
+            //        });
+
+            //    return new UserSvc.UserSvcClient(channel);
+            //});
+
+            services.AddHttpClient("ups", c =>
             {
-                var channel = GrpcChannel.ForAddress(Environment.GetEnvironmentVariable("UPS_SVC"),
-                    new GrpcChannelOptions
-                    {
-                        HttpClient = new HttpClient(new HttpClientHandler
-                        {
-                            // Trust certificates for debugging purpose
-                            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                        }),
-                        LoggerFactory = LoggerFactory.Create(logging =>
-                        {
-                            logging.AddConsole();
-                            logging.SetMinimumLevel(LogLevel.Information);
-                        })
-                    });
-
-                return new UserSvc.UserSvcClient(channel);
+                c.BaseAddress = new Uri(Environment.GetEnvironmentVariable("UPS_SVC"));
             });
-
             services.AddTransient<IProfileService, ProfileService>();
 
             services.AddIdentityServer(options =>

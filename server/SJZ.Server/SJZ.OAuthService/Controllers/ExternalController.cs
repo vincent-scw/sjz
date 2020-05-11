@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
 using IdentityModel;
@@ -13,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using SJZ.OAuthService.Models;
 using SJZ.UserProfileService;
 
 namespace SJZ.OAuthService.Controllers
@@ -22,18 +26,20 @@ namespace SJZ.OAuthService.Controllers
     [Route("[controller]")]
     public class ExternalController : ControllerBase
     {
-        private readonly UserSvc.UserSvcClient _userClient;
+        //private readonly UserSvc.UserSvcClient _userClient;
+        private readonly IHttpClientFactory _clientFactory;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
 
-        public ExternalController(UserSvc.UserSvcClient userClient,
+        public ExternalController(//UserSvc.UserSvcClient userClient,
+            IHttpClientFactory clientFactory,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events)
         {
-            _userClient = userClient;
-
+            //_userClient = userClient;
+            _clientFactory = clientFactory;
             _interaction = interaction;
             _clientStore = clientStore;
             _events = events;
@@ -45,7 +51,8 @@ namespace SJZ.OAuthService.Controllers
             try
             {
                 var returnUrl = HttpContext.Request.QueryString.Value;
-                returnUrl = returnUrl.Substring(11); // Remove ?ReturnUrl=
+                if (returnUrl.Length > 11)
+                    returnUrl = returnUrl.Substring(11); // Remove ?ReturnUrl=
                 // start challenge and roundtrip the return URL and scheme 
                 var props = new AuthenticationProperties
                 {
@@ -94,14 +101,15 @@ namespace SJZ.OAuthService.Controllers
             var name = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
             var email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
 
-            var user = await _userClient.GetOrCreateAsync(new UserRequest 
-            { 
-                Name = name?.Value,
-                Email = email?.Value,
-                ThirdPartyProvider = provider, 
-                ThirdPartyId = userIdClaim.Value
-            });
-
+            //var user = await _userClient.GetOrCreateAsync(new UserRequest 
+            //{ 
+            //    Name = name?.Value,
+            //    Email = email?.Value,
+            //    ThirdPartyProvider = provider, 
+            //    ThirdPartyId = userIdClaim.Value
+            //});
+            var user = await GetUser(name?.Value, email?.Value, provider, userIdClaim.Value);
+            
             // this allows us to collect any additonal claims or properties
             // for the specific prtotocols used and store them in the local auth cookie.
             // this is typically used to store data needed for signout from those protocols.
@@ -138,6 +146,21 @@ namespace SJZ.OAuthService.Controllers
             {
                 localSignInProps.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
             }
+        }
+
+        private async Task<UserModel> GetUser(string name, string email, string thirdPartyProvider, string thirdPartyId)
+        {
+            var client = _clientFactory.CreateClient("ups");
+            var response = await client.PostAsync("/api/user", new StringContent(
+                JsonConvert.SerializeObject(new
+                {
+                    name, email, thirdPartyProvider, thirdPartyId
+                }), Encoding.UTF8, "application/json"));
+
+            response.EnsureSuccessStatusCode();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserModel>(responseString);
         }
     }
 }

@@ -37,7 +37,14 @@ namespace SJZ.UserProfileService
 
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddGrpc(options => options.EnableDetailedErrors = true);
+            services.AddHealthChecks();
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "User Profile API" });
+            });
+
+            // services.AddGrpc(options => options.EnableDetailedErrors = true);
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,16 +55,18 @@ namespace SJZ.UserProfileService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "User Profile API v1"));
+
+            app.UseHealthChecks(new PathString("/health"));
+            //app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/health", async context =>
-                {
-                    await context.Response.WriteAsync("I am fine.");
-                });
-                endpoints.MapGrpcService<Services.UserService>();
+                endpoints.MapControllers();
+                // bypass Grpc
+                // endpoints.MapGrpcService<Services.UserService>();
             });
         }
     }

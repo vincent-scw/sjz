@@ -13,10 +13,6 @@ services:
       - NEO4J_PASSWORD=Welcome1
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-      - ~/.aspnet/https:/https:ro
 
   oauthsvc:
     build:
@@ -33,10 +29,6 @@ services:
       - LINKEDIN_CLIENTID=81y34iwbqrnk79
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-      - ~/.aspnet/https:/https:ro
       
   imagesvc:
     build:
@@ -50,10 +42,6 @@ services:
       - STORAGEACCOUNT_KEY="fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA=="
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-      - ~/.aspnet/https:/https:ro
       
   timelinesvc:
     build:
@@ -67,8 +55,4 @@ services:
       - MONGO_CONNECTIONSTRING=mongodb://host.docker.internal:27017
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Welcome1
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-      - ~/.aspnet/https:/https:ro
       

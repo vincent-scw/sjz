@@ -89,6 +89,7 @@ namespace SJZ.OAuthService
                     options.SaveTokens = true;
                 });
 
+            services.AddHealthChecks();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "OAuth API" });
@@ -116,6 +117,7 @@ namespace SJZ.OAuthService
             app.UseAuthentication();
             app.UseIdentityServer();
 
+            app.UseHealthChecks(new PathString("/health"));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

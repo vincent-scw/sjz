@@ -23,18 +23,19 @@ install:
 script:
   - echo "building with $VERSION_NUMBER..."
   - docker build -t sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.UserProfileService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.OAuthService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.ImageService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.TimelineService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
+  # - docker build -t sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.OAuthService/Dockerfile ./server/SJZ.Server
+  # - docker build -t sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.ImageService/Dockerfile ./server/SJZ.Server
+  # - docker build -t sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.TimelineService/Dockerfile ./server/SJZ.Server
+  # - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
 
 after_success:
+  - docker logout
   - echo "$DOCKER_PASSWORD" | docker login sjzvin.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
   - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
-  - docker push sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER
-  - docker push sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER
-  - docker push sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER
-  - docker push sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER
+  # - docker push sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER
+  # - docker push sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER
+  # - docker push sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER
+  # - docker push sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER
   
 # before_deploy:
   # - az login -u "$AZ_USERNAME" -p "$AZ_PASSWORD"

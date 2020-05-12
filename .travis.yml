@@ -4,8 +4,6 @@ env:
   global:
     - VERSION_NUMBER="v0.$TRAVIS_BUILD_NUMBER"
 
-language: csharp
-
 services:
   - docker
 
@@ -31,7 +29,7 @@ script:
   - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login shenacr.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login sjzvin.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
   - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
   - docker push sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER
   - docker push sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER

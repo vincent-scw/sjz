@@ -55,6 +55,7 @@ namespace SJZ.OAuthService
 
             services.AddIdentityServer(options =>
             {
+                options.IssuerUri = Environment.GetEnvironmentVariable("ISSUER");
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseInformationEvents = true;

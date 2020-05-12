@@ -5,12 +5,13 @@
       "launchBrowser": true,
       "launchUrl": "login.html",
       "environmentVariables": {
-        "GITHUB_CLIENTSECRET": "408941d4d7c701efd5a6497e1627e0f8fbd503fc",
         "UPS_SVC": "http://localhost:5000",
-        "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb",
+        "ISSUER": "http://localhost:5010",
         "GITHUB_CLIENTID": "6abec5f4e4d9d5c48f07",
+        "GITHUB_CLIENTSECRET": "408941d4d7c701efd5a6497e1627e0f8fbd503fc",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "LINKEDIN_CLIENTID": "81y34iwbqrnk79"
+        "LINKEDIN_CLIENTID": "81y34iwbqrnk79",
+        "LINKEDIN_CLIENTSECRET": "FSVHA2ty27qpe8yb"
       },
       "applicationUrl": "http://localhost:5010"
     },

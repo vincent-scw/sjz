@@ -1,0 +1,54 @@
+sudo: required
+
+env:
+  global:
+    - VERSION_NUMBER="v0.$TRAVIS_BUILD_NUMBER"
+
+language: csharp
+
+services:
+  - docker
+
+install:
+  - echo "installing..."
+  - sudo apt-get update
+  - sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+  - curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+  - export AZ_REPO=$(lsb_release -cs)
+  - echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+  - sudo apt-get update
+  - sudo apt-get install azure-cli
+  - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+  # - docker pull alpine:latest
+  # - docker pull node:alpine
+
+script:
+  - echo "building with $VERSION_NUMBER..."
+  - docker build -t sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.UserProfileService/Dockerfile ./server/SJZ.Server
+  - docker build -t sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.OAuthService/Dockerfile ./server/SJZ.Server
+  - docker build -t sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.ImageService/Dockerfile ./server/SJZ.Server
+  - docker build -t sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.TimelineService/Dockerfile ./server/SJZ.Server
+  - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login shenacr.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
+  - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
+  - docker push sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER
+  - docker push sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER
+  - docker push sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER
+  - docker push sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER
+  
+# before_deploy:
+  # - az login -u "$AZ_USERNAME" -p "$AZ_PASSWORD"
+  # - az aks get-credentials --resource-group sjz --name "$AKS_NAME"
+  
+# deploy:
+  # provider: script
+  # script: bash deploy/deploy.sh $VERSION_NUMBER
+  # on:
+    # branch: master
+  
+#notifications:
+#  email:
+#    on_failure: always
+#    on_success: never

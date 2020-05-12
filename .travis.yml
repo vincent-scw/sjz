@@ -29,7 +29,7 @@ script:
   # - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
 
 after_success:
-  - docker logout
+  - docker logout sjzvin.azurecr.io
   - echo "$DOCKER_PASSWORD" | docker login sjzvin.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
   - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
   # - docker push sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER

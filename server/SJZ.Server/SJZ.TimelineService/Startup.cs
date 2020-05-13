@@ -10,6 +10,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -62,7 +63,8 @@ namespace SJZ.TimelineService
                 // Bypass certification error
                 return true; 
             };
-            
+
+            services.AddHealthChecks();
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
@@ -91,6 +93,7 @@ namespace SJZ.TimelineService
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHealthChecks(new PathString("/health"));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

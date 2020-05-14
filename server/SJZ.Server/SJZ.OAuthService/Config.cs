@@ -42,7 +42,8 @@ namespace SJZ.OAuthService
                 },
                 AllowedCorsOrigins = new List<string>
                 {
-                    "http://localhost:4200"
+                    "http://localhost:4200",
+                    "https://www.timelines.top"
                 },
                 RequireClientSecret = false,
                 RequirePkce = true,
@@ -50,12 +51,16 @@ namespace SJZ.OAuthService
                 RedirectUris = new List<string>
                 {
                     "http://localhost:4200",
-                    "http://localhost:4200/silent-renew.html"
+                    "http://localhost:4200/silent-renew.html",
+                    "https://www.timelines.top",
+                    "https://www.timelines.top/silent-renew.html"
                 },
                 PostLogoutRedirectUris = new List<string>
                 {
                     "http://localhost:4200",
-                    "http://localhost:4200/unauthorized"
+                    "http://localhost:4200/unauthorized",
+                    "https://www.timelines.top",
+                    "https://www.timelines.top/unauthorized"
                 },
             }
         };

@@ -14,9 +14,11 @@ services:
       - 7474:7474
       - 7687:7687
     volumes:
-      - D:/neo4j/conf:/conf
-      - D:/neo4j/data:/data
-      - D:/neo4j/logs:/logs
+      - /conf:/conf
+      - /data:/data
+      - /logs:/logs
+    environment:
+      - NEO4J_AUTH=neo4j/Welcome1
       
   
   userprofilesvc:
@@ -79,11 +81,11 @@ services:
       - oauthsvc
       - mongo
       
-  angularclient:
-    build:
-      context: ./client
-      dockerfile: ./dev.Dockerfile
-    ports:
-      - 4200:80
-    depends_on:
-      - timelinesvc
+  # angularclient:
+    # build:
+      # context: ./client
+      # dockerfile: ./dev.Dockerfile
+    # ports:
+      # - 4200:80
+    # depends_on:
+      # - timelinesvc

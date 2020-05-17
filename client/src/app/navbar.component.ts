@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	createNew() {
-		this.dialog.open(TimelineEditorComponent, { data: { periodGroupLevel: PeriodGroupLevel.byDay} })
+		this.dialog.open(TimelineEditorComponent, { data: { periodGroupLevel: PeriodGroupLevel.byDay } })
 			.afterClosed().toPromise().then(() => this.refresh());
 	}
 }

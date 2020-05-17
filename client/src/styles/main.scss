@@ -9,8 +9,14 @@
 @import './2-modules/moment-editor';
 @import './2-modules/image-viewer';
 
+.has-navbar-fixed-top {
+  padding-top: 4rem !important;
+}
+
 .main {
-  margin-top: 1.5rem;
+  background-color: white;
+  height: 100%;
+  padding: 0 1rem;
 }
 
 .is-fullwidth {

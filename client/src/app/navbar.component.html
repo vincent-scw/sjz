@@ -23,7 +23,7 @@
 					</a>
 					<div class="navbar-dropdown">
 						<a class="navbar-item" [class.is-active]="activeTopicKey == item.timelineId"
-							*ngFor="let item of timelines$ | async" [routerLink]="['/timeline/', item.timelineId]"
+							*ngFor="let item of timelines$ | async" [routerLink]="['/t/', item.timelineId]"
 							(click)="burgerActive = false">
 							<div class="level">
 								<div class="level-left">{{item.title}}</div>

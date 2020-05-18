@@ -26,7 +26,7 @@ services:
   
   userprofilesvc:
     build:
-      context: ./server/SJZ.Server
+      context: ./server
       dockerfile: ./SJZ.UserProfileService/Dockerfile
     ports:
       - "5000:80"
@@ -40,7 +40,7 @@ services:
 
   oauthsvc:
     build:
-      context: ./server/SJZ.Server
+      context: ./server
       dockerfile: ./SJZ.OAuthService/Dockerfile
     ports:
       - "5010:80"
@@ -57,7 +57,7 @@ services:
       
   imagesvc:
     build:
-      context: ./server/SJZ.Server
+      context: ./server
       dockerfile: ./SJZ.ImageService/Dockerfile
     ports:
       - "5020:80"
@@ -71,7 +71,7 @@ services:
       
   timelinesvc:
     build:
-      context: ./server/SJZ.Server
+      context: ./server
       dockerfile: ./SJZ.TimelineService/Dockerfile
     ports:
       - "5030:80"

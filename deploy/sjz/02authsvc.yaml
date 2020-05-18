@@ -20,7 +20,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
         - name: ISSUER
-          value: "https://www.timelines.top"
+          value: "https://auth.timelines.top"
         - name: UPS_SVC
           value: "http://ups:80"
         - name: GITHUB_CLIENTSECRET

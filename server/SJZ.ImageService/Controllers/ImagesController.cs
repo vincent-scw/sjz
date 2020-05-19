@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SJZ.Images.Repository;
@@ -41,12 +43,22 @@ namespace SJZ.ImageService.Controllers
         }
 
         [HttpPost("upload")]
+        [HttpPut("upload")]
         [RequestSizeLimit(5_000_000)] // up to 5MB
-        public async Task<IActionResult> UploadAsync([FromQuery] string owner, [FromQuery] int year, [FromQuery] int month)
+        [Authorize]
+        public async Task<IActionResult> UploadAsync([FromQuery] int year, [FromQuery] int month)
         {
             var file = HttpContext.Request.Form.Files["file"];
             if (file == null)
                 file = HttpContext.Request.Form.Files[0];
+
+            if (year == 0 || month == 0)
+            {
+                year = DateTime.UtcNow.Year;
+                month = DateTime.UtcNow.Month;
+            }
+
+            var owner = GetUserId();
 
             var thumbnailDivideBy = GetThumbnailDivideBy(file.Length);
 
@@ -72,7 +84,7 @@ namespace SJZ.ImageService.Controllers
                     thumbUri = await _imageRepository.UploadImageAsync(owner, year, month, $"_thumbnail/{filename}", thumbStream);
                 }
 
-                return Ok(new { Uri = uri, Thumbnail = thumbUri });
+                return Ok(new { imageUrl = uri });
             }
             catch (Exception ex)
             {
@@ -115,6 +127,12 @@ namespace SJZ.ImageService.Controllers
                 return 2;
 
             return 1;
+        }
+
+        private string GetUserId()
+        {
+            var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return idClaim.Value;
         }
     }
 }

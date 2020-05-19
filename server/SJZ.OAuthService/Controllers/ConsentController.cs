@@ -33,6 +33,7 @@ namespace SJZ.OAuthService.Controllers
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
                     "timelineapi",
+                    "imageapi",
                     "ups"}
             };
 

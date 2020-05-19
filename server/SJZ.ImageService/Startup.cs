@@ -42,6 +42,14 @@ namespace SJZ.ImageService
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Images API" });
             });
 
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = Environment.GetEnvironmentVariable("AUTHORITY");
+                    options.Audience = "imageapi";
+                });
+
             services.AddHealthChecks();
             services.AddControllers();
         }
@@ -58,9 +66,10 @@ namespace SJZ.ImageService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Images API v1"));
 
             //app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            app.UseCors();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseHealthChecks(new PathString("/health"));

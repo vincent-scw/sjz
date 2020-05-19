@@ -67,7 +67,7 @@ namespace SJZ.Common.Tests.Domain
         [Fact]
         public void ParseCodeToEnum_ShouldReturnExpectedEnum()
         {
-            var v1 = Enumeration.ParseCodeToEnum<TestEnum?>(TestEnumeration.Value1);
+            var v1 = Enumeration.ParseCodeToEnum<TestEnum>(TestEnumeration.Value1);
 
             Assert.Equal(TestEnum.Value1, v1);
         }

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Timeline } from '../../../models/timeline.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
 	selector: 'app-record-editor',
@@ -15,17 +16,18 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	@Input() model: Record = { recordId: '', date: new Date() };
 	@Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
 	timeline: Timeline;
-	public editorConfig = {
-		'editable': true,
-		'spellcheck': true,
-		'minHeight': '200px',
-		'width': 'auto',
-		'translate': 'yes',
-		'enableToolbar': true,
-		'showToolbar': true,
-		'placeholder': 'Enter text here...',
-		'uploadUrl': `${environment.imageSvcUrl}/api/images/upload`,
-		'toolbarHiddenButtons': [
+	public editorConfig: AngularEditorConfig = {
+		editable: true,
+		spellcheck: true,
+		minHeight: '200px',
+		width: 'auto',
+		translate: 'yes',
+		enableToolbar: true,
+		showToolbar: true,
+		sanitize: true,
+		placeholder: 'Enter text here...',
+		uploadUrl: `${environment.imageSvcUrl}/api/images/upload`,
+		toolbarHiddenButtons: [
 			['subscript',
 				'superscript',
 				'justifyLeft',

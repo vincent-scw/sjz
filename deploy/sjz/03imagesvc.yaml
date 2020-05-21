@@ -23,6 +23,8 @@ spec:
           value: "{{STORAGEACCOUNT_CONNECTIONSTRING}}"
         - name: STORAGEACCOUNT_KEY
           value: "{{STORAGEACCOUNT_KEY}}"
+        - name: AUTHORITY
+          value: "http://oauthsvc:80"
         ports:
         - containerPort: 80
         readinessProbe:

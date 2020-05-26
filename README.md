@@ -5,7 +5,8 @@
 
 **sjz** was decomposed into 3 microservices. All of them are independently deployable applications.
 
-<img width="880" alt="Architecture" src="https://github.com/vincent-scw/sjz/blob/master/doc/architecture.png" />
+<img width="660" alt="Architecture" src="https://github.com/vincent-scw/sjz/blob/master/doc/architecture.png" />
+
 
 #### User Profile Service
 Contains general user information: user account, liked timeline, following users.

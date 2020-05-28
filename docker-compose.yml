@@ -82,11 +82,11 @@ services:
       - oauthsvc
       - mongo
       
-  # angularclient:
-    # build:
-      # context: ./client
-      # dockerfile: ./dev.Dockerfile
-    # ports:
-      # - 4200:80
-    # depends_on:
-      # - timelinesvc
+  angularclient:
+    build:
+      context: ./client
+      dockerfile: ./dev.Dockerfile
+    ports:
+      - 4200:80
+    depends_on:
+      - timelinesvc

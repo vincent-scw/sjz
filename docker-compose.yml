@@ -18,7 +18,7 @@ services:
       - /data:/data
       - /logs:/logs
     environment:
-      - NEO4J_AUTH=neo4j/Welcome1
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
       
   
   userprofilesvc:
@@ -30,7 +30,7 @@ services:
     environment:
       - NEO4J_USERNAME=neo4j
       - NEO4J_URI=bolt://neo4j:7687
-      - NEO4J_PASSWORD=Welcome1
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - neo4j
@@ -44,10 +44,10 @@ services:
     environment:
       - UPS_SVC=http://userprofilesvc:80
       - ISSUER=http://localhost:5010
-      - GITHUB_CLIENTSECRET=408941d4d7c701efd5a6497e1627e0f8fbd503fc
-      - GITHUB_CLIENTID=6abec5f4e4d9d5c48f07
-      - LINKEDIN_CLIENTSECRET=FSVHA2ty27qpe8yb
-      - LINKEDIN_CLIENTID=81y34iwbqrnk79
+      - GITHUB_CLIENTSECRET=${GITHUB_CLIENTSECRET}
+      - GITHUB_CLIENTID=${GITHUB_CLIENTID}
+      - LINKEDIN_CLIENTSECRET=${LINKEDIN_CLIENTSECRET}
+      - LINKEDIN_CLIENTID=${LINKEDIN_CLIENTID}
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - userprofilesvc
@@ -59,8 +59,8 @@ services:
     ports:
       - "5020:80"
     environment:
-      - STORAGEACCOUNT_CONNECTIONSTRING="DefaultEndpointsProtocol=https;AccountName=storageaccountexp85e8;AccountKey=fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA==;EndpointSuffix=core.windows.net"
-      - STORAGEACCOUNT_KEY="fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA=="
+      - STORAGEACCOUNT_CONNECTIONSTRING=${STORAGEACCOUNT_CONNECTIONSTRING}
+      - STORAGEACCOUNT_KEY=${STORAGEACCOUNT_KEY}
       - AUTHORITY=http://oauthsvc:80
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:

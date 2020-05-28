@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: imagesvc
-        image: sjzvin.azurecr.io/sjz_imagesvc:{{VERSION_NUMBER}}
+        image: sjzvin.azurecr.io/sjz_imagesvc:${VERSION_NUMBER}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
         - name: STORAGEACCOUNT_CONNECTIONSTRING
-          value: "{{STORAGEACCOUNT_CONNECTIONSTRING}}"
+          value: "${STORAGEACCOUNT_CONNECTIONSTRING}"
         - name: STORAGEACCOUNT_KEY
-          value: "{{STORAGEACCOUNT_KEY}}"
+          value: "${STORAGEACCOUNT_KEY}"
         - name: AUTHORITY
           value: "http://oauthsvc:80"
         ports:

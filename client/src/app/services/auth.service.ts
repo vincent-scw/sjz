@@ -28,7 +28,7 @@ export class AuthService implements OnDestroy {
 			redirect_url: environment.selfUrl,
 			client_id: 'spa',
 			response_type: 'code',
-			scope: 'openid profile timelineapi imageapi ups',
+			scope: 'openid profile offline_access timelineapi imageapi ups',
 			post_login_route: '/',
 			forbidden_route: '/forbidden',
 			unauthorized_route: '/unauthorized',

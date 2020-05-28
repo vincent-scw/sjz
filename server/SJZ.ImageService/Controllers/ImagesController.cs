@@ -88,6 +88,7 @@ namespace SJZ.ImageService.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Upload image failed");
                 return BadRequest(ex.Message);
             }
         }

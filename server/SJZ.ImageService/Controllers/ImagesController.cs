@@ -44,7 +44,6 @@ namespace SJZ.ImageService.Controllers
 
         [HttpPost("upload")]
         [HttpPut("upload")]
-        [RequestSizeLimit(5_000_000)] // up to 5MB
         [Authorize]
         public async Task<IActionResult> UploadAsync([FromQuery] int year, [FromQuery] int month)
         {

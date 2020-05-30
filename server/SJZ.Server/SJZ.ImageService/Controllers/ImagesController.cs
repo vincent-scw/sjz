@@ -41,6 +41,7 @@ namespace SJZ.ImageService.Controllers
         }
 
         [HttpPost("upload")]
+        [RequestSizeLimit(5_000_000)] // up to 5MB
         public async Task<IActionResult> UploadAsync([FromQuery] string owner, [FromQuery] int year, [FromQuery] int month)
         {
             var file = HttpContext.Request.Form.Files["file"];

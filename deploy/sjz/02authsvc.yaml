@@ -15,22 +15,22 @@ spec:
     spec:
       containers:
       - name: oauthsvc
-        image: sjzvin.azurecr.io/sjz_oauthsvc:{{VERSION_NUMBER}}
+        image: sjzvin.azurecr.io/sjz_oauthsvc:${VERSION_NUMBER}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
         - name: ISSUER
-          value: "https://www.timelines.top"
+          value: "https://auth.timelines.top"
         - name: UPS_SVC
           value: "http://ups:80"
         - name: GITHUB_CLIENTSECRET
-          value: "{{GITHUB_CLIENTSECRET}}"
+          value: "${GITHUB_CLIENTSECRET}"
         - name: GITHUB_CLIENTID
-          value: "{{GITHUB_CLIENTID}}"
+          value: "${GITHUB_CLIENTID}"
         - name: LINKEDIN_CLIENTSECRET
-          value: "{{LINKEDIN_CLIENTSECRET}}"
+          value: "${LINKEDIN_CLIENTSECRET}"
         - name: LINKEDIN_CLIENTID
-          value: "{{LINKEDIN_CLIENTID}}"
+          value: "${LINKEDIN_CLIENTID}"
         ports:
         - containerPort: 80
         readinessProbe:

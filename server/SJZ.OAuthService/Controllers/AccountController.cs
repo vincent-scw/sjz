@@ -23,18 +23,15 @@ namespace SJZ.OAuthService.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly UserSvc.UserSvcClient _userClient;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
 
-        public AccountController(UserSvc.UserSvcClient userClient,
+        public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events)
         {
-            _userClient = userClient;
-
             _interaction = interaction;
             _clientStore = clientStore;
             _events = events;

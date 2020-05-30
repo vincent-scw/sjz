@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: timelinesvc
-        image: sjzvin.azurecr.io/sjz_timelinesvc:{{VERSION_NUMBER}}
+        image: sjzvin.azurecr.io/sjz_timelinesvc:${VERSION_NUMBER}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
         - name: MONGO_DATABASE
           value: "sjz"
         - name: MONGO_CONNECTIONSTRING
-          value: "mongodb://mongodb:27017"
+          value: "mongodb://root:${PASSWORD}@mongodb:27017"
         - name: AUTHORITY
           value: "http://oauthsvc:80"
         ports:

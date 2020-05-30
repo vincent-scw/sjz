@@ -22,10 +22,10 @@ install:
 
 script:
   - echo "building with $VERSION_NUMBER..."
-  - docker build -t sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.UserProfileService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.OAuthService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.ImageService/Dockerfile ./server/SJZ.Server
-  - docker build -t sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER -f ./server/SJZ.Server/SJZ.TimelineService/Dockerfile ./server/SJZ.Server
+  - docker build -t sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER -f ./server/SJZ.UserProfileService/Dockerfile ./server
+  - docker build -t sjzvin.azurecr.io/sjz_oauthsvc:$VERSION_NUMBER -f ./server/SJZ.OAuthService/Dockerfile ./server
+  - docker build -t sjzvin.azurecr.io/sjz_imagesvc:$VERSION_NUMBER -f ./server/SJZ.ImageService/Dockerfile ./server
+  - docker build -t sjzvin.azurecr.io/sjz_timelinesvc:$VERSION_NUMBER -f ./server/SJZ.TimelineService/Dockerfile ./server
   - docker build -t sjzvin.azurecr.io/sjz_angularclient:$VERSION_NUMBER -f ./client/Dockerfile ./client
 
 after_success:

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: angularclient
-        image: sjzvin.azurecr.io/sjz_angularclient:{{VERSION_NUMBER}}
+        image: sjzvin.azurecr.io/sjz_angularclient:${VERSION_NUMBER}
         ports:
         - containerPort: 80
         readinessProbe:

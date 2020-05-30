@@ -12,6 +12,7 @@ namespace SJZ.OAuthService
         public static IEnumerable<ApiResource> Apis => new List<ApiResource>
         {
             new ApiResource("timelineapi"),
+            new ApiResource("imageapi"),
             new ApiResource("ups")
         };
 
@@ -31,13 +32,17 @@ namespace SJZ.OAuthService
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
+                AllowOfflineAccess = true,
                 AccessTokenType = AccessTokenType.Jwt,
+                RequireConsent = false,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "timelineapi",
+                    "imageapi",
                     "ups"
                 },
                 AllowedCorsOrigins = new List<string>

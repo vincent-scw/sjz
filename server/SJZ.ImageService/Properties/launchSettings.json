@@ -8,6 +8,7 @@
       "environmentVariables": {
         "STORAGEACCOUNT_CONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=storageaccountexp85e8;AccountKey=fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA==;EndpointSuffix=core.windows.net",
         "STORAGEACCOUNT_KEY": "fZBa58mEvrKqvjaoIKqqy3pkMbgTGkDBuyoh+72J3BzCvgHoS+5miknuNstu4J8RsCKEuw8AsMOHLja1N/XkeA==",
+        "AUTHORITY": "http://localhost:5010",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5020"

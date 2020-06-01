@@ -1,10 +1,10 @@
 export interface Record {
-    recordId: string;
-    date: Date;
-    content?: string;
+  recordId?: string;
+  date?: Date;
+  content?: string;
 }
 
 export interface GroupedRecords {
-    group: string;
-    records: Record[];
+  group: string;
+  records: Record[];
 }

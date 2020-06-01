@@ -3,7 +3,7 @@ import { Record } from '../../../models/record.model';
 import { TimelineService } from '../../../services/timeline.service';
 import { Subscription } from 'rxjs';
 import { Timeline } from '../../../models/timeline.model';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
@@ -13,8 +13,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 
 export class RecordEditorComponent implements OnInit, OnDestroy {
-	@Input() model: Record = { recordId: '', date: new Date() };
-	@Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
 	timeline: Timeline;
 	public editorConfig: AngularEditorConfig = {
 		editable: true,
@@ -46,12 +44,11 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	};
 
 	private timelineSub: Subscription;
-	private dialogRef: MatDialogRef<RecordEditorComponent>;
 
 	constructor(
-		private injector: Injector,
-		private service: TimelineService) {
-		this.dialogRef = injector.get(MatDialogRef, null);
+		private dialogRef: MatDialogRef<RecordEditorComponent>,
+		private service: TimelineService,
+		@Inject(MAT_DIALOG_DATA) public model: Record) {
 	}
 
 	ngOnInit() {
@@ -67,13 +64,11 @@ export class RecordEditorComponent implements OnInit, OnDestroy {
 	onSubmit(newData: Record) {
 		this.service.insertOrReplaceRecord(this.timeline.timelineId, newData).toPromise()
 			.then(() => {
-				this.complete.emit(true);
-				this.dialogRef && this.dialogRef.close();
+				this.dialogRef.close(true);
 			});
 	}
 
 	onCancel() {
-		this.complete.emit(false);
-		this.dialogRef && this.dialogRef.close();
+		this.dialogRef.close(false);
 	}
 }

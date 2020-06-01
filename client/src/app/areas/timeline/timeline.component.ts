@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
-import { Observable ,  Subscription ,  BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 
 import { TimelineService } from '../../services/timeline.service';
 import { Record, GroupedRecords } from '../../models/record.model';
@@ -23,7 +22,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   groupedRecords: GroupedRecords[];
   loaded: boolean;
   editable: boolean;
-  align: number = -1;
+  align = -1;
 
   private topicKey: string;
   private timelineSubscription: Subscription;
@@ -39,7 +38,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private title: Title,
     private router: Router,
-    private datePipe: DatePipe) { 
+    private datePipe: DatePipe) {
     this.groupedRecords = new Array();
     this.loaded = false;
   }
@@ -77,6 +76,11 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
       this.loaded = true;
     });
+  }
+
+  onEdit(record: Record) {
+    this.dialog.open(RecordEditorComponent, { data: record })
+      .afterClosed().toPromise().then(() => this.refresh());
   }
 
   onDelete(recordId: string) {
@@ -118,8 +122,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAddMomentClicked() {
-    this.dialog.open(RecordEditorComponent)
+  onAddRecordClicked() {
+    this.dialog.open(RecordEditorComponent, { data: {} })
       .afterClosed().toPromise().then(() => this.refresh());
   }
 }

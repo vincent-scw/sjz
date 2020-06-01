@@ -64,8 +64,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	getYears() {
-		var today = new Date();
-		for (var i = 2017; i <= today.getFullYear(); i++) {
+		const today = new Date();
+		for (let i = 2017; i <= today.getFullYear(); i++) {
 			this.years.push(i);
 		}
 	}

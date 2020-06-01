@@ -23,7 +23,8 @@ import { TimelineAccessGuard } from '../../services/timeline-access-guard.servic
     TimelineAccessGuard
   ],
   entryComponents: [
-    RecordEditorComponent
+    RecordEditorComponent,
+    TimelineEditorComponent
   ]
 })
 export class TimelineModule { }

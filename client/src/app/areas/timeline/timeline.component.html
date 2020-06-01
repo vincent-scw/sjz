@@ -41,13 +41,13 @@
       </header>
       <div class="timeline-item" *ngFor="let record of mGroup.records">
         <div class="timeline-marker"></div>
-        <div class="timeline-content" *ngIf="!record.editMode; else editTemplate">
+        <div class="timeline-content">
           <p class="heading">{{record.date | date: 'MMMM dd'}}</p>
           <p [innerHTML]="record.content"></p>
           <div class="level is-mobile" *ngIf="editable" style="padding-top: 5px">
             <div class="level-left"></div>
             <div class="level-right">
-              <a matTooltip="Edit" class="level-item" (click)="record.editMode = true">
+              <a matTooltip="Edit" class="level-item" (click)="onEdit(record)">
                 <span class="icon is-small">
                   <i class="fa fa-edit"></i>
                 </span>
@@ -60,12 +60,6 @@
             </div>
           </div>
         </div>
-      
-        <ng-template #editTemplate>
-          <div class="timeline-content">
-            <app-record-editor [model]="record" (complete)="record.editMode = false"></app-record-editor>
-          </div>
-        </ng-template>
       </div>
     </div>
     <div class="timeline" [class.is-centered]="align==0" [class.is-rtl]="align==1">
@@ -76,6 +70,6 @@
   </div>
 </div>
 <app-action-panel class="left-dockbg" *ngIf="editable"
-  (add)="onAddMomentClicked()" 
+  (add)="onAddRecordClicked()" 
   (edit)="onEditTimelineClicked()"
   (delete)="onDeleteTimelineClicked()"></app-action-panel>
